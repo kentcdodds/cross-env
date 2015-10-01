@@ -1,0 +1,67 @@
+{
+  "name": "cross-env",
+  "version": "0.0.0-semanticallly-released.0",
+  "description": "Run commands that set environment variables across platforms",
+  "main": "src/index.js",
+  "bin": {
+    "cross-env": "bin/cross-env.js"
+  },
+  "scripts": {
+    "start": "npm run test:watch",
+    "prebuild": "trash dist && mkdir dist",
+    "build": "cd src && babel index.js -d ../dist && cd ..",
+    "commit": "git-cz",
+    "eslint": "eslint src/ -c other/src.eslintrc --ignore-path other/src.eslintignore && eslint src/*.test.js",
+    "check-coverage": "istanbul check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
+    "report-coverage": "cat ./coverage/lcov.info | codecov",
+    "test:watch": "mocha src/*.test.js -w --compilers js:babel/register",
+    "test": "istanbul cover -x *.test.js _mocha -- -R spec src/index.test.js --compilers js:babel/register",
+    "prepublish": "npm run build",
+    "postpublish": "publish-latest",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kentcdodds/cross-env.git"
+  },
+  "keywords": [
+    "environment variables",
+    "cross platform"
+  ],
+  "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kentcdodds/cross-env/issues"
+  },
+  "homepage": "https://github.com/kentcdodds/cross-env#readme",
+  "devDependencies": {
+    "babel": "5.8.23",
+    "chai": "3.3.0",
+    "codecov.io": "0.1.6",
+    "commitizen": "1.0.5",
+    "cz-conventional-changelog": "1.1.2",
+    "eslint": "1.5.1",
+    "eslint-config-kentcdodds": "4.0.1",
+    "eslint-plugin-mocha": "1.0.0",
+    "ghooks": "0.3.2",
+    "istanbul": "0.3.21",
+    "mocha": "2.3.3",
+    "proxyquire": "1.7.2",
+    "semantic-release": "4.3.5",
+    "sinon": "1.17.1",
+    "sinon-chai": "2.8.0",
+    "trash": "2.0.0",
+    "validate-commit-msg": "1.0.0"
+  },
+  "config": {
+    "ghooks": {
+      "commit-msg": "./node_modules/.bin/validate-commit-msg && npm run eslint && npm t && npm run check-coverage && echo 'pre-commit checks good 👍'"
+    }
+  },
+  "czConfig": {
+    "path": "node_modules/cz-conventional-changelog/"
+  },
+  "dependencies": {
+    "add-to-path": "1.1.2"
+  }
+}
