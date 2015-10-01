@@ -47,6 +47,7 @@
     "istanbul": "0.3.21",
     "mocha": "2.3.3",
     "proxyquire": "1.7.2",
+    "publish-latest": "1.1.2",
     "semantic-release": "4.3.5",
     "sinon": "1.17.1",
     "sinon-chai": "2.8.0",
