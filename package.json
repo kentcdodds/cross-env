@@ -15,7 +15,7 @@
     "check-coverage": "istanbul check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
     "test:watch": "mocha src/*.test.js -w --compilers js:babel/register",
-    "test": "istanbul cover -x *.test.js _mocha -- -R spec src/index.test.js --compilers js:babel/register",
+    "test": "istanbul cover -x *.test.js node_modules/mocha/bin/_mocha -- -R spec src/index.test.js --compilers js:babel/register",
     "prepublish": "npm run build",
     "postpublish": "publish-latest",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
@@ -39,6 +39,7 @@
     "chai": "3.3.0",
     "codecov.io": "0.1.6",
     "commitizen": "1.0.5",
+    "cross-spawn-async": "^2.0.0",
     "cz-conventional-changelog": "1.1.2",
     "eslint": "1.5.1",
     "eslint-config-kentcdodds": "4.0.1",

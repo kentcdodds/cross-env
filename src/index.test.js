@@ -7,17 +7,17 @@ chai.use(sinonChai);
 
 const {expect} = chai;
 const proxied = {
-  child_process: { // eslint-disable-line camelcase
-    spawn: sinon.spy(() => 'spawn-returned')
-  }
+  spawn: sinon.spy(() => 'spawn-returned')
 };
 
-const crossEnv = proxyquire('./index', proxied);
+const crossEnv = proxyquire('./index', {
+  'cross-spawn-async': proxied.spawn
+});
 
 describe(`cross-env`, () => {
 
   beforeEach(() => {
-    proxied.child_process.spawn.reset();
+    proxied.spawn.reset();
   });
 
   it(`should set environment variables and run the remaining command`, () => {
@@ -30,7 +30,7 @@ describe(`cross-env`, () => {
 
   it(`should do nothing given no command`, () => {
     crossEnv([]);
-    expect(proxied.child_process.spawn).to.have.not.been.called;
+    expect(proxied.spawn).to.have.not.been.called;
   });
 
   function testEnvSetting(...envSettings) {
@@ -42,8 +42,8 @@ describe(`cross-env`, () => {
     });
 
     expect(ret, 'returns what spawn returns').to.equal('spawn-returned');
-    expect(proxied.child_process.spawn).to.have.been.calledOnce;
-    expect(proxied.child_process.spawn).to.have.been.calledWith(
+    expect(proxied.spawn).to.have.been.calledOnce;
+    expect(proxied.spawn).to.have.been.calledWith(
       'echo', ['hello world'], {stdio: 'inherit', env}
     );
   }
