@@ -63,7 +63,7 @@
     }
   },
   "dependencies": {
-    "cross-spawn": "2.0.0",
+    "cross-spawn-async": "2.0.0",
     "manage-path": "2.0.0"
   }
 }
