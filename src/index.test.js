@@ -2,7 +2,7 @@ import chai from 'chai';
 import sinonChai from 'sinon-chai';
 import sinon from 'sinon';
 import proxyquire from 'proxyquire';
-import getPathVar from 'add-to-path/dist/get-path-var';
+import getPathVar from 'manage-path/dist/get-path-var';
 chai.use(sinonChai);
 
 const {expect} = chai;

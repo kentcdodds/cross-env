@@ -1,5 +1,5 @@
 import {spawn} from 'cross-spawn';
-import getPathVar from 'add-to-path/dist/get-path-var';
+import getPathVar from 'manage-path/dist/get-path-var';
 export default crossEnv;
 
 const envSetterRegex = /(\w+)=(\w+)/;
