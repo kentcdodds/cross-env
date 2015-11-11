@@ -1,6 +1,6 @@
 {
   "name": "cross-env",
-  "version": "0.0.0-semanticallly-released.0",
+  "version": "1.0.3",
   "description": "Run commands that set environment variables across platforms",
   "main": "src/index.js",
   "bin": {
