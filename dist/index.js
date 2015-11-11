@@ -10,7 +10,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var _child_process = require('child_process');
+var _crossSpawn = require('cross-spawn');
 
 var _addToPathDistGetPathVar = require('add-to-path/dist/get-path-var');
 
@@ -30,7 +30,7 @@ function crossEnv(args) {
   var env = _getCommandArgsAndEnvVars2[2];
 
   if (command) {
-    return (0, _child_process.spawn)(command, commandArgs, { stdio: 'inherit', env: env });
+    return (0, _crossSpawn.spawn)(command, commandArgs, { stdio: 'inherit', env: env });
   }
 }
 

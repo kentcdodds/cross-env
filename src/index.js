@@ -1,4 +1,4 @@
-import {spawn} from 'child_process';
+import {spawn} from 'cross-spawn';
 import getPathVar from 'add-to-path/dist/get-path-var';
 export default crossEnv;
 

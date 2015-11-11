@@ -1,6 +1,6 @@
 {
   "name": "cross-env",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Run commands that set environment variables across platforms",
   "main": "src/index.js",
   "bin": {
@@ -39,6 +39,7 @@
     "chai": "3.3.0",
     "codecov.io": "0.1.6",
     "commitizen": "1.0.5",
+    "cross-spawn": "2.0.0",
     "cz-conventional-changelog": "1.1.2",
     "eslint": "1.5.1",
     "eslint-config-kentcdodds": "4.0.1",
