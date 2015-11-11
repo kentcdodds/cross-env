@@ -1,6 +1,6 @@
 {
   "name": "cross-env",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Run commands that set environment variables across platforms",
   "main": "src/index.js",
   "bin": {
@@ -38,13 +38,12 @@
     "babel": "5.8.23",
     "chai": "3.3.0",
     "codecov.io": "0.1.6",
-    "commitizen": "1.0.5",
-    "cross-spawn": "2.0.0",
-    "cz-conventional-changelog": "1.1.2",
+    "commitizen": "2.4.4",
+    "cz-conventional-changelog": "1.1.4",
     "eslint": "1.5.1",
     "eslint-config-kentcdodds": "4.0.1",
     "eslint-plugin-mocha": "1.0.0",
-    "ghooks": "0.3.2",
+    "ghooks": "1.0.0",
     "istanbul": "0.3.21",
     "mocha": "2.3.3",
     "proxyquire": "1.7.2",
@@ -56,14 +55,15 @@
     "validate-commit-msg": "1.0.0"
   },
   "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog/"
+    },
     "ghooks": {
-      "commit-msg": "./node_modules/.bin/validate-commit-msg && npm run eslint && npm t && npm run check-coverage && echo 'pre-commit checks good 👍'"
+      "commit-msg": "validate-commit-msg && npm run eslint && npm t && npm run check-coverage && echo 'pre-commit checks good 👍'"
     }
   },
-  "czConfig": {
-    "path": "node_modules/cz-conventional-changelog/"
-  },
   "dependencies": {
-    "add-to-path": "1.1.2"
+    "cross-spawn": "2.0.0",
+    "manage-path": "2.0.0"
   }
 }

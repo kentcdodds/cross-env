@@ -12,9 +12,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var _crossSpawn = require('cross-spawn');
 
-var _addToPathDistGetPathVar = require('add-to-path/dist/get-path-var');
+var _managePathDistGetPathVar = require('manage-path/dist/get-path-var');
 
-var _addToPathDistGetPathVar2 = _interopRequireDefault(_addToPathDistGetPathVar);
+var _managePathDistGetPathVar2 = _interopRequireDefault(_managePathDistGetPathVar);
 
 exports['default'] = crossEnv;
 
@@ -36,7 +36,7 @@ function crossEnv(args) {
 
 function getCommandArgsAndEnvVars(args) {
   var command = undefined;
-  var envVars = _defineProperty({}, (0, _addToPathDistGetPathVar2['default'])(), process.env[(0, _addToPathDistGetPathVar2['default'])()]);
+  var envVars = _defineProperty({}, (0, _managePathDistGetPathVar2['default'])(), process.env[(0, _managePathDistGetPathVar2['default'])()]);
   var commandArgs = args.slice();
   while (commandArgs.length) {
     var shifted = commandArgs.shift();
