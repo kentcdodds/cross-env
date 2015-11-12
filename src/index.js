@@ -1,4 +1,4 @@
-import {spawn} from 'cross-spawn';
+import {spawn} from 'cross-spawn-async';
 import getPathVar from 'manage-path/dist/get-path-var';
 export default crossEnv;
 
@@ -24,6 +24,7 @@ function getCommandArgsAndEnvVars(args) {
       command = shifted;
       break;
     }
+    envVars.APPDATA = process.env.APPDATA;
   }
   return [command, commandArgs, envVars];
 }

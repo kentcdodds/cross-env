@@ -1,6 +1,6 @@
 {
   "name": "cross-env",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Run commands that set environment variables across platforms",
   "main": "src/index.js",
   "bin": {
@@ -15,7 +15,7 @@
     "check-coverage": "istanbul check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
     "test:watch": "mocha src/*.test.js -w --compilers js:babel/register",
-    "test": "istanbul cover -x *.test.js _mocha -- -R spec src/index.test.js --compilers js:babel/register",
+    "test": "istanbul cover -x *.test.js node_modules/mocha/bin/_mocha -- -R spec src/index.test.js --compilers js:babel/register",
     "prepublish": "npm run build",
     "postpublish": "publish-latest",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
@@ -63,7 +63,7 @@
     }
   },
   "dependencies": {
-    "cross-spawn": "2.0.0",
+    "cross-spawn-async": "2.0.0",
     "manage-path": "2.0.0"
   }
 }
