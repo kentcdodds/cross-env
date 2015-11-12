@@ -24,10 +24,7 @@ function getCommandArgsAndEnvVars(args) {
       command = shifted;
       break;
     }
-    /* istanbul ignore else  */
-    if (process.platform === 'win32') {
-      envVars.APPDATA = process.env.APPDATA;
-    }
+    envVars.APPDATA = process.env.APPDATA;
   }
   return [command, commandArgs, envVars];
 }

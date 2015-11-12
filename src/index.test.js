@@ -36,9 +36,7 @@ describe(`cross-env`, () => {
   function testEnvSetting(...envSettings) {
     const ret = crossEnv([...envSettings, 'echo', 'hello world']);
     const env = {[getPathVar()]: process.env[getPathVar()]};
-    if (process.platform === 'win32') {
-      env.APPDATA = process.env.APPDATA;
-    }
+    env.APPDATA = process.env.APPDATA;
     envSettings.forEach(setting => {
       const [prop, val] = setting.split('=');
       env[prop] = val;
