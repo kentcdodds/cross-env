@@ -1,5 +1,5 @@
 import {spawn} from 'cross-spawn-async';
-import getPathVar from 'manage-path/dist/get-path-var';
+import assign from 'lodash.assign';
 export default crossEnv;
 
 const envSetterRegex = /(\w+)=(\w+)/;
@@ -13,7 +13,7 @@ function crossEnv(args) {
 
 function getCommandArgsAndEnvVars(args) {
   let command;
-  const envVars = {[getPathVar()]: process.env[getPathVar()]};
+  const envVars = assign({}, process.env);
   const commandArgs = args.slice();
   while (commandArgs.length) {
     const shifted = commandArgs.shift();

@@ -8,13 +8,11 @@ var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = 
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 var _crossSpawnAsync = require('cross-spawn-async');
 
-var _managePathDistGetPathVar = require('manage-path/dist/get-path-var');
+var _lodashAssign = require('lodash.assign');
 
-var _managePathDistGetPathVar2 = _interopRequireDefault(_managePathDistGetPathVar);
+var _lodashAssign2 = _interopRequireDefault(_lodashAssign);
 
 exports['default'] = crossEnv;
 
@@ -36,7 +34,7 @@ function crossEnv(args) {
 
 function getCommandArgsAndEnvVars(args) {
   var command = undefined;
-  var envVars = _defineProperty({}, (0, _managePathDistGetPathVar2['default'])(), process.env[(0, _managePathDistGetPathVar2['default'])()]);
+  var envVars = (0, _lodashAssign2['default'])({}, process.env);
   var commandArgs = args.slice();
   while (commandArgs.length) {
     var shifted = commandArgs.shift();
