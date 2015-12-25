@@ -22,11 +22,40 @@ describe(`cross-env`, () => {
   });
 
   it(`should set environment variables and run the remaining command`, () => {
-    testEnvSetting('FOO_ENV=production');
+    testEnvSetting({
+      FOO_ENV: 'production'
+    }, 'FOO_ENV=production');
   });
 
   it(`should handle multiple env variables`, () => {
-    testEnvSetting('FOO_ENV=production', 'bar_env=dev');
+    testEnvSetting({
+      FOO_ENV: 'production',
+      BAR_ENV: 'dev'
+    }, 'FOO_ENV=production', 'BAR_ENV=dev');
+  });
+
+  it(`should handle special characters`, () => {
+    testEnvSetting({
+      FOO_ENV: './!?'
+    }, 'FOO_ENV=./!?');
+  });
+
+  it(`should handle single-quoted strings`, () => {
+    testEnvSetting({
+      FOO_ENV: 'bar env'
+    }, 'FOO_ENV=\'bar env\'');
+  });
+
+  it(`should handle double-quoted strings`, () => {
+    testEnvSetting({
+      FOO_ENV: 'bar env'
+    }, 'FOO_ENV="bar env"');
+  });
+
+  it(`should handle equality signs in quoted strings`, () => {
+    testEnvSetting({
+      FOO_ENV: 'foo=bar'
+    }, 'FOO_ENV="foo=bar"');
   });
 
   it(`should do nothing given no command`, () => {
@@ -34,19 +63,19 @@ describe(`cross-env`, () => {
     expect(proxied['cross-spawn-async'].spawn).to.have.not.been.called;
   });
 
-  function testEnvSetting(...envSettings) {
+  function testEnvSetting(expected, ...envSettings) {
     const ret = crossEnv([...envSettings, 'echo', 'hello world']);
     const env = {[getPathVar()]: process.env[getPathVar()]};
     env.APPDATA = process.env.APPDATA;
-    envSettings.forEach(setting => {
-      const [prop, val] = setting.split('=');
-      env[prop] = val;
-    });
+    assign(env, expected);
 
     expect(ret, 'returns what spawn returns').to.equal('spawn-returned');
     expect(proxied['cross-spawn-async'].spawn).to.have.been.calledOnce;
     expect(proxied['cross-spawn-async'].spawn).to.have.been.calledWith(
-      'echo', ['hello world'], {stdio: 'inherit', env: assign({}, process.env, env)}
+      'echo', ['hello world'], {
+        stdio: 'inherit',
+        env: assign({}, process.env, env)
+      }
     );
   }
 });

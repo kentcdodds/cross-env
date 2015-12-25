@@ -2,7 +2,7 @@ import {spawn} from 'cross-spawn-async';
 import assign from 'lodash.assign';
 export default crossEnv;
 
-const envSetterRegex = /(\w+)=(\w+)/;
+const envSetterRegex = /(\w+)=('(.+)'|"(.+)"|(.+))/;
 
 function crossEnv(args) {
   const [command, commandArgs, env] = getCommandArgsAndEnvVars(args);
@@ -19,7 +19,7 @@ function getCommandArgsAndEnvVars(args) {
     const shifted = commandArgs.shift();
     const match = envSetterRegex.exec(shifted);
     if (match) {
-      envVars[match[1]] = match[2];
+      envVars[match[1]] = match[3] || match[4] || match[5];
     } else {
       command = shifted;
       break;
