@@ -16,7 +16,7 @@ var _lodashAssign2 = _interopRequireDefault(_lodashAssign);
 
 exports['default'] = crossEnv;
 
-var envSetterRegex = /(\w+)=(\w+)/;
+var envSetterRegex = /(\w+)=('(.+)'|"(.+)"|(.+))/;
 
 function crossEnv(args) {
   var _getCommandArgsAndEnvVars = getCommandArgsAndEnvVars(args);
@@ -40,7 +40,7 @@ function getCommandArgsAndEnvVars(args) {
     var shifted = commandArgs.shift();
     var match = envSetterRegex.exec(shifted);
     if (match) {
-      envVars[match[1]] = match[2];
+      envVars[match[1]] = match[3] || match[4] || match[5];
     } else {
       command = shifted;
       break;
