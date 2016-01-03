@@ -7,7 +7,9 @@ const envSetterRegex = /(\w+)=('(.+)'|"(.+)"|(.+))/;
 function crossEnv(args) {
   const [command, commandArgs, env] = getCommandArgsAndEnvVars(args);
   if (command) {
-    return spawn(command, commandArgs, {stdio: 'inherit', env});
+    const proc = spawn(command, commandArgs, {stdio: 'inherit', env});
+    proc.on('exit', process.exit);
+    return proc;
   }
 }
 
