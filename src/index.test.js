@@ -7,9 +7,10 @@ import assign from 'lodash.assign';
 chai.use(sinonChai);
 
 const {expect} = chai;
+const spawned = {on: sinon.spy()};
 const proxied = {
   'cross-spawn-async': {
-    spawn: sinon.spy(() => 'spawn-returned')
+    spawn: sinon.spy(() => spawned)
   }
 };
 
@@ -19,6 +20,7 @@ describe(`cross-env`, () => {
 
   beforeEach(() => {
     proxied['cross-spawn-async'].spawn.reset();
+    spawned.on.reset();
   });
 
   it(`should set environment variables and run the remaining command`, () => {
@@ -69,7 +71,7 @@ describe(`cross-env`, () => {
     env.APPDATA = process.env.APPDATA;
     assign(env, expected);
 
-    expect(ret, 'returns what spawn returns').to.equal('spawn-returned');
+    expect(ret, 'returns what spawn returns').to.equal(spawned);
     expect(proxied['cross-spawn-async'].spawn).to.have.been.calledOnce;
     expect(proxied['cross-spawn-async'].spawn).to.have.been.calledWith(
       'echo', ['hello world'], {
@@ -77,5 +79,8 @@ describe(`cross-env`, () => {
         env: assign({}, process.env, env)
       }
     );
+
+    expect(spawned.on).to.have.been.calledOnce;
+    expect(spawned.on).to.have.been.calledWith('exit');
   }
 });
