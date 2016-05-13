@@ -5,6 +5,7 @@ Status:
 [![npm downloads](https://img.shields.io/npm/dm/cross-env.svg?style=flat-square)](http://npm-stat.com/charts.html?package=cross-env&from=2015-09-01)
 [![Build Status](https://img.shields.io/travis/kentcdodds/cross-env.svg?style=flat-square)](https://travis-ci.org/kentcdodds/cross-env)
 [![Code Coverage](https://img.shields.io/codecov/c/github/kentcdodds/cross-env.svg?style=flat-square)](https://codecov.io/github/kentcdodds/cross-env)
+[![Donate][donate-badge]][donate]
 
 This micro-lib allows you to provide a script which sets an environment using unix style and have it work on windows too
 
@@ -54,3 +55,6 @@ variable. These limitations are not a problem in that scenario (like in the exam
 ## LICENSE
 
 MIT
+
+[donate-badge]: https://img.shields.io/badge/$-support-green.svg?style=flat-square
+[donate]: http://kcd.im/donate
