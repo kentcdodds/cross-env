@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "npm run test:watch",
-    "prebuild": "trash dist && mkdir dist",
+    "prebuild": "rimraf dist && mkdir dist",
     "build": "cd src && babel index.js -d ../dist && cd ..",
     "commit": "git-cz",
     "eslint": "eslint src/ -c other/src.eslintrc --ignore-path other/src.eslintignore && eslint src/*.test.js",
@@ -47,10 +47,10 @@
     "manage-path": "2.0.0",
     "mocha": "2.3.3",
     "proxyquire": "1.7.2",
+    "rimraf": "^2.5.2",
     "semantic-release": "4.3.5",
     "sinon": "1.17.1",
     "sinon-chai": "2.8.0",
-    "trash": "2.0.0",
     "validate-commit-msg": "1.0.0"
   },
   "config": {
@@ -62,7 +62,7 @@
     }
   },
   "dependencies": {
-    "cross-spawn-async": "2.0.0",
+    "cross-spawn": "^3.0.1",
     "lodash.assign": "^3.2.0"
   }
 }
