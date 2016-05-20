@@ -1,4 +1,4 @@
-import {spawn} from 'cross-spawn-async';
+import {spawn} from 'cross-spawn';
 import assign from 'lodash.assign';
 export default crossEnv;
 

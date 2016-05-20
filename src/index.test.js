@@ -9,7 +9,7 @@ chai.use(sinonChai);
 const {expect} = chai;
 const spawned = {on: sinon.spy()};
 const proxied = {
-  'cross-spawn-async': {
+  'cross-spawn': {
     spawn: sinon.spy(() => spawned)
   }
 };
@@ -19,7 +19,7 @@ const crossEnv = proxyquire('./index', proxied);
 describe(`cross-env`, () => {
 
   beforeEach(() => {
-    proxied['cross-spawn-async'].spawn.reset();
+    proxied['cross-spawn'].spawn.reset();
     spawned.on.reset();
   });
 
@@ -62,7 +62,7 @@ describe(`cross-env`, () => {
 
   it(`should do nothing given no command`, () => {
     crossEnv([]);
-    expect(proxied['cross-spawn-async'].spawn).to.have.not.been.called;
+    expect(proxied['cross-spawn'].spawn).to.have.not.been.called;
   });
 
   function testEnvSetting(expected, ...envSettings) {
@@ -72,8 +72,8 @@ describe(`cross-env`, () => {
     assign(env, expected);
 
     expect(ret, 'returns what spawn returns').to.equal(spawned);
-    expect(proxied['cross-spawn-async'].spawn).to.have.been.calledOnce;
-    expect(proxied['cross-spawn-async'].spawn).to.have.been.calledWith(
+    expect(proxied['cross-spawn'].spawn).to.have.been.calledOnce;
+    expect(proxied['cross-spawn'].spawn).to.have.been.calledWith(
       'echo', ['hello world'], {
         stdio: 'inherit',
         env: assign({}, process.env, env)
