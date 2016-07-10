@@ -2,7 +2,6 @@ import chai from 'chai';
 import sinonChai from 'sinon-chai';
 import sinon from 'sinon';
 import proxyquire from 'proxyquire';
-import getPathVar from 'manage-path/dist/get-path-var';
 import assign from 'lodash.assign';
 chai.use(sinonChai);
 
@@ -59,7 +58,6 @@ describe(`cross-env`, () => {
       FOO_ENV: 'foo=bar'
     }, 'FOO_ENV="foo=bar"');
   });
-
   it(`should do nothing given no command`, () => {
     crossEnv([]);
     expect(proxied['cross-spawn'].spawn).to.have.not.been.called;
@@ -67,7 +65,7 @@ describe(`cross-env`, () => {
 
   function testEnvSetting(expected, ...envSettings) {
     const ret = crossEnv([...envSettings, 'echo', 'hello world']);
-    const env = {[getPathVar()]: process.env[getPathVar()]};
+    const env = {};
     env.APPDATA = process.env.APPDATA;
     assign(env, expected);
 
