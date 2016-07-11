@@ -2,5 +2,8 @@
   "extends": "kentcdodds",
   "env": {
     "browser": false
+  },
+  "rules": {
+    "complexity": [1, 6]
   }
 }
