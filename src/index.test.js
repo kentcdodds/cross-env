@@ -6,7 +6,7 @@ import assign from 'lodash.assign';
 chai.use(sinonChai);
 
 const {expect} = chai;
-const spawned = {on: sinon.spy()};
+const spawned = {on: sinon.spy(), kill: sinon.spy()};
 const proxied = {
   'cross-spawn': {
     spawn: sinon.spy(() => spawned)
@@ -58,9 +58,19 @@ describe(`cross-env`, () => {
       FOO_ENV: 'foo=bar'
     }, 'FOO_ENV="foo=bar"');
   });
+
   it(`should do nothing given no command`, () => {
     crossEnv([]);
     expect(proxied['cross-spawn'].spawn).to.have.not.been.called;
+  });
+
+  it(`should propage SIGTERM signal`, () => {
+    testEnvSetting({
+      FOO_ENV: 'foo=bar'
+    }, 'FOO_ENV="foo=bar"');
+
+    process.emit('SIGTERM');
+    expect(spawned.kill).to.have.been.calledWith('SIGTERM');
   });
 
   function testEnvSetting(expected, ...envSettings) {
