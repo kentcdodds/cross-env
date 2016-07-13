@@ -8,6 +8,7 @@ function crossEnv(args) {
   const [command, commandArgs, env] = getCommandArgsAndEnvVars(args);
   if (command) {
     const proc = spawn(command, commandArgs, {stdio: 'inherit', env});
+    process.on('SIGTERM', () => proc.kill('SIGTERM'));
     proc.on('exit', process.exit);
     return proc;
   }
