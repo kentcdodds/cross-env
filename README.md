@@ -53,6 +53,10 @@ And expect it to output `bar` you're going to be sad, for two reasons:
 The main use case for this package is to simply run another script which will (itself) respond to the environment
 variable. These limitations are not a problem in that scenario (like in the example).
 
+## Related Projects
+
+[`env-cmd`](https://github.com/toddbluhm/env-cmd) - Reads environment variables from a file instead
+
 ## LICENSE
 
 MIT
