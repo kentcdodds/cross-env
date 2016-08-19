@@ -10,6 +10,9 @@ const spawned = {on: sinon.spy(), kill: sinon.spy()};
 const proxied = {
   'cross-spawn': {
     spawn: sinon.spy(() => spawned)
+  },
+  path: {
+    delimiter: '@'
   }
 };
 
@@ -58,7 +61,16 @@ describe(`cross-env`, () => {
       FOO_ENV: 'foo=bar'
     }, 'FOO_ENV="foo=bar"');
   });
-
+  it('should change delimiter to match platform\'s if multi-value flag is set', () => {
+    testEnvSetting({
+      FOO_ENV: 'foo@bar'
+    }, '-m', 'FOO_ENV=foo:bar');
+  });
+  it('should not change delimiter if multi-value flag is not set', () => {
+    testEnvSetting({
+      FOO_ENV: 'foo:bar'
+    }, 'FOO_ENV=foo:bar');
+  });
   it(`should do nothing given no command`, () => {
     crossEnv([]);
     expect(proxied['cross-spawn'].spawn).to.have.not.been.called;
