@@ -14,7 +14,7 @@ function crossEnv(args) {
   }
 }
 
-function getCommandArgsAndEnvVars(args) {
+function getCommandArgsAndEnvVars(args) { // eslint-disable-line
   let command;
   const envVars = assign({}, process.env);
   const commandArgs = args.slice();
@@ -27,7 +27,9 @@ function getCommandArgsAndEnvVars(args) {
       command = shifted;
       break;
     }
-    envVars.APPDATA = process.env.APPDATA;
+    if (process.env.APPDATA) {
+      envVars.APPDATA = process.env.APPDATA;
+    }
   }
   return [command, commandArgs, envVars];
 }

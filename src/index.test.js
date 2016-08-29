@@ -28,11 +28,19 @@ describe(`cross-env`, () => {
     }, 'FOO_ENV=production');
   });
 
+  it(`should APPDATA be undefined and not string`, () => {
+    testEnvSetting({
+      FOO_ENV: 'production',
+      APPDATA: 2
+    }, 'FOO_ENV=production');
+  });
+
   it(`should handle multiple env variables`, () => {
     testEnvSetting({
       FOO_ENV: 'production',
-      BAR_ENV: 'dev'
-    }, 'FOO_ENV=production', 'BAR_ENV=dev');
+      BAR_ENV: 'dev',
+      APPDATA: '0'
+    }, 'FOO_ENV=production', 'BAR_ENV=dev', 'APPDATA=0');
   });
 
   it(`should handle special characters`, () => {
@@ -74,11 +82,18 @@ describe(`cross-env`, () => {
   });
 
   function testEnvSetting(expected, ...envSettings) {
+    if (expected.APPDATA === 2) { // kill the APPDATA to test both is undefined
+      delete process.env.APPDATA;
+      delete expected.APPDATA;
+    } else if (!process.env.APPDATA && expected.APPDATA === '0') { // set APPDATA and test it
+      process.env.APPDATA = '0';
+    }
     const ret = crossEnv([...envSettings, 'echo', 'hello world']);
     const env = {};
-    env.APPDATA = process.env.APPDATA;
+    if (process.env.APPDATA) {
+      env.APPDATA = process.env.APPDATA;
+    }
     assign(env, expected);
-
     expect(ret, 'returns what spawn returns').to.equal(spawned);
     expect(proxied['cross-spawn'].spawn).to.have.been.calledOnce;
     expect(proxied['cross-spawn'].spawn).to.have.been.calledWith(
