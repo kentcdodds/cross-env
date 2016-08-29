@@ -38,8 +38,9 @@ describe(`cross-env`, () => {
   it(`should handle multiple env variables`, () => {
     testEnvSetting({
       FOO_ENV: 'production',
-      BAR_ENV: 'dev'
-    }, 'FOO_ENV=production', 'BAR_ENV=dev');
+      BAR_ENV: 'dev',
+      APPDATA: '0'
+    }, 'FOO_ENV=production', 'BAR_ENV=dev', 'APPDATA=0');
   });
 
   it(`should handle special characters`, () => {
@@ -81,9 +82,11 @@ describe(`cross-env`, () => {
   });
 
   function testEnvSetting(expected, ...envSettings) {
-    if (expected.APPDATA === 2) {
+    if (expected.APPDATA === 2) { // kill the APPDATA to test both is undefined
       delete process.env.APPDATA;
       delete expected.APPDATA;
+    } else if (!process.env.APPDATA && expected.APPDATA === '0') { // set APPDATA and test it
+      process.env.APPDATA = '0';
     }
     const ret = crossEnv([...envSettings, 'echo', 'hello world']);
     const env = {};
