@@ -61,7 +61,6 @@
     }
   },
   "dependencies": {
-    "cross-spawn": "^3.0.1",
-    "lodash.assign": "^3.2.0"
+    "cross-spawn": "^3.0.1"
   }
 }

@@ -1,5 +1,4 @@
 import {spawn} from 'cross-spawn';
-import assign from 'lodash.assign';
 export default crossEnv;
 
 const envSetterRegex = /(\w+)=('(.+)'|"(.+)"|(.+))/;
@@ -16,7 +15,7 @@ function crossEnv(args) {
 
 function getCommandArgsAndEnvVars(args) { // eslint-disable-line
   let command;
-  const envVars = assign({}, process.env);
+  const envVars = Object.assign({}, process.env);
   const commandArgs = args.slice();
   while (commandArgs.length) {
     const shifted = commandArgs.shift();
