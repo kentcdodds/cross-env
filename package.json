@@ -9,7 +9,7 @@
   "scripts": {
     "start": "npm run test:watch",
     "prebuild": "rimraf dist && mkdir dist",
-    "build": "cd src && babel index.js -d ../dist && cd ..",
+    "build": "babel src --ignore '*.test.js' --out-dir dist",
     "commit": "git-cz",
     "eslint": "eslint src/ -c other/src.eslintrc --ignore-path other/src.eslintignore && eslint src/*.test.js",
     "check-coverage": "istanbul check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
