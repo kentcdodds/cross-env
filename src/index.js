@@ -17,7 +17,7 @@ function crossEnv(args) {
 function getCommandArgsAndEnvVars(args) { // eslint-disable-line
   let command;
   const envVars = Object.assign({}, process.env);
-  const commandArgs = args.slice().map(commandConvert);
+  const commandArgs = args.map(commandConvert);
   while (commandArgs.length) {
     const shifted = commandArgs.shift();
     const match = envSetterRegex.exec(shifted);
