@@ -1,4 +1,5 @@
 import {spawn} from 'cross-spawn';
+import commandConvert from './command';
 export default crossEnv;
 
 const envSetterRegex = /(\w+)=('(.+)'|"(.+)"|(.+))/;
@@ -16,7 +17,7 @@ function crossEnv(args) {
 function getCommandArgsAndEnvVars(args) { // eslint-disable-line
   let command;
   const envVars = Object.assign({}, process.env);
-  const commandArgs = args.slice();
+  const commandArgs = args.slice().map(commandConvert);
   while (commandArgs.length) {
     const shifted = commandArgs.shift();
     const match = envSetterRegex.exec(shifted);

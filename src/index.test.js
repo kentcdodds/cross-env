@@ -2,7 +2,6 @@ import chai from 'chai';
 import sinonChai from 'sinon-chai';
 import sinon from 'sinon';
 import proxyquire from 'proxyquire';
-import assign from 'lodash.assign';
 chai.use(sinonChai);
 
 const {expect} = chai;
@@ -93,13 +92,13 @@ describe(`cross-env`, () => {
     if (process.env.APPDATA) {
       env.APPDATA = process.env.APPDATA;
     }
-    assign(env, expected);
+    Object.assign(env, expected);
     expect(ret, 'returns what spawn returns').to.equal(spawned);
     expect(proxied['cross-spawn'].spawn).to.have.been.calledOnce;
     expect(proxied['cross-spawn'].spawn).to.have.been.calledWith(
       'echo', ['hello world'], {
         stdio: 'inherit',
-        env: assign({}, process.env, env)
+        env: Object.assign({}, process.env, env)
       }
     );
 
