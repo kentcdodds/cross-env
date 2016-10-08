@@ -71,13 +71,19 @@ describe(`cross-env`, () => {
     expect(proxied['cross-spawn'].spawn).to.have.not.been.called;
   });
 
-  it(`should propage SIGTERM signal`, () => {
+  it(`should propagate kill signals`, () => {
     testEnvSetting({
       FOO_ENV: 'foo=bar'
     }, 'FOO_ENV="foo=bar"');
 
     process.emit('SIGTERM');
+    process.emit('SIGINT');
+    process.emit('SIGHUP');
+    process.emit('SIGBREAK');
     expect(spawned.kill).to.have.been.calledWith('SIGTERM');
+    expect(spawned.kill).to.have.been.calledWith('SIGINT');
+    expect(spawned.kill).to.have.been.calledWith('SIGHUP');
+    expect(spawned.kill).to.have.been.calledWith('SIGBREAK');
   });
 
   function testEnvSetting(expected, ...envSettings) {
