@@ -9,6 +9,9 @@ function crossEnv(args) {
   if (command) {
     const proc = spawn(command, commandArgs, {stdio: 'inherit', env});
     process.on('SIGTERM', () => proc.kill('SIGTERM'));
+    process.on('SIGINT', () => proc.kill('SIGINT'));
+    process.on('SIGBREAK', () => proc.kill('SIGBREAK'));
+    process.on('SIGHUP', () => proc.kill('SIGHUP'));
     proc.on('exit', process.exit);
     return proc;
   }
