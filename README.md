@@ -61,7 +61,10 @@ variable. These limitations are not a problem in that scenario (like in the exam
 
 MIT
 
-[donate-badge]: https://img.shields.io/badge/$-support-green.svg?style=flat-square
-[donate]: http://kcd.im/donate
-[dependencyci-badge]: https://dependencyci.com/github/kentcdodds/cross-env/badge?style=flat-square
-[dependencyci]: https://dependencyci.com/github/kentcdodds/cross-env
+ https://img.shields.io/badge/$-support-green.svg?style=flat-square
+ 
+ http://kcd.im/donate
+ 
+ https://dependencyci.com/github/kentcdodds/cross-env/badge?style=flat-square
+ 
+ https://dependencyci.com/github/kentcdodds/cross-env
