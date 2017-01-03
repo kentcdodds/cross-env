@@ -10,6 +10,9 @@ Status:
 
 This micro-lib allows you to provide a script which sets an environment using unix style and have it work on windows too
 
+## Prerequisites
+-   [Node.js](https://nodejs.org/) version 4.0 or greater.
+
 ## Usage
 
 I use this in my npm scripts:

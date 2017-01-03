@@ -6,6 +6,9 @@
   "bin": {
     "cross-env": "bin/cross-env.js"
   },
+  "engines": {
+    "node" : ">=4.0"
+  },
   "scripts": {
     "start": "npm run test:watch",
     "prebuild": "rimraf dist && mkdir dist",
