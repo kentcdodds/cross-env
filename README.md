@@ -36,9 +36,11 @@ The `NODE_ENV` environment variable will be set by `cross-env`
 
 ## Why?
 
-Windows will choke when you set environment variables with `NODE_ENV=production` like that. This makes it so you can
-have a single command without worrying about setting the environment variable properly for the platform. Just set it
-like you would if it's running on a unix system, and `cross-env` will take care of setting it properly.
+Most Windows command prompts will choke when you set environment variables with `NODE_ENV=production` like that. (The exception is [Bash on Windows](https://msdn.microsoft.com/en-us/commandline/wsl/about), which uses native Bash.)
+
+`cross-env` makes it so you can have a single command without worrying about setting the environment 
+variable properly for the platform. Just set it like you would if it's running on a unix system, and
+`cross-env` will take care of setting it properly.
 
 ## Known limitations
 
