@@ -33,6 +33,19 @@ webpack --config build/webpack.config.js
 
 The `NODE_ENV` environment variable will be set by `cross-env`
 
+You can also split a command into several ones, or separate the environment variables declaration from the actual command execution. You can do it this way:
+
+```json
+{
+  "scripts": {
+    "parentScript": "cross-env GREET='Joe' npm run childScript",
+    "childScript": "echo Hello $GEET"
+    }
+}
+```
+
+Where `childScript` holds the actual command to execute and `parentScript` sets the environment variables to use. 
+Then instead of run the childScript you run the parent. This is quite useful for launching the same command with different env variables or when the environment variables are too long to have everything in one line.
 
 ## Why?
 
@@ -57,6 +70,8 @@ And expect it to output `bar` you're going to be sad, for two reasons:
 
 The main use case for this package is to simply run another script which will (itself) respond to the environment
 variable. These limitations are not a problem in that scenario (like in the example).
+
+If you want to modularize your npm scripts take a look at the proposed solution on the usage section.
 
 ## Related Projects
 
