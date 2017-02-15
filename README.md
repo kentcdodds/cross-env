@@ -47,7 +47,7 @@ You can also split a command into several ones, or separate the environment vari
 Where `childScript` holds the actual command to execute and `parentScript` sets the environment variables to use.
 Then instead of run the childScript you run the parent. This is quite useful for launching the same command with different env variables or when the environment variables are too long to have everything in one line.
 
-If you need to translate environment variables before setting them, use [`cross-var`])(https://github.com/elijahmanor/cross-var).  Example:
+If you need to translate environment variables before setting them, use [`cross-var`](https://github.com/elijahmanor/cross-var).  Example:
 
 ```json
 {
