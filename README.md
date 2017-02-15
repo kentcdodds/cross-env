@@ -39,19 +39,29 @@ You can also split a command into several ones, or separate the environment vari
 {
   "scripts": {
     "parentScript": "cross-env GREET='Joe' npm run childScript",
-    "childScript": "echo Hello $GEET"
+    "childScript": "echo Hello $GREET"
     }
 }
 ```
 
-Where `childScript` holds the actual command to execute and `parentScript` sets the environment variables to use. 
+Where `childScript` holds the actual command to execute and `parentScript` sets the environment variables to use.
 Then instead of run the childScript you run the parent. This is quite useful for launching the same command with different env variables or when the environment variables are too long to have everything in one line.
+
+If you need to translate environment variables before setting them, use [`cross-var`])(https://github.com/elijahmanor/cross-var).  Example:
+
+```json
+{
+  "scripts": {
+    "parentScript": "cross-var cross-env NODE_PATH=$NODE_PATH:./app/scripts foo"
+    }
+}
+```
 
 ## Why?
 
 Most Windows command prompts will choke when you set environment variables with `NODE_ENV=production` like that. (The exception is [Bash on Windows](https://msdn.microsoft.com/en-us/commandline/wsl/about), which uses native Bash.)
 
-`cross-env` makes it so you can have a single command without worrying about setting the environment 
+`cross-env` makes it so you can have a single command without worrying about setting the environment
 variable properly for the platform. Just set it like you would if it's running on a unix system, and
 `cross-env` will take care of setting it properly.
 
@@ -75,7 +85,8 @@ If you want to modularize your npm scripts take a look at the proposed solution 
 
 ## Related Projects
 
-[`env-cmd`](https://github.com/toddbluhm/env-cmd) - Reads environment variables from a file instead
+* [`cross-var`](https://github.com/elijahmanor/cross-var) - Translates environment variables
+* [`env-cmd`](https://github.com/toddbluhm/env-cmd) - Reads environment variables from a file instead
 
 ## LICENSE
 
