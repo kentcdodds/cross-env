@@ -27,6 +27,13 @@ describe(`cross-env`, () => {
     }, 'FOO_ENV=production');
   });
 
+  it(`should append to environment variables and run the remaining command`, () => {
+    process.env.FOO_ENV = 'production';
+    testEnvSetting({
+      FOO_ENV: 'production:test'
+    }, 'FOO_ENV+=:test');
+  });
+
   it(`should APPDATA be undefined and not string`, () => {
     testEnvSetting({
       FOO_ENV: 'production',
