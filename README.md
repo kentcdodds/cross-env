@@ -4,6 +4,7 @@ Status:
 [![npm version](https://img.shields.io/npm/v/cross-env.svg?style=flat-square)](https://www.npmjs.org/package/cross-env)
 [![npm downloads](https://img.shields.io/npm/dm/cross-env.svg?style=flat-square)](http://npm-stat.com/charts.html?package=cross-env&from=2015-09-01)
 [![Build Status](https://img.shields.io/travis/kentcdodds/cross-env.svg?style=flat-square)](https://travis-ci.org/kentcdodds/cross-env)
+[![Windows Build](https://img.shields.io/appveyor/ci/kentcdodds/cross-env.svg?style=flat-square)](https://ci.appveyor.com/project/kentcdodds/cross-env)
 [![Code Coverage](https://img.shields.io/codecov/c/github/kentcdodds/cross-env.svg?style=flat-square)](https://codecov.io/github/kentcdodds/cross-env)
 [![Dependencies][dependencyci-badge]][dependencyci]
 [![Donate][donate-badge]][donate]
