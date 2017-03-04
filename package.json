@@ -4,7 +4,7 @@
   "description": "Run scripts that set and use environment variables across platforms",
   "main": "dist/index.js",
   "bin": {
-    "cross-env": "bin/cross-env.js"
+    "cross-env": "dist/bin/cross-env.js"
   },
   "engines": {
     "node": ">=4.0"
