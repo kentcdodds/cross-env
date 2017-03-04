@@ -1,50 +1,24 @@
-import chai from 'chai';
-import sinonChai from 'sinon-chai';
-import proxyquire from 'proxyquire';
-chai.use(sinonChai);
+import isWindowsMock from 'is-windows'
+import commandConvert from './command'
 
-const {expect} = chai;
+beforeEach(() => {
+  isWindowsMock.__mock.reset()
+})
 
-describe(`commandConvert`, () => {
-  const platform = process.platform;
-  let commandConvert;
+test(`converts unix-style env variable usage for windows`, () => {
+  isWindowsMock.__mock.returnValue = true
+  expect(commandConvert('$test')).toBe('%test%')
+})
 
-  describe(`on Windows`, () =>{
-    beforeEach(() =>{
-      Object.defineProperty(process, 'platform', {value: 'win32'});
-      commandConvert = proxyquire('./command', {});
-    });
+test(`leaves command unchanged when not a variable`, () => {
+  expect(commandConvert('test')).toBe('test')
+})
+test(`converts windows-style env variable usage for linux`, () => {
+  isWindowsMock.__mock.returnValue = false
+  expect(commandConvert('%test%')).toBe('$test')
+})
 
-    afterEach(() =>{
-      Object.defineProperty(process, 'platform', {value: platform});
-    });
-
-    it(`should convert unix-style env variable usage for windows`, () =>{
-      expect(commandConvert('$test')).to.equal('%test%');
-    });
-
-    it(`should leave command unchanged when not a variable`, () =>{
-      expect(commandConvert('test')).to.equal('test');
-    });
-  });
-
-  describe(`on Unix-based`, () =>{
-    beforeEach(() => {
-      Object.defineProperty(process, 'platform', {value: 'linux'});
-      commandConvert = proxyquire('./command', {});
-    });
-
-    afterEach(() =>{
-      Object.defineProperty(process, 'platform', {value: platform});
-    });
-
-    it(`should convert windows-style env variable usage for linux`, () =>{
-      expect(commandConvert('%test%')).to.equal('$test');
-    });
-
-    it(`should leave variable unchanged when using correct operating system`, () =>{
-      expect(commandConvert('$test')).to.equal('$test');
-    });
-  });
-
-});
+test(`leaves variable unchanged when using correct operating system`, () => {
+  isWindowsMock.__mock.returnValue = true
+  expect(commandConvert('$test')).toBe('$test')
+})

@@ -1,114 +1,90 @@
-import chai from 'chai';
-import sinonChai from 'sinon-chai';
-import sinon from 'sinon';
-import proxyquire from 'proxyquire';
-chai.use(sinonChai);
+import crossSpawnMock from 'cross-spawn'
+import crossEnv from '.'
 
-const {expect} = chai;
-const spawned = {on: sinon.spy(), kill: sinon.spy()};
-const proxied = {
-  'cross-spawn': {
-    spawn: sinon.spy(() => spawned)
-  }
-};
+beforeEach(() => {
+  crossSpawnMock.__mock.reset()
+})
 
-const crossEnv = proxyquire('./index', proxied);
+it(`should set environment variables and run the remaining command`, () => {
+  testEnvSetting({FOO_ENV: 'production'}, 'FOO_ENV=production')
+})
 
-describe(`cross-env`, () => {
+it(`should APPDATA be undefined and not string`, () => {
+  testEnvSetting({FOO_ENV: 'production', APPDATA: 2}, 'FOO_ENV=production')
+})
 
-  beforeEach(() => {
-    proxied['cross-spawn'].spawn.reset();
-    spawned.on.reset();
-  });
-
-  it(`should set environment variables and run the remaining command`, () => {
-    testEnvSetting({
-      FOO_ENV: 'production'
-    }, 'FOO_ENV=production');
-  });
-
-  it(`should APPDATA be undefined and not string`, () => {
-    testEnvSetting({
-      FOO_ENV: 'production',
-      APPDATA: 2
-    }, 'FOO_ENV=production');
-  });
-
-  it(`should handle multiple env variables`, () => {
-    testEnvSetting({
+it(`should handle multiple env variables`, () => {
+  testEnvSetting(
+    {
       FOO_ENV: 'production',
       BAR_ENV: 'dev',
-      APPDATA: '0'
-    }, 'FOO_ENV=production', 'BAR_ENV=dev', 'APPDATA=0');
-  });
+      APPDATA: '0',
+    },
+    'FOO_ENV=production',
+    'BAR_ENV=dev',
+    'APPDATA=0',
+  )
+})
 
-  it(`should handle special characters`, () => {
-    testEnvSetting({
-      FOO_ENV: './!?'
-    }, 'FOO_ENV=./!?');
-  });
+it(`should handle special characters`, () => {
+  testEnvSetting({FOO_ENV: './!?'}, 'FOO_ENV=./!?')
+})
 
-  it(`should handle single-quoted strings`, () => {
-    testEnvSetting({
-      FOO_ENV: 'bar env'
-    }, 'FOO_ENV=\'bar env\'');
-  });
+it(`should handle single-quoted strings`, () => {
+  testEnvSetting({FOO_ENV: 'bar env'}, "FOO_ENV='bar env'")
+})
 
-  it(`should handle double-quoted strings`, () => {
-    testEnvSetting({
-      FOO_ENV: 'bar env'
-    }, 'FOO_ENV="bar env"');
-  });
+it(`should handle double-quoted strings`, () => {
+  testEnvSetting({FOO_ENV: 'bar env'}, 'FOO_ENV="bar env"')
+})
 
-  it(`should handle equality signs in quoted strings`, () => {
-    testEnvSetting({
-      FOO_ENV: 'foo=bar'
-    }, 'FOO_ENV="foo=bar"');
-  });
+it(`should handle equality signs in quoted strings`, () => {
+  testEnvSetting({FOO_ENV: 'foo=bar'}, 'FOO_ENV="foo=bar"')
+})
 
-  it(`should do nothing given no command`, () => {
-    crossEnv([]);
-    expect(proxied['cross-spawn'].spawn).to.have.not.been.called;
-  });
+it(`should do nothing given no command`, () => {
+  crossEnv([])
+  expect(crossSpawnMock.spawn).toHaveBeenCalledTimes(0)
+})
 
-  it(`should propagate kill signals`, () => {
-    testEnvSetting({
-      FOO_ENV: 'foo=bar'
-    }, 'FOO_ENV="foo=bar"');
+it(`should propagate kill signals`, () => {
+  testEnvSetting({FOO_ENV: 'foo=bar'}, 'FOO_ENV="foo=bar"')
 
-    process.emit('SIGTERM');
-    process.emit('SIGINT');
-    process.emit('SIGHUP');
-    process.emit('SIGBREAK');
-    expect(spawned.kill).to.have.been.calledWith('SIGTERM');
-    expect(spawned.kill).to.have.been.calledWith('SIGINT');
-    expect(spawned.kill).to.have.been.calledWith('SIGHUP');
-    expect(spawned.kill).to.have.been.calledWith('SIGBREAK');
-  });
+  process.emit('SIGTERM')
+  process.emit('SIGINT')
+  process.emit('SIGHUP')
+  process.emit('SIGBREAK')
+  expect(crossSpawnMock.__mock.spawned.kill).toHaveBeenCalledWith('SIGTERM')
+  expect(crossSpawnMock.__mock.spawned.kill).toHaveBeenCalledWith('SIGINT')
+  expect(crossSpawnMock.__mock.spawned.kill).toHaveBeenCalledWith('SIGHUP')
+  expect(crossSpawnMock.__mock.spawned.kill).toHaveBeenCalledWith('SIGBREAK')
+})
 
-  function testEnvSetting(expected, ...envSettings) {
-    if (expected.APPDATA === 2) { // kill the APPDATA to test both is undefined
-      delete process.env.APPDATA;
-      delete expected.APPDATA;
-    } else if (!process.env.APPDATA && expected.APPDATA === '0') { // set APPDATA and test it
-      process.env.APPDATA = '0';
-    }
-    const ret = crossEnv([...envSettings, 'echo', 'hello world']);
-    const env = {};
-    if (process.env.APPDATA) {
-      env.APPDATA = process.env.APPDATA;
-    }
-    Object.assign(env, expected);
-    expect(ret, 'returns what spawn returns').to.equal(spawned);
-    expect(proxied['cross-spawn'].spawn).to.have.been.calledOnce;
-    expect(proxied['cross-spawn'].spawn).to.have.been.calledWith(
-      'echo', ['hello world'], {
-        stdio: 'inherit',
-        env: Object.assign({}, process.env, env)
-      }
-    );
-
-    expect(spawned.on).to.have.been.calledOnce;
-    expect(spawned.on).to.have.been.calledWith('exit');
+function testEnvSetting(expected, ...envSettings) {
+  if (expected.APPDATA === 2) {
+    // kill the APPDATA to test both is undefined
+    delete process.env.APPDATA
+    delete expected.APPDATA
+  } else if (!process.env.APPDATA && expected.APPDATA === '0') {
+    // set APPDATA and test it
+    process.env.APPDATA = '0'
   }
-});
+  const ret = crossEnv([...envSettings, 'echo', 'hello world'])
+  const env = {}
+  if (process.env.APPDATA) {
+    env.APPDATA = process.env.APPDATA
+  }
+  Object.assign(env, expected)
+  expect(ret, 'returns what spawn returns').toBe(crossSpawnMock.__mock.spawned)
+  expect(crossSpawnMock.spawn).toHaveBeenCalledTimes(1)
+  expect(crossSpawnMock.spawn).toHaveBeenCalledWith('echo', ['hello world'], {
+    stdio: 'inherit',
+    env: Object.assign({}, process.env, env),
+  })
+
+  expect(crossSpawnMock.__mock.spawned.on).toHaveBeenCalledTimes(1)
+  expect(crossSpawnMock.__mock.spawned.on).toHaveBeenCalledWith(
+    'exit',
+    expect.any(Function),
+  )
+}
