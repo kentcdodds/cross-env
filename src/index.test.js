@@ -1,19 +1,19 @@
-import crossSpawnMock from 'cross-spawn'
+import spawnCommand from 'spawn-command'
 import crossEnv from '.'
 
 beforeEach(() => {
-  crossSpawnMock.__mock.reset()
+  spawnCommand.__mock.reset()
 })
 
-it(`should set environment variables and run the remaining command`, () => {
+test(`sets environment variables and run the remaining command`, () => {
   testEnvSetting({FOO_ENV: 'production'}, 'FOO_ENV=production')
 })
 
-it(`should APPDATA be undefined and not string`, () => {
+test(`APPDATAs be undefined and not string`, () => {
   testEnvSetting({FOO_ENV: 'production', APPDATA: 2}, 'FOO_ENV=production')
 })
 
-it(`should handle multiple env variables`, () => {
+test(`handles multiple env variables`, () => {
   testEnvSetting(
     {
       FOO_ENV: 'production',
@@ -26,38 +26,47 @@ it(`should handle multiple env variables`, () => {
   )
 })
 
-it(`should handle special characters`, () => {
+test(`handles special characters`, () => {
   testEnvSetting({FOO_ENV: './!?'}, 'FOO_ENV=./!?')
 })
 
-it(`should handle single-quoted strings`, () => {
+test(`handles single-quoted strings`, () => {
   testEnvSetting({FOO_ENV: 'bar env'}, "FOO_ENV='bar env'")
 })
 
-it(`should handle double-quoted strings`, () => {
+test(`handles double-quoted strings`, () => {
   testEnvSetting({FOO_ENV: 'bar env'}, 'FOO_ENV="bar env"')
 })
 
-it(`should handle equality signs in quoted strings`, () => {
+test(`handles equality signs in quoted strings`, () => {
   testEnvSetting({FOO_ENV: 'foo=bar'}, 'FOO_ENV="foo=bar"')
 })
 
-it(`should do nothing given no command`, () => {
+test(`does nothing given no command`, () => {
   crossEnv([])
-  expect(crossSpawnMock.spawn).toHaveBeenCalledTimes(0)
+  expect(spawnCommand).toHaveBeenCalledTimes(0)
 })
 
-it(`should propagate kill signals`, () => {
+test(`propagates kill signals`, () => {
   testEnvSetting({FOO_ENV: 'foo=bar'}, 'FOO_ENV="foo=bar"')
 
   process.emit('SIGTERM')
   process.emit('SIGINT')
   process.emit('SIGHUP')
   process.emit('SIGBREAK')
-  expect(crossSpawnMock.__mock.spawned.kill).toHaveBeenCalledWith('SIGTERM')
-  expect(crossSpawnMock.__mock.spawned.kill).toHaveBeenCalledWith('SIGINT')
-  expect(crossSpawnMock.__mock.spawned.kill).toHaveBeenCalledWith('SIGHUP')
-  expect(crossSpawnMock.__mock.spawned.kill).toHaveBeenCalledWith('SIGBREAK')
+  expect(spawnCommand.__mock.spawned.kill).toHaveBeenCalledWith('SIGTERM')
+  expect(spawnCommand.__mock.spawned.kill).toHaveBeenCalledWith('SIGINT')
+  expect(spawnCommand.__mock.spawned.kill).toHaveBeenCalledWith('SIGHUP')
+  expect(spawnCommand.__mock.spawned.kill).toHaveBeenCalledWith('SIGBREAK')
+})
+
+test('can spawn a group of scripts in a string', () => {
+  crossEnv(['FOO_ENV=baz', '"echo $baz && echo $baz"'])
+  expect(spawnCommand).toHaveBeenCalledTimes(1)
+  expect(spawnCommand).toHaveBeenCalledWith('"echo $baz && echo $baz" ', {
+    stdio: 'inherit',
+    env: expect.any(Object),
+  })
 })
 
 function testEnvSetting(expected, ...envSettings) {
@@ -75,15 +84,15 @@ function testEnvSetting(expected, ...envSettings) {
     env.APPDATA = process.env.APPDATA
   }
   Object.assign(env, expected)
-  expect(ret, 'returns what spawn returns').toBe(crossSpawnMock.__mock.spawned)
-  expect(crossSpawnMock.spawn).toHaveBeenCalledTimes(1)
-  expect(crossSpawnMock.spawn).toHaveBeenCalledWith('echo', ['hello world'], {
+  expect(ret, 'returns what spawn returns').toBe(spawnCommand.__mock.spawned)
+  expect(spawnCommand).toHaveBeenCalledTimes(1)
+  expect(spawnCommand).toHaveBeenCalledWith('echo hello world', {
     stdio: 'inherit',
     env: Object.assign({}, process.env, env),
   })
 
-  expect(crossSpawnMock.__mock.spawned.on).toHaveBeenCalledTimes(1)
-  expect(crossSpawnMock.__mock.spawned.on).toHaveBeenCalledWith(
+  expect(spawnCommand.__mock.spawned.on).toHaveBeenCalledTimes(1)
+  expect(spawnCommand.__mock.spawned.on).toHaveBeenCalledWith(
     'exit',
     expect.any(Function),
   )

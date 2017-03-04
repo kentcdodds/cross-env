@@ -60,7 +60,7 @@ I use this in my npm scripts:
 }
 ```
 
-Ultimately, the command that is executed (using `cross-spawn`) is:
+Ultimately, the command that is executed (using `spawn-command`) is:
 
 ```
 webpack --config build/webpack.config.js
@@ -85,6 +85,19 @@ the environment variables to use. Then instead of run the childScript you run
 the parent. This is quite useful for launching the same command with different
 env variables or when the environment variables are too long to have everything
 in one line.
+
+## Gotchas
+
+If you want to have the environment variable apply to several commands in series
+then you will need to wrap those in quotes in your script. For example:
+
+```json
+{
+  "scripts": {
+    "greet": "cross-env GREETING=Hi NAME=Joe \"echo $GREETING && echo $NAME\""
+  }
+}
+```
 
 ## Inspiration
 

@@ -1,4 +1,4 @@
-import {spawn} from 'cross-spawn'
+import spawn from 'spawn-command'
 import commandConvert from './command'
 
 export default crossEnv
@@ -6,9 +6,9 @@ export default crossEnv
 const envSetterRegex = /(\w+)=('(.+)'|"(.+)"|(.+))/
 
 function crossEnv(args) {
-  const [command, commandArgs, env] = getCommandArgsAndEnvVars(args)
+  const [command, env] = getCommandArgsAndEnvVars(args)
   if (command) {
-    const proc = spawn(command, commandArgs, {stdio: 'inherit', env})
+    const proc = spawn(command, {stdio: 'inherit', env})
     process.on('SIGTERM', () => proc.kill('SIGTERM'))
     process.on('SIGINT', () => proc.kill('SIGINT'))
     process.on('SIGBREAK', () => proc.kill('SIGBREAK'))
@@ -23,7 +23,10 @@ function getCommandArgsAndEnvVars(args) {
   const envVars = getEnvVars()
   const commandArgs = args.map(commandConvert)
   const command = getCommand(commandArgs, envVars)
-  return [command, commandArgs, envVars]
+  if (!command) {
+    return []
+  }
+  return [`${command} ${commandArgs.join(' ')}`, envVars]
 }
 
 function getCommand(commandArgs, envVars) {
