@@ -18,6 +18,16 @@
         "infra",
         "test"
       ]
+    },
+    {
+      "login": "zhuangya",
+      "name": "Ya Zhuang ",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/499038?v=3",
+      "profile": "https://zhuangya.me",
+      "contributions": [
+        "plugin",
+        "doc"
+      ]
     }
   ]
 }
