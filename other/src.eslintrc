@@ -1,6 +1,0 @@
-{
-  "extends": "kentcdodds",
-  "env": {
-    "browser": false
-  }
-}
