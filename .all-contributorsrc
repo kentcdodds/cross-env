@@ -28,6 +28,15 @@
         "plugin",
         "doc"
       ]
+    },
+    {
+      "login": "wopian",
+      "name": "James Harris",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3440094?v=3",
+      "profile": "https://wopian.me",
+      "contributions": [
+        "doc"
+      ]
     }
   ]
 }
