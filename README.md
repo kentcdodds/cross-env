@@ -2,13 +2,14 @@
 
 Run scripts that set and use environment variables across platforms
 
-[![Build Status][build-badge]][build]
+[![Travis Build Status][build-badge]][build]
+[![AppVeyor Build Status][win-build-badge]][win-build]
 [![Code Coverage][coverage-badge]][coverage]
 [![Dependencies][dependencyci-badge]][dependencyci]
 [![version][version-badge]][package]
 [![downloads][downloads-badge]][npm-stat]
-[![MIT License][license-badge]][LICENSE]
 
+[![MIT License][license-badge]][LICENSE]
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome][prs-badge]][prs]
 [![Donate][donate-badge]][donate]
@@ -119,6 +120,8 @@ MIT
 [node]: https://nodejs.org
 [build-badge]: https://img.shields.io/travis/kentcdodds/cross-env.svg?style=flat-square
 [build]: https://travis-ci.org/kentcdodds/cross-env
+[win-build-badge]: https://img.shields.io/appveyor/ci/kentcdodds/cross-env.svg?style=flat-square
+[win-build]: https://ci.appveyor.com/project/kentcdodds/cross-env
 [coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/cross-env.svg?style=flat-square
 [coverage]: https://codecov.io/github/kentcdodds/cross-env
 [dependencyci-badge]: https://dependencyci.com/github/kentcdodds/cross-env/badge?style=flat-square
