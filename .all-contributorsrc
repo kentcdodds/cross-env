@@ -37,6 +37,17 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "compumike08",
+      "name": "compumike08",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/8941730?v=3",
+      "profile": "https://github.com/compumike08",
+      "contributions": [
+        "bug",
+        "doc",
+        "test"
+      ]
     }
   ]
 }

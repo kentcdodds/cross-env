@@ -10,7 +10,7 @@ Run scripts that set and use environment variables across platforms
 [![downloads][downloads-badge]][npm-stat]
 
 [![MIT License][license-badge]][LICENSE]
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome][prs-badge]][prs]
 [![Donate][donate-badge]][donate]
 [![Code of Conduct][coc-badge]][coc]
@@ -102,8 +102,8 @@ much easier for windows users.
 Thanks goes to these people ([emoji key][emojis]):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-| [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub>Kent C. Dodds</sub>](https://kentcdodds.com)<br />[💻](https://github.com/kentcdodds/cross-env/commits?author=kentcdodds) [📖](https://github.com/kentcdodds/cross-env/commits?author=kentcdodds) 🚇 [⚠️](https://github.com/kentcdodds/cross-env/commits?author=kentcdodds) | [<img src="https://avatars1.githubusercontent.com/u/499038?v=3" width="100px;"/><br /><sub>Ya Zhuang </sub>](https://zhuangya.me)<br />🔌 [📖](https://github.com/kentcdodds/cross-env/commits?author=zhuangya) | [<img src="https://avatars3.githubusercontent.com/u/3440094?v=3" width="100px;"/><br /><sub>James Harris</sub>](https://wopian.me)<br />[📖](https://github.com/kentcdodds/cross-env/commits?author=wopian) |
-| :---: | :---: | :---: |
+| [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub>Kent C. Dodds</sub>](https://kentcdodds.com)<br />[💻](https://github.com/kentcdodds/cross-env/commits?author=kentcdodds) [📖](https://github.com/kentcdodds/cross-env/commits?author=kentcdodds) 🚇 [⚠️](https://github.com/kentcdodds/cross-env/commits?author=kentcdodds) | [<img src="https://avatars1.githubusercontent.com/u/499038?v=3" width="100px;"/><br /><sub>Ya Zhuang </sub>](https://zhuangya.me)<br />🔌 [📖](https://github.com/kentcdodds/cross-env/commits?author=zhuangya) | [<img src="https://avatars3.githubusercontent.com/u/3440094?v=3" width="100px;"/><br /><sub>James Harris</sub>](https://wopian.me)<br />[📖](https://github.com/kentcdodds/cross-env/commits?author=wopian) | [<img src="https://avatars1.githubusercontent.com/u/8941730?v=3" width="100px;"/><br /><sub>compumike08</sub>](https://github.com/compumike08)<br />[🐛](https://github.com/kentcdodds/cross-env/issues?q=author%3Acompumike08) [📖](https://github.com/kentcdodds/cross-env/commits?author=compumike08) [⚠️](https://github.com/kentcdodds/cross-env/commits?author=compumike08) |
+| :---: | :---: | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification. Contributions of any kind welcome!
