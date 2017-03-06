@@ -1,69 +1,93 @@
 {
   "name": "cross-env",
-  "version": "0.0.0-semanticallly-released.0",
-  "description": "Run commands that set environment variables across platforms",
+  "version": "0.0.0-semantically-released",
+  "description": "Run scripts that set and use environment variables across platforms",
   "main": "dist/index.js",
   "bin": {
-    "cross-env": "bin/cross-env.js"
+    "cross-env": "dist/bin/cross-env.js"
   },
   "engines": {
-    "node" : ">=4.0"
+    "node": ">=4.0"
   },
   "scripts": {
-    "start": "npm run test:watch",
-    "prebuild": "rimraf dist && mkdir dist",
-    "build": "babel --copy-files --out-dir dist --ignore *.test.js src",
-    "commit": "git-cz",
-    "eslint": "eslint src/ -c other/src.eslintrc --ignore-path other/src.eslintignore && eslint src/*.test.js",
-    "check-coverage": "istanbul check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
-    "report-coverage": "cat ./coverage/lcov.info | codecov",
-    "test:watch": "mocha src/*.test.js -w --compilers js:babel/register",
-    "test": "istanbul cover -x *.test.js node_modules/mocha/bin/_mocha -- -R spec src/*.test.js --compilers js:babel/register",
-    "prepublish": "npm run build",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "start": "nps",
+    "test": "nps test",
+    "commitmsg": "opt --in commit-msg --exec \"validate-commit-msg\"",
+    "precommit": "lint-staged && opt --in pre-commit --exec \"npm start validate\""
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [],
+  "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",
+  "license": "MIT",
+  "dependencies": {
+    "cross-spawn": "^5.1.0",
+    "is-windows": "^1.0.0"
+  },
+  "devDependencies": {
+    "all-contributors-cli": "^4.0.1",
+    "babel-cli": "^6.23.0",
+    "babel-core": "^6.23.1",
+    "babel-jest": "^19.0.0",
+    "babel-preset-env": "^1.2.0",
+    "babel-preset-stage-2": "^6.22.0",
+    "babel-register": "^6.23.0",
+    "codecov": "^1.0.1",
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.0.0",
+    "eslint": "^3.17.0",
+    "eslint-config-kentcdodds": "^12.0.0",
+    "husky": "^0.13.2",
+    "jest-cli": "^19.0.2",
+    "lint-staged": "^3.3.1",
+    "nps": "^5.0.3",
+    "nps-utils": "^1.1.2",
+    "opt-cli": "^1.5.1",
+    "prettier-eslint-cli": "^3.1.2",
+    "semantic-release": "^6.3.6",
+    "validate-commit-msg": "^2.11.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "kentcdodds",
+      "kentcdodds/jest"
+    ],
+    "rules": {
+      "max-len": [
+        "error",
+        80
+      ]
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier-eslint --write",
+      "git add"
+    ]
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/kentcdodds/cross-env.git"
   },
-  "keywords": [
-    "environment variables",
-    "cross platform"
-  ],
-  "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/kentcdodds/cross-env/issues"
   },
-  "homepage": "https://github.com/kentcdodds/cross-env#readme",
-  "devDependencies": {
-    "babel": "5.8.23",
-    "chai": "3.3.0",
-    "codecov.io": "0.1.6",
-    "commitizen": "2.4.4",
-    "cz-conventional-changelog": "1.1.4",
-    "eslint": "1.5.1",
-    "eslint-config-kentcdodds": "4.0.1",
-    "eslint-plugin-mocha": "1.0.0",
-    "ghooks": "1.0.0",
-    "istanbul": "0.3.21",
-    "mocha": "2.3.3",
-    "proxyquire": "1.7.2",
-    "rimraf": "^2.5.2",
-    "semantic-release": "4.3.5",
-    "sinon": "1.17.1",
-    "sinon-chai": "2.8.0",
-    "validate-commit-msg": "1.0.0"
-  },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-conventional-changelog/"
-    },
-    "ghooks": {
-      "commit-msg": "validate-commit-msg && npm run eslint && npm t && npm run check-coverage && echo 'pre-commit checks good 👍'"
-    }
-  },
-  "dependencies": {
-    "cross-spawn": "^3.0.1"
-  }
+  "homepage": "https://github.com/kentcdodds/cross-env#readme"
 }
