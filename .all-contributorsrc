@@ -48,6 +48,17 @@
         "doc",
         "test"
       ]
+    },
+    {
+      "login": "danielo515",
+      "name": "Daniel Rodríguez Rivero",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/2270425?v=3",
+      "profile": "https://github.com/danielo515",
+      "contributions": [
+        "bug",
+        "code",
+        "doc"
+      ]
     }
   ]
 }
