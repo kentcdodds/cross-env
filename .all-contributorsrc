@@ -59,6 +59,17 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "inyono",
+      "name": "Jonas Keinholz",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1508477?v=3",
+      "profile": "https://github.com/inyono",
+      "contributions": [
+        "bug",
+        "code",
+        "test"
+      ]
     }
   ]
 }
