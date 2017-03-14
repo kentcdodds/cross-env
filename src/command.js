@@ -13,9 +13,5 @@ const envUseWinRegex = /%(.*?)%/ // %my_var%
 function commandConvert(command) {
   const isWin = isWindows()
   const envExtract = isWin ? envUseUnixRegex : envUseWinRegex
-  const match = envExtract.exec(command)
-  if (match) {
-    command = isWin ? `%${match[1]}%` : `$${match[1]}`
-  }
-  return command
+  return command.replace(envExtract, isWin ? '%$1%' : '$$$1')
 }
