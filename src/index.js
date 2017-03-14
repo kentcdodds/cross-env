@@ -2,7 +2,6 @@ import {spawn} from 'cross-spawn'
 import commandConvert from './command'
 
 module.exports = crossEnv
-export default crossEnv
 
 const envSetterRegex = /(\w+)=('(.+)'|"(.+)"|(.+))/
 

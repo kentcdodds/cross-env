@@ -1,15 +1,9 @@
 import crossSpawnMock from 'cross-spawn'
-import crossEnv from '.'
 
-const commonJSCrossEnv = require('.')
+const crossEnv = require('.')
 
 beforeEach(() => {
   crossSpawnMock.__mock.reset()
-})
-
-it(`should be possible to use both commonJS and ES6 modules`, () => {
-  expect(typeof crossEnv).toBe('function')
-  expect(typeof commonJSCrossEnv).toBe('function')
 })
 
 it(`should set environment variables and run the remaining command`, () => {
