@@ -70,6 +70,17 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "hgwood",
+      "name": "Hugo Wood",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1656170?v=3",
+      "profile": "https://github.com/hgwood",
+      "contributions": [
+        "bug",
+        "code",
+        "test"
+      ]
     }
   ]
 }
