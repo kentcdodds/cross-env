@@ -2,8 +2,8 @@ import isWindows from 'is-windows'
 
 export default commandConvert
 
-const envUseUnixRegex = /\$(\w+)/g // $my_var
-const envUseWinRegex = /%(.*?)%/g // %my_var%
+const envUseUnixRegex = /\$(\w+)/ // $my_var
+const envUseWinRegex = /%(.*?)%/ // %my_var%
 
 /**
  * Converts an environment variable usage to be appropriate for the current OS
