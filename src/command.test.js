@@ -51,3 +51,9 @@ test(`
   isWindowsMock.__mock.returnValue = false
   expect(commandConvert('$test1/$test2/$test3')).toBe('$test1/$test2/$test3')
 })
+
+test(`converts braced unix-style env variable usage for windows`, () => {
+  isWindowsMock.__mock.returnValue = true
+  // eslint-disable-next-line no-template-curly-in-string
+  expect(commandConvert('${test}')).toBe('%test%')
+})
