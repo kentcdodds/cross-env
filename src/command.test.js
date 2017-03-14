@@ -26,7 +26,7 @@ test(`leaves variable unchanged when using correct operating system`, () => {
 
 test(`is stateless`, () => {
   // this test prevents falling into regexp traps like this:
-  // http://bit.ly/1zWb3tn
+  // http://stackoverflow.com/a/1520853/971592
   isWindowsMock.__mock.returnValue = true
   expect(commandConvert('$test')).toBe(commandConvert('$test'))
 })
