@@ -45,9 +45,8 @@ test(`converts embedded windows-style env variables usage for linux`, () => {
   )
 })
 
-test(`
-  leaves embedded variables unchanged 
-  when using correct operating system`, () => {
+// eslint-disable-next-line max-len
+test(`leaves embedded variables unchanged when using correct operating system`, () => {
   isWindowsMock.__mock.returnValue = false
   expect(commandConvert('$test1/$test2/$test3')).toBe('$test1/$test2/$test3')
 })
