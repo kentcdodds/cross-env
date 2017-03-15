@@ -87,6 +87,19 @@ the parent. This is quite useful for launching the same command with different
 env variables or when the environment variables are too long to have everything
 in one line.
 
+## Gotchas
+
+If you want to have the environment variable apply to several commands in series
+then you will need to wrap those in quotes in your script. For example:
+
+```json
+{
+  "scripts": {
+    "greet": "cross-env GREETING=Hi NAME=Joe \"echo $GREETING && echo $NAME\""
+  }
+}
+```
+
 ## Inspiration
 
 I originally created this to solve a problem I was having with my npm scripts in
