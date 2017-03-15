@@ -7,6 +7,7 @@ Run scripts that set and use environment variables across platforms
 [![Code Coverage][coverage-badge]][coverage]
 [![Dependencies][dependencyci-badge]][dependencyci]
 [![version][version-badge]][package]
+[![node-version][node-version-badge]][node]
 [![downloads][downloads-badge]][npm-stat]
 
 [![MIT License][license-badge]][LICENSE]
@@ -35,10 +36,6 @@ and on windows you use `%ENV_VAR%`.
 setting or using the environment variable properly for the platform. Just set it
 like you would if it's running on a POSIX system, and `cross-env` will take care
 of setting it properly.
-
-## Prerequisites
-
-- [NodeJS][node] version 4.0 or greater.
 
 ## Installation
 
@@ -87,6 +84,19 @@ the parent. This is quite useful for launching the same command with different
 env variables or when the environment variables are too long to have everything
 in one line.
 
+## Gotchas
+
+If you want to have the environment variable apply to several commands in series
+then you will need to wrap those in quotes in your script. For example:
+
+```json
+{
+  "scripts": {
+    "greet": "cross-env GREETING=Hi NAME=Joe \"echo $GREETING && echo $NAME\""
+  }
+}
+```
+
 ## Inspiration
 
 I originally created this to solve a problem I was having with my npm scripts in
@@ -129,6 +139,7 @@ MIT
 [dependencyci]: https://dependencyci.com/github/kentcdodds/cross-env
 [version-badge]: https://img.shields.io/npm/v/cross-env.svg?style=flat-square
 [package]: https://www.npmjs.com/package/cross-env
+[node-version-badge]: https://img.shields.io/badge/node-%3E%3D%204.8-orange.svg?style=flat-square
 [downloads-badge]: https://img.shields.io/npm/dm/cross-env.svg?style=flat-square
 [npm-stat]: http://npm-stat.com/charts.html?package=cross-env&from=2016-04-01
 [license-badge]: https://img.shields.io/npm/l/cross-env.svg?style=flat-square
