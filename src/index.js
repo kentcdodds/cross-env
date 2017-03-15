@@ -8,7 +8,11 @@ const envSetterRegex = /(\w+)=('(.+)'|"(.+)"|(.+))/
 function crossEnv(args) {
   const [command, commandArgs, env] = getCommandArgsAndEnvVars(args)
   if (command) {
-    const proc = spawn(command, commandArgs, {stdio: 'inherit', env})
+    const proc = spawn(command, commandArgs, {
+      stdio: 'inherit',
+      shell: true,
+      env,
+    })
     process.on('SIGTERM', () => proc.kill('SIGTERM'))
     process.on('SIGINT', () => proc.kill('SIGINT'))
     process.on('SIGBREAK', () => proc.kill('SIGBREAK'))
