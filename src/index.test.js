@@ -80,6 +80,7 @@ function testEnvSetting(expected, ...envSettings) {
   expect(crossSpawnMock.spawn).toHaveBeenCalledTimes(1)
   expect(crossSpawnMock.spawn).toHaveBeenCalledWith('echo', ['hello world'], {
     stdio: 'inherit',
+    shell: true,
     env: Object.assign({}, process.env, env),
   })
 
