@@ -1,5 +1,6 @@
 import {spawn} from 'cross-spawn'
 import commandConvert from './command'
+import varValueConvert from './variable'
 
 module.exports = crossEnv
 
@@ -35,7 +36,7 @@ function getCommand(commandArgs, envVars) {
     const shifted = commandArgs.shift()
     const match = envSetterRegex.exec(shifted)
     if (match) {
-      envVars[match[1]] = match[3] || match[4] || match[5]
+      envVars[match[1]] = varValueConvert(match[3] || match[4] || match[5])
     } else {
       return shifted
     }
