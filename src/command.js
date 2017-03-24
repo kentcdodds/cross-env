@@ -8,9 +8,9 @@ export default commandConvert
  * @returns {String} Converted command
  */
 function commandConvert(command) {
-  const envUseUnixRegex = /\$(\w+)|\${(\w+)}/g // $my_var or ${my_var}
-  const envUseWinRegex = /%(.*?)%/g // %my_var%
-  const isWin = isWindows()
-  const envExtract = isWin ? envUseUnixRegex : envUseWinRegex
-  return command.replace(envExtract, isWin ? '%$1$2%' : '$$$1')
+  if (!isWindows()) {
+    return command
+  }
+  const envUnixRegex = /\$(\w+)|\${(\w+)}/g // $my_var or ${my_var}
+  return command.replace(envUnixRegex, '%$1$2%')
 }
