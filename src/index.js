@@ -26,9 +26,9 @@ function crossEnv(args) {
 
 function getCommandArgsAndEnvVars(args) {
   const envVars = getEnvVars()
-  const commandArgs = args.map(commandConvert)
+  const commandArgs = args.slice()
   const command = getCommand(commandArgs, envVars)
-  return [command, commandArgs, envVars]
+  return [commandConvert(command), commandArgs.map(commandConvert), envVars]
 }
 
 function getCommand(commandArgs, envVars) {
