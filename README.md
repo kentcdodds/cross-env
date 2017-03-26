@@ -139,7 +139,7 @@ MIT
 [dependencyci]: https://dependencyci.com/github/kentcdodds/cross-env
 [version-badge]: https://img.shields.io/npm/v/cross-env.svg?style=flat-square
 [package]: https://www.npmjs.com/package/cross-env
-[node-version-badge]: https://img.shields.io/badge/node-%3E%3D%204.8-orange.svg?style=flat-square
+[node-version-badge]: https://img.shields.io/badge/node-%3E%3D%204.0-orange.svg?style=flat-square
 [downloads-badge]: https://img.shields.io/npm/dm/cross-env.svg?style=flat-square
 [npm-stat]: http://npm-stat.com/charts.html?package=cross-env&from=2016-04-01
 [license-badge]: https://img.shields.io/npm/l/cross-env.svg?style=flat-square
