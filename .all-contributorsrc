@@ -108,7 +108,9 @@
       "name": "Amila Welihinda",
       "avatar_url": "https://avatars2.githubusercontent.com/u/6374832?v=3",
       "profile": "http://amilajack.com",
-      "contributions": []
+      "contributions": [
+        "infra"
+      ]
     }
   ]
 }
