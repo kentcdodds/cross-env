@@ -136,7 +136,7 @@ function testEnvSetting(expected, ...envSettings) {
     // set APPDATA and test it
     process.env.APPDATA = '0'
   }
-  const ret = crossEnv([...envSettings, 'echo', 'hello world'])
+  const ret = crossEnv([...envSettings, 'echo', 'hello-world'])
   const env = {}
   if (process.env.APPDATA) {
     env.APPDATA = process.env.APPDATA
@@ -144,7 +144,7 @@ function testEnvSetting(expected, ...envSettings) {
   Object.assign(env, expected)
   expect(ret, 'returns what spawn returns').toBe(crossSpawnMock.__mock.spawned)
   expect(crossSpawnMock.spawn).toHaveBeenCalledTimes(1)
-  expect(crossSpawnMock.spawn).toHaveBeenCalledWith('echo', ['"hello world"'], {
+  expect(crossSpawnMock.spawn).toHaveBeenCalledWith('echo', ['hello-world'], {
     stdio: 'inherit',
     shell: true,
     env: Object.assign({}, process.env, env),
