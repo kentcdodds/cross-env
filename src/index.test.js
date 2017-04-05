@@ -57,6 +57,58 @@ it(`should handle quoted scripts`, () => {
   })
 })
 
+it(`should quote args with spaces`, () => {
+  crossEnv(['cat', '/path with space/file'])
+  expect(crossSpawnMock.spawn).toHaveBeenCalledWith(
+    'cat',
+    ['"/path with space/file"'],
+    {
+      stdio: 'inherit',
+      shell: true,
+      env: process.env,
+    },
+  )
+})
+
+it(`should not quote args without spaces`, () => {
+  crossEnv(['echo', '/path-without-space'])
+  expect(crossSpawnMock.spawn).toHaveBeenCalledWith(
+    'echo',
+    ['/path-without-space'],
+    {
+      stdio: 'inherit',
+      shell: true,
+      env: process.env,
+    },
+  )
+})
+
+it(`should quote args with single quotes`, () => {
+  crossEnv(['cat', "/path'with'quotes"])
+  expect(crossSpawnMock.spawn).toHaveBeenCalledWith(
+    'cat',
+    ['"/path\'with\'quotes"'],
+    {
+      stdio: 'inherit',
+      shell: true,
+      env: process.env,
+    },
+  )
+})
+
+it(`should quote args with double quotes`, () => {
+  crossEnv(['cat', '/path"with"quotes'])
+  expect(crossSpawnMock.spawn).toHaveBeenCalledWith(
+    'cat',
+    ['"/path\\"with\\"quotes"'],
+    {
+      stdio: 'inherit',
+      shell: true,
+      env: process.env,
+    },
+  )
+})
+
 it(`should do nothing given no command`, () => {
   crossEnv([])
   expect(crossSpawnMock.spawn).toHaveBeenCalledTimes(0)
@@ -92,7 +144,7 @@ function testEnvSetting(expected, ...envSettings) {
   Object.assign(env, expected)
   expect(ret, 'returns what spawn returns').toBe(crossSpawnMock.__mock.spawned)
   expect(crossSpawnMock.spawn).toHaveBeenCalledTimes(1)
-  expect(crossSpawnMock.spawn).toHaveBeenCalledWith('echo', ['hello world'], {
+  expect(crossSpawnMock.spawn).toHaveBeenCalledWith('echo', ['"hello world"'], {
     stdio: 'inherit',
     shell: true,
     env: Object.assign({}, process.env, env),
