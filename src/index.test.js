@@ -71,9 +71,9 @@ it(`should quote args with spaces`, () => {
 })
 
 it(`should not quote args without spaces`, () => {
-  crossEnv(['echo', '/path-without-space'])
+  crossEnv(['cat', '/path-without-space'])
   expect(crossSpawnMock.spawn).toHaveBeenCalledWith(
-    'echo',
+    'cat',
     ['/path-without-space'],
     {
       stdio: 'inherit',
@@ -107,6 +107,15 @@ it(`should quote args with double quotes`, () => {
       env: process.env,
     },
   )
+})
+
+it(`should not quote command with spaces`, () => {
+  crossEnv(['echo a && echo b'])
+  expect(crossSpawnMock.spawn).toHaveBeenCalledWith('echo a && echo b', [], {
+    stdio: 'inherit',
+    shell: true,
+    env: process.env,
+  })
 })
 
 it(`should do nothing given no command`, () => {
