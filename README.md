@@ -58,7 +58,8 @@ I use this in my npm scripts:
 }
 ```
 
-Ultimately, the command that is executed (using `cross-spawn`) is:
+Ultimately, the command that is executed (using [`cross-spawn`][cross-spawn])
+is:
 
 ```
 webpack --config build/webpack.config.js
@@ -84,18 +85,31 @@ the parent. This is quite useful for launching the same command with different
 env variables or when the environment variables are too long to have everything
 in one line.
 
-## Gotchas
+## `cross-env` vs `cross-env-shell`
 
-If you want to have the environment variable apply to several commands in series
-then you will need to wrap those in quotes in your script. For example:
+The `cross-env` module exposes two bins: `cross-env` and `cross-env-shell`. The
+first one executes commands using [`cross-spawn`][cross-spawn], while the
+second one uses the `shell` option from Node's `spawn`.
+
+The main use case for `cross-env-shell` is when your need an environment
+vartiable to be set across an entire inline shell script, rather than just one
+command.
+
+For example, if you want to have the environment variable apply to several
+commands in series then you will need to wrap those in quotes and use 
+`cross-env-shell` instead of `cross-env`.
 
 ```json
 {
   "scripts": {
-    "greet": "cross-env GREETING=Hi NAME=Joe \"echo $GREETING && echo $NAME\""
+    "greet": "cross-env-shell GREETING=Hi NAME=Joe \"echo $GREETING && echo $NAME\""
   }
 }
 ```
+
+The rule of thumb is: if you want to pass to `cross-env` a command that
+contains special shell characters *that you want interpreted*, then use
+`cross-env-shell`. Otherwise stick to `cross-env`.
 
 ## Inspiration
 
@@ -164,3 +178,4 @@ MIT
 [all-contributors]: https://github.com/kentcdodds/all-contributors
 [win-bash]: https://msdn.microsoft.com/en-us/commandline/wsl/about
 [angular-formly]: https://github.com/formly-js/angular-formly
+[cross-spawn]: https://www.npmjs.com/package/cross-spawn
