@@ -52,7 +52,7 @@ function getEnvVars(envSetters) {
     envVars.APPDATA = process.env.APPDATA
   }
   Object.keys(envSetters).forEach(varName => {
-    envVars[varName] = varValueConvert(envSetters[varName])
+    envVars[varName] = varValueConvert(envSetters[varName], varName)
   })
   return envVars
 }
