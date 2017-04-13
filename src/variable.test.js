@@ -19,12 +19,22 @@ test(`doesn't affect simple variable values`, () => {
 
 test(`doesn't convert a ; into a : on UNIX`, () => {
   isWindowsMock.__mock.returnValue = false
-  expect(varValueConvert('foo;bar')).toBe('foo;bar')
+  expect(varValueConvert('foo;bar', 'PATH')).toBe('foo;bar')
 })
 
-test(`converts a : into a ; on Windows`, () => {
+test(`doesn't convert a ; into a : for non-PATH on UNIX`, () => {
+  isWindowsMock.__mock.returnValue = false
+  expect(varValueConvert('foo;bar', 'FOO')).toBe('foo;bar')
+})
+
+test(`doesn't convert a ; into a : for non-PATH on Windows`, () => {
   isWindowsMock.__mock.returnValue = true
-  expect(varValueConvert('foo:bar')).toBe('foo;bar')
+  expect(varValueConvert('foo;bar', 'FOO')).toBe('foo;bar')
+})
+
+test(`converts a : into a ; on Windows if PATH`, () => {
+  isWindowsMock.__mock.returnValue = true
+  expect(varValueConvert('foo:bar', 'PATH')).toBe('foo;bar')
 })
 
 test(`doesn't convert already valid separators`, () => {
@@ -32,24 +42,24 @@ test(`doesn't convert already valid separators`, () => {
   expect(varValueConvert('foo:bar')).toBe('foo:bar')
 })
 
-test(`doesn't convert escaped separators on Windows`, () => {
+test(`doesn't convert escaped separators on Windows if PATH`, () => {
   isWindowsMock.__mock.returnValue = true
-  expect(varValueConvert('foo\\:bar')).toBe('foo:bar')
+  expect(varValueConvert('foo\\:bar', 'PATH')).toBe('foo:bar')
 })
 
 test(`doesn't convert escaped separators on UNIX`, () => {
   isWindowsMock.__mock.returnValue = false
-  expect(varValueConvert('foo\\:bar')).toBe('foo:bar')
+  expect(varValueConvert('foo\\:bar', 'PATH')).toBe('foo:bar')
 })
 
 test(`converts a separator even if preceded by an escaped backslash`, () => {
   isWindowsMock.__mock.returnValue = true
-  expect(varValueConvert('foo\\\\:bar')).toBe('foo\\\\;bar')
+  expect(varValueConvert('foo\\\\:bar', 'PATH')).toBe('foo\\\\;bar')
 })
 
-test(`converts multiple separators`, () => {
+test(`converts multiple separators if PATH`, () => {
   isWindowsMock.__mock.returnValue = true
-  expect(varValueConvert('foo:bar:baz')).toBe('foo;bar;baz')
+  expect(varValueConvert('foo:bar:baz', 'PATH')).toBe('foo;bar;baz')
 })
 
 test(`resolves an env variable value`, () => {

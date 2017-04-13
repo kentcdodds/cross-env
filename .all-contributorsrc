@@ -111,6 +111,16 @@
       "contributions": [
         "infra"
       ]
+    },
+    {
+      "login": "paulcbetts",
+      "name": "Paul Betts",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1396?v=3",
+      "profile": "https://twitter.com/paulcbetts",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ]
 }
