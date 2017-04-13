@@ -13,6 +13,7 @@ const pathLikeEnvVarWhitelist = ['PATH', 'NODE_PATH'].reduce(
  * For example, the value of the $PATH variable "/usr/bin:/usr/local/bin:."
  * will become "/usr/bin;/usr/local/bin;." on Windows.
  * @param {String} varValue Original value of the env variable
+ * @param {String} varName Original name of the env variable
  * @returns {String} Converted value
  */
 function replaceListDelimiters(varValue, varName = '') {
@@ -54,6 +55,7 @@ function resolveEnvVars(varValue) {
 /**
  * Converts an environment variable value to be appropriate for the current OS.
  * @param {String} originalValue Original value of the env variable
+ * @param {String} originalName Original name of the env variable
  * @returns {String} Converted value
  */
 export default function varValueConvert(originalValue, originalName) {

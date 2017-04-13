@@ -52,7 +52,7 @@ test(`doesn't convert escaped separators on UNIX`, () => {
   expect(varValueConvert('foo\\:bar', 'PATH')).toBe('foo:bar')
 })
 
-test(`converts a separator even if preceded by an escaped backslash if PATH`, () => {
+test(`converts a separator even if preceded by an escaped backslash`, () => {
   isWindowsMock.__mock.returnValue = true
   expect(varValueConvert('foo\\\\:bar', 'PATH')).toBe('foo\\\\;bar')
 })
