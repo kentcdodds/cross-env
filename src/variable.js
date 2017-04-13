@@ -1,14 +1,21 @@
 import isWindows from 'is-windows'
 
+const pathLikeEnvVarWhitelist = new Set(['PATH', 'NODE_PATH'])
+
 /**
  * This will transform UNIX-style list values to Windows-style.
  * For example, the value of the $PATH variable "/usr/bin:/usr/local/bin:."
  * will become "/usr/bin;/usr/local/bin;." on Windows.
  * @param {String} varValue Original value of the env variable
+ * @param {String} varName Original name of the env variable
  * @returns {String} Converted value
  */
-function replaceListDelimiters(varValue) {
+function replaceListDelimiters(varValue, varName = '') {
   const targetSeparator = isWindows() ? ';' : ':'
+  if (!pathLikeEnvVarWhitelist.has(varName)) {
+    return varValue
+  }
+
   return varValue.replace(/(\\*):/g, (match, backslashes) => {
     if (backslashes.length % 2) {
       // Odd number of backslashes preceding it means it's escaped,
@@ -42,8 +49,9 @@ function resolveEnvVars(varValue) {
 /**
  * Converts an environment variable value to be appropriate for the current OS.
  * @param {String} originalValue Original value of the env variable
+ * @param {String} originalName Original name of the env variable
  * @returns {String} Converted value
  */
-export default function varValueConvert(originalValue) {
-  return resolveEnvVars(replaceListDelimiters(originalValue))
+export default function varValueConvert(originalValue, originalName) {
+  return resolveEnvVars(replaceListDelimiters(originalValue, originalName))
 }
