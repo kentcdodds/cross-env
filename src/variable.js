@@ -1,12 +1,6 @@
 import isWindows from 'is-windows'
 
-const pathLikeEnvVarWhitelist = ['PATH', 'NODE_PATH'].reduce(
-  (acc, x) => {
-    acc.add(x)
-    return acc
-  },
-  new Set(),
-)
+const pathLikeEnvVarWhitelist = new Set(['PATH', 'NODE_PATH'])
 
 /**
  * This will transform UNIX-style list values to Windows-style.
