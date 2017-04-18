@@ -44,7 +44,9 @@ it(`should handle equality signs in quoted strings`, () => {
 })
 
 it(`should handle quoted scripts`, () => {
-  crossEnv(['GREETING=Hi', 'NAME=Joe', 'echo $GREETING && echo $NAME'])
+  crossEnv(['GREETING=Hi', 'NAME=Joe', 'echo $GREETING && echo $NAME'], {
+    shell: true,
+  })
   expect(
     crossSpawnMock.spawn,
   ).toHaveBeenCalledWith('echo $GREETING && echo $NAME', [], {
@@ -94,7 +96,7 @@ function testEnvSetting(expected, ...envSettings) {
   expect(crossSpawnMock.spawn).toHaveBeenCalledTimes(1)
   expect(crossSpawnMock.spawn).toHaveBeenCalledWith('echo', ['hello world'], {
     stdio: 'inherit',
-    shell: true,
+    shell: undefined,
     env: Object.assign({}, process.env, env),
   })
 
