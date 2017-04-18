@@ -92,7 +92,7 @@ first one executes commands using [`cross-spawn`][cross-spawn], while the
 second one uses the `shell` option from Node's `spawn`.
 
 The main use case for `cross-env-shell` is when your need an environment
-vartiable to be set across an entire inline shell script, rather than just one
+variable to be set across an entire inline shell script, rather than just one
 command.
 
 For example, if you want to have the environment variable apply to several
