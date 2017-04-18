@@ -6,7 +6,7 @@ module.exports = crossEnv
 
 const envSetterRegex = /(\w+)=('(.+)'|"(.+)"|(.+))/
 
-function crossEnv(args) {
+function crossEnv(args, options = {}) {
   const [envSetters, command, commandArgs] = parseCommand(args)
   if (command) {
     const proc = spawn(
@@ -14,7 +14,7 @@ function crossEnv(args) {
       commandArgs.map(commandConvert),
       {
         stdio: 'inherit',
-        shell: true,
+        shell: options.shell,
         env: getEnvVars(envSetters),
       },
     )
