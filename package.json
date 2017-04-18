@@ -1,10 +1,11 @@
 {
   "name": "cross-env",
-  "version": "0.0.0-semantically-released",
+  "version": "5.0.0-beta.0",
   "description": "Run scripts that set and use environment variables across platforms",
   "main": "dist/index.js",
   "bin": {
-    "cross-env": "dist/bin/cross-env.js"
+    "cross-env": "dist/bin/cross-env.js",
+    "cross-env-shell": "dist/bin/cross-env-shell.js"
   },
   "engines": {
     "node": ">=4.0"
