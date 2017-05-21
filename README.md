@@ -85,6 +85,17 @@ the parent. This is quite useful for launching the same command with different
 env variables or when the environment variables are too long to have everything
 in one line.
 
+Lastly, if you want to pass a JSON string (e.g., when using [ts-loader]), you can do as follows:
+```json
+{
+  "scripts": {
+    "test": "cross-env TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} node some_file.test.ts"
+  }
+}
+```
+Pay special attention to the **triple backslash** `(\\\)` **before** the **double quotes** `(")` and the **absence** of **single quotes** `(')`.
+Both of these conditions have to be met in order to work both on Windows and UNIX.
+
 ## `cross-env` vs `cross-env-shell`
 
 The `cross-env` module exposes two bins: `cross-env` and `cross-env-shell`. The
@@ -179,3 +190,4 @@ MIT
 [win-bash]: https://msdn.microsoft.com/en-us/commandline/wsl/about
 [angular-formly]: https://github.com/formly-js/angular-formly
 [cross-spawn]: https://www.npmjs.com/package/cross-spawn
+[ts-loader]: https://www.npmjs.com/package/ts-loader
