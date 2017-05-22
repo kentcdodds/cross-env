@@ -1,15 +1,19 @@
 import isWindowsMock from 'is-windows'
 import varValueConvert from './variable'
 
+const JSON_VALUE = '{\\"foo\\":\\"bar\\"}'
+
 beforeEach(() => {
   process.env.VAR1 = 'value1'
   process.env.VAR2 = 'value2'
+  process.env.JSON_VAR = JSON_VALUE
   isWindowsMock.__mock.reset()
 })
 
 afterEach(() => {
   delete process.env.VAR1
   delete process.env.VAR2
+  delete process.env.JSON_VAR
 })
 
 test(`doesn't affect simple variable values`, () => {
@@ -81,4 +85,14 @@ test(`resolves multiple env variable values`, () => {
 test(`resolves an env variable value for non-existant variable`, () => {
   isWindowsMock.__mock.returnValue = true
   expect(varValueConvert('foo-$VAR_POTATO')).toBe('foo-')
+})
+
+test(`resolves an env variable with a JSON string value on Windows`, () => {
+  isWindowsMock.__mock.returnValue = true
+  expect(varValueConvert('$JSON_VAR')).toBe(JSON_VALUE)
+})
+
+test(`resolves an env variable with a JSON string value on UNIX`, () => {
+  isWindowsMock.__mock.returnValue = false
+  expect(varValueConvert('$JSON_VAR')).toBe(JSON_VALUE)
 })
