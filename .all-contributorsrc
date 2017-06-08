@@ -121,6 +121,17 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "turnerhayes",
+      "name": "Turner Hayes",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/6371670?v=3",
+      "profile": "https://github.com/turnerhayes",
+      "contributions": [
+        "bug",
+        "code",
+        "test"
+      ]
     }
   ]
 }
