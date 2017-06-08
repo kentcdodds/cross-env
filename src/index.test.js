@@ -43,6 +43,18 @@ it(`should handle equality signs in quoted strings`, () => {
   testEnvSetting({FOO_ENV: 'foo=bar'}, 'FOO_ENV="foo=bar"')
 })
 
+it(`should handle empty single-quoted strings`, () => {
+  testEnvSetting({FOO_ENV: ''}, "FOO_ENV=''")
+})
+
+it(`should handle empty double-quoted strings`, () => {
+  testEnvSetting({FOO_ENV: ''}, 'FOO_ENV=""')
+})
+
+it(`should handle no value after the equals sign`, () => {
+  testEnvSetting({FOO_ENV: ''}, 'FOO_ENV=')
+})
+
 it(`should handle quoted scripts`, () => {
   crossEnv(['GREETING=Hi', 'NAME=Joe', 'echo $GREETING && echo $NAME'], {
     shell: true,
@@ -92,7 +104,7 @@ function testEnvSetting(expected, ...envSettings) {
     env.APPDATA = process.env.APPDATA
   }
   Object.assign(env, expected)
-  expect(ret, 'returns what spawn returns').toBe(crossSpawnMock.__mock.spawned)
+  expect(ret).toBe(crossSpawnMock.__mock.spawned)
   expect(crossSpawnMock.spawn).toHaveBeenCalledTimes(1)
   expect(crossSpawnMock.spawn).toHaveBeenCalledWith('echo', ['hello world'], {
     stdio: 'inherit',

@@ -4,7 +4,7 @@ import varValueConvert from './variable'
 
 module.exports = crossEnv
 
-const envSetterRegex = /(\w+)=('(.+)'|"(.+)"|(.+))/
+const envSetterRegex = /(\w+)=('(.*)'|"(.*)"|(.*))/
 
 function crossEnv(args, options = {}) {
   const [envSetters, command, commandArgs] = parseCommand(args)
@@ -35,7 +35,17 @@ function parseCommand(args) {
   for (let i = 0; i < args.length; i++) {
     const match = envSetterRegex.exec(args[i])
     if (match) {
-      envSetters[match[1]] = match[3] || match[4] || match[5]
+      let value
+
+      if (typeof match[3] !== 'undefined') {
+        value = match[3]
+      } else if (typeof match[4] === 'undefined') {
+        value = match[5]
+      } else {
+        value = match[4]
+      }
+
+      envSetters[match[1]] = value
     } else {
       // No more env setters, the rest of the line must be the command and args
       command = args[i]
@@ -43,6 +53,7 @@ function parseCommand(args) {
       break
     }
   }
+
   return [envSetters, command, commandArgs]
 }
 
