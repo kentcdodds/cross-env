@@ -11,7 +11,7 @@ function crossEnv(args, options = {}) {
   if (command) {
     const proc = spawn(
       commandConvert(command),
-      commandArgs.map(commandConvert),
+      commandArgs.map(commandConvert).map(quoteArgument),
       {
         stdio: 'inherit',
         shell: options.shell,
@@ -66,4 +66,8 @@ function getEnvVars(envSetters) {
     envVars[varName] = varValueConvert(envSetters[varName], varName)
   })
   return envVars
+}
+
+function quoteArgument(arg) {
+  return arg.match(/[ "']/) ? JSON.stringify(arg) : arg
 }
