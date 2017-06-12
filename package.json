@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "all-contributors-cli": "^4.0.1",
-    "babel-cli": "^6.23.0",
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.23.1",
     "babel-jest": "^19.0.0",
     "babel-preset-env": "^1.2.0",
