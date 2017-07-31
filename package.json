@@ -24,7 +24,7 @@
   "license": "MIT",
   "dependencies": {
     "cross-spawn": "^5.1.0",
-    "is-windows": "^1.0.0"
+    "platform-is": "^1.0.0"
   },
   "devDependencies": {
     "all-contributors-cli": "^4.0.1",

@@ -1,4 +1,4 @@
-import isWindowsMock from 'is-windows'
+import isWindowsMock from 'platform-is'
 import commandConvert from './command'
 
 beforeEach(() => {

@@ -1,10 +1,12 @@
 import {spawn} from 'cross-spawn'
+import * as utils from 'platform-is'
 import commandConvert from './command'
 import varValueConvert from './variable'
 
 module.exports = crossEnv
 
 const envSetterRegex = /(\w+)=('(.*)'|"(.*)"|(.*))/
+const crossEnvOption = /--c-only-(\w+)/
 
 function crossEnv(args, options = {}) {
   const [envSetters, command, commandArgs] = parseCommand(args)
@@ -28,12 +30,29 @@ function crossEnv(args, options = {}) {
   return null
 }
 
+/* eslint-disable complexity */
 function parseCommand(args) {
   const envSetters = {}
   let command = null
   let commandArgs = []
   for (let i = 0; i < args.length; i++) {
     const match = envSetterRegex.exec(args[i])
+
+    const opt = crossEnvOption.exec(args[i])
+
+    if (opt) {
+      // utils
+      if (opt[1] === 'windows' && !utils.isWindows()) {
+        break
+      }
+      if (opt[1] === 'mac' && !utils.isMac()) {
+        break
+      }
+      if (opt[1] === 'linux' && !utils.isLinux()) {
+        break
+      }
+    }
+
     if (match) {
       let value
 
@@ -56,6 +75,7 @@ function parseCommand(args) {
 
   return [envSetters, command, commandArgs]
 }
+/* eslint-enable complexity */
 
 function getEnvVars(envSetters) {
   const envVars = Object.assign({}, process.env)
