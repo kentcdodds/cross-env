@@ -1,4 +1,4 @@
-import {isWindows as isWindowsMock} from './utils'
+import isWindowsMock from 'platform-is'
 import varValueConvert from './variable'
 
 const JSON_VALUE = '{\\"foo\\":\\"bar\\"}'

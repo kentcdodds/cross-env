@@ -23,7 +23,8 @@
   "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",
   "license": "MIT",
   "dependencies": {
-    "cross-spawn": "^5.1.0"
+    "cross-spawn": "^5.1.0",
+    "platform-is": "^1.0.0"
   },
   "devDependencies": {
     "all-contributors-cli": "^4.0.1",
