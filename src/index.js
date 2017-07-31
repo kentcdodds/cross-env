@@ -37,6 +37,18 @@ function parseCommand(args) {
   for (let i = 0; i < args.length; i++) {
     const match = envSetterRegex.exec(args[i])
     const opt = crossEnvOption.exec(args[i])
+    if (opt) {
+      // utils
+      if (opt[1] === 'windows' && !utils.isWindows()) {
+        break
+      }
+      if (opt[1] === 'mac' && !utils.isMac()) {
+        break
+      }
+      if (opt[1] === 'linux' && !utils.isLinux()) {
+        break
+      }
+    }
     if (match) {
       let value
 
@@ -49,17 +61,6 @@ function parseCommand(args) {
       }
 
       envSetters[match[1]] = value
-    } else if (opt) {
-      // utils
-      if (opt[1] === 'windows' && !utils.isWindows()) {
-        break
-      }
-      if (opt[1] === 'mac' && !utils.isMac()) {
-        break
-      }
-      if (opt[1] === 'linux' && !utils.isLinux()) {
-        break
-      }
     } else {
       // No more env setters, the rest of the line must be the command and args
       command = args[i]

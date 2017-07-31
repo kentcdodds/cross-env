@@ -1,4 +1,4 @@
-import isWindowsMock from 'is-windows'
+import {isWindows as isWindowsMock} from './utils'
 import commandConvert from './command'
 
 beforeEach(() => {
@@ -39,13 +39,10 @@ test(`converts embedded unix-style env variables usage for windows`, () => {
 })
 
 // eslint-disable-next-line max-len
-test(
-  `leaves embedded variables unchanged when using correct operating system`,
-  () => {
-    isWindowsMock.__mock.returnValue = false
-    expect(commandConvert('$test1/$test2/$test3')).toBe('$test1/$test2/$test3')
-  },
-)
+test(`leaves embedded variables unchanged when using correct operating system`, () => {
+  isWindowsMock.__mock.returnValue = false
+  expect(commandConvert('$test1/$test2/$test3')).toBe('$test1/$test2/$test3')
+})
 
 test(`converts braced unix-style env variable usage for windows`, () => {
   isWindowsMock.__mock.returnValue = true

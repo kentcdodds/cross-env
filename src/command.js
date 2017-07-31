@@ -1,4 +1,4 @@
-import isWindows from 'is-windows'
+import {isWindows} from './utils'
 
 export default commandConvert
 
