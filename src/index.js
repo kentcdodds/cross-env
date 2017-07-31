@@ -1,10 +1,12 @@
 import {spawn} from 'cross-spawn'
 import commandConvert from './command'
 import varValueConvert from './variable'
+import * as utils from './utils'
 
 module.exports = crossEnv
 
 const envSetterRegex = /(\w+)=('(.*)'|"(.*)"|(.*))/
+const crossEnvOption = /--c-only-(\w+)/
 
 function crossEnv(args, options = {}) {
   const [envSetters, command, commandArgs] = parseCommand(args)
@@ -34,6 +36,7 @@ function parseCommand(args) {
   let commandArgs = []
   for (let i = 0; i < args.length; i++) {
     const match = envSetterRegex.exec(args[i])
+    const opt = crossEnvOption.exec(args[i])
     if (match) {
       let value
 
@@ -46,6 +49,17 @@ function parseCommand(args) {
       }
 
       envSetters[match[1]] = value
+    } else if (opt) {
+      // utils
+      if (opt[1] === 'windows' && !utils.isWindows()) {
+        break
+      }
+      if (opt[1] === 'mac' && !utils.isMac()) {
+        break
+      }
+      if (opt[1] === 'linux' && !utils.isLinux()) {
+        break
+      }
     } else {
       // No more env setters, the rest of the line must be the command and args
       command = args[i]
