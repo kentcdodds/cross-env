@@ -1,3 +1,4 @@
+import path from 'path'
 import isWindowsMock from 'is-windows'
 import commandConvert from './command'
 
@@ -34,7 +35,7 @@ test(`is stateless`, () => {
 test(`converts embedded unix-style env variables usage for windows`, () => {
   isWindowsMock.__mock.returnValue = true
   expect(commandConvert('$test1/$test2/$test3')).toBe(
-    '%test1%/%test2%/%test3%',
+    path.normalize('%test1%/%test2%/%test3%'),
   )
 })
 
