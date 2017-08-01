@@ -1,3 +1,4 @@
+import path from 'path'
 import isWindows from 'is-windows'
 
 export default commandConvert
@@ -12,5 +13,5 @@ function commandConvert(command) {
     return command
   }
   const envUnixRegex = /\$(\w+)|\${(\w+)}/g // $my_var or ${my_var}
-  return command.replace(envUnixRegex, '%$1$2%')
+  return path.normalize(command.replace(envUnixRegex, '%$1$2%'))
 }
