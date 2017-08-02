@@ -8,10 +8,10 @@ notifications:
 node_js:
   - '6'
 script:
-  - yarn start validate
+  - npm start validate
 after_success:
-  - yarn start report-coverage
-  - yarn start release
+  - npm start report-coverage
+  - npm start release
 branches:
   only:
     - master
