@@ -2,6 +2,8 @@ import crossSpawnMock from 'cross-spawn'
 
 const crossEnv = require('.')
 
+process.setMaxListeners(20)
+
 beforeEach(() => {
   crossSpawnMock.__mock.reset()
 })
