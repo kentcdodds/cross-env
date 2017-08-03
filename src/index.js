@@ -10,7 +10,9 @@ function crossEnv(args, options = {}) {
   const [envSetters, command, commandArgs] = parseCommand(args)
   if (command) {
     const proc = spawn(
-      commandConvert(command),
+      // run `path.normalize` for command(on windows)
+      commandConvert(command, true),
+      // by default normalize is `false`, so not run for cmd args
       commandArgs.map(commandConvert),
       {
         stdio: 'inherit',

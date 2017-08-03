@@ -1,4 +1,3 @@
-import path from 'path'
 import isWindowsMock from 'is-windows'
 import commandConvert from './command'
 
@@ -35,7 +34,7 @@ test(`is stateless`, () => {
 test(`converts embedded unix-style env variables usage for windows`, () => {
   isWindowsMock.__mock.returnValue = true
   expect(commandConvert('$test1/$test2/$test3')).toBe(
-    path.normalize('%test1%/%test2%/%test3%'),
+    '%test1%/%test2%/%test3%',
   )
 })
 
@@ -52,4 +51,11 @@ test(`converts braced unix-style env variable usage for windows`, () => {
   isWindowsMock.__mock.returnValue = true
   // eslint-disable-next-line no-template-curly-in-string
   expect(commandConvert('${test}')).toBe('%test%')
+})
+
+test(`normalizes command on windows`, () => {
+  isWindowsMock.__mock.returnValue = true
+  // index.js calls `commandConvert` with `normalize` param
+  // as `true` for command only
+  expect(commandConvert('./cmd.bat', true)).toBe('cmd.bat')
 })
