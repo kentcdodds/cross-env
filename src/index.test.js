@@ -1,4 +1,5 @@
 import crossSpawnMock from 'cross-spawn'
+import isWindowsMock from 'is-windows'
 
 const crossEnv = require('.')
 
@@ -76,6 +77,30 @@ it(`should handle quoted scripts`, () => {
 it(`should do nothing given no command`, () => {
   crossEnv([])
   expect(crossSpawnMock.spawn).toHaveBeenCalledTimes(0)
+})
+
+it(`should normalize command on windows`, () => {
+  isWindowsMock.__mock.returnValue = true
+  crossEnv(['./cmd.bat'])
+  expect(crossSpawnMock.spawn).toHaveBeenCalledWith('cmd.bat', [], {
+    stdio: 'inherit',
+    env: Object.assign({}, process.env),
+  })
+  isWindowsMock.__mock.reset()
+})
+
+it(`should not normalize command arguments on windows`, () => {
+  isWindowsMock.__mock.returnValue = true
+  crossEnv(['echo', 'http://example.com'])
+  expect(crossSpawnMock.spawn).toHaveBeenCalledWith(
+    'echo',
+    ['http://example.com'],
+    {
+      stdio: 'inherit',
+      env: Object.assign({}, process.env),
+    },
+  )
+  isWindowsMock.__mock.reset()
 })
 
 it(`should propagate kill signals`, () => {
