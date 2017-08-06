@@ -13,7 +13,7 @@ function crossEnv(args, options = {}) {
       // run `path.normalize` for command(on windows)
       commandConvert(command, true),
       // by default normalize is `false`, so not run for cmd args
-      commandArgs.map(commandConvert),
+      commandArgs.map(arg => commandConvert(arg)),
       {
         stdio: 'inherit',
         shell: options.shell,
