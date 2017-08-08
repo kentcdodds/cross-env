@@ -22,6 +22,8 @@ Run scripts that set and use environment variables across platforms
 [![Star on GitHub][github-star-badge]][github-star]
 [![Tweet][twitter-badge]][twitter]
 
+[![Sponsor](https://app.codesponsor.io/embed/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/cross-env.svg)](https://app.codesponsor.io/link/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/cross-env)
+
 ## The problem
 
 Most Windows command prompts will choke when you set environment variables with
@@ -45,6 +47,9 @@ should be installed as one of your project's `devDependencies`:
 ```
 npm install --save-dev cross-env
 ```
+
+> WARNING! Make sure that when you're installing packages that you spell things
+> correctly to avoid [mistakenly installing malware][malware]
 
 ## Usage
 
@@ -86,6 +91,7 @@ env variables or when the environment variables are too long to have everything
 in one line.
 
 Lastly, if you want to pass a JSON string (e.g., when using [ts-loader]), you can do as follows:
+
 ```json
 {
   "scripts": {
@@ -93,6 +99,7 @@ Lastly, if you want to pass a JSON string (e.g., when using [ts-loader]), you ca
   }
 }
 ```
+
 Pay special attention to the **triple backslash** `(\\\)` **before** the **double quotes** `(")` and the **absence** of **single quotes** `(')`.
 Both of these conditions have to be met in order to work both on Windows and UNIX.
 
@@ -191,3 +198,4 @@ MIT
 [angular-formly]: https://github.com/formly-js/angular-formly
 [cross-spawn]: https://www.npmjs.com/package/cross-spawn
 [ts-loader]: https://www.npmjs.com/package/ts-loader
+[malware]: http://blog.npmjs.org/post/163723642530/crossenv-malware-on-the-npm-registry
