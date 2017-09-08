@@ -1,7 +1,7 @@
 import crossSpawnMock from 'cross-spawn'
 import isWindowsMock from 'is-windows'
 
-const crossEnv = require('.')
+const crossEnv = require('../')
 
 process.setMaxListeners(20)
 
@@ -119,7 +119,8 @@ it(`should propagate kill signals`, () => {
 function testEnvSetting(expected, ...envSettings) {
   if (expected.APPDATA === 2) {
     // kill the APPDATA to test both is undefined
-    delete process.env.APPDATA
+    const {env} = process
+    delete env.APPDATA
     delete expected.APPDATA
   } else if (!process.env.APPDATA && expected.APPDATA === '0') {
     // set APPDATA and test it
