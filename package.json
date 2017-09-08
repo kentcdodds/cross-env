@@ -1,7 +1,8 @@
 {
   "name": "cross-env",
   "version": "0.0.0-semantically-released",
-  "description": "Run scripts that set and use environment variables across platforms",
+  "description":
+    "Run scripts that set and use environment variables across platforms",
   "main": "dist/index.js",
   "bin": {
     "cross-env": "dist/bin/cross-env.js",
@@ -11,15 +12,16 @@
     "node": ">=4.0"
   },
   "scripts": {
-    "start": "nps",
-    "test": "nps test",
-    "commitmsg": "opt --in commit-msg --exec \"validate-commit-msg\"",
-    "precommit": "lint-staged && opt --in pre-commit --exec \"npm start validate\""
+    "add-contributor": "kcd-scripts contributors add",
+    "build": "kcd-scripts build",
+    "lint": "kcd-scripts lint",
+    "test": "kcd-scripts test",
+    "test:update": "npm test -- --updateSnapshot --coverage",
+    "validate": "kcd-scripts validate",
+    "precommit": "kcd-scripts precommit"
   },
-  "files": [
-    "dist"
-  ],
-  "keywords": [],
+  "files": ["dist"],
+  "keywords": ["cross-environment", "environment variable", "windows"],
   "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",
   "license": "MIT",
   "dependencies": {
@@ -27,62 +29,12 @@
     "is-windows": "^1.0.0"
   },
   "devDependencies": {
-    "all-contributors-cli": "^4.0.1",
-    "babel-cli": "^6.24.1",
-    "babel-core": "^6.23.1",
-    "babel-jest": "^20.0.3",
-    "babel-preset-env": "^1.2.0",
-    "babel-preset-stage-2": "^6.22.0",
-    "babel-register": "^6.23.0",
-    "codecov": "^2.3.0",
-    "commitizen": "^2.9.6",
-    "cz-conventional-changelog": "^2.0.0",
-    "eslint": "^3.17.0",
-    "eslint-config-kentcdodds": "^12.0.0",
-    "husky": "^0.14.3",
-    "jest-cli": "^20.0.4",
-    "lint-staged": "^3.3.1",
-    "nps": "^5.0.3",
-    "nps-utils": "^1.1.2",
-    "opt-cli": "^1.5.1",
-    "prettier-eslint-cli": "^4.1.1",
-    "semantic-release": "^6.3.6",
-    "validate-commit-msg": "^2.11.1"
+    "kcd-scripts": "^0.3.4"
   },
   "eslintConfig": {
-    "extends": [
-      "kentcdodds",
-      "kentcdodds/jest"
-    ],
-    "rules": {
-      "max-len": [
-        "error",
-        80
-      ]
-    }
+    "extends": "./node_modules/kcd-scripts/eslint.js"
   },
-  "lint-staged": {
-    "*.js": [
-      "prettier-eslint --write",
-      "git add"
-    ]
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "coverageThreshold": {
-      "global": {
-        "branches": 100,
-        "functions": 100,
-        "lines": 100,
-        "statements": 100
-      }
-    }
-  },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-conventional-changelog"
-    }
-  },
+  "eslintIgnore": ["node_modules", "coverage", "dist"],
   "repository": {
     "type": "git",
     "url": "https://github.com/kentcdodds/cross-env.git"

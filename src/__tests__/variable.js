@@ -1,5 +1,5 @@
 import isWindowsMock from 'is-windows'
-import varValueConvert from './variable'
+import varValueConvert from '../variable'
 
 const JSON_VALUE = '{\\"foo\\":\\"bar\\"}'
 
@@ -11,9 +11,10 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-  delete process.env.VAR1
-  delete process.env.VAR2
-  delete process.env.JSON_VAR
+  const {env} = process
+  delete env.VAR1
+  delete env.VAR2
+  delete env.JSON_VAR
 })
 
 test(`doesn't affect simple variable values`, () => {
