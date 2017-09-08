@@ -157,6 +157,8 @@ This project follows the [all-contributors][all-contributors] specification. Con
 
 MIT
 
+[![Sponsor](https://app.codesponsor.io/embed/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/cross-env.svg)](https://app.codesponsor.io/link/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/cross-env)
+
 [npm]: https://www.npmjs.com/
 [node]: https://nodejs.org
 [build-badge]: https://img.shields.io/travis/kentcdodds/cross-env.svg?style=flat-square
@@ -197,5 +199,3 @@ MIT
 [cross-spawn]: https://www.npmjs.com/package/cross-spawn
 [ts-loader]: https://www.npmjs.com/package/ts-loader
 [malware]: http://blog.npmjs.org/post/163723642530/crossenv-malware-on-the-npm-registry
-
-[![Sponsor](https://app.codesponsor.io/embed/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/cross-env.svg)](https://app.codesponsor.io/link/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/cross-env)
