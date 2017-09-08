@@ -22,8 +22,6 @@ Run scripts that set and use environment variables across platforms
 [![Star on GitHub][github-star-badge]][github-star]
 [![Tweet][twitter-badge]][twitter]
 
-[![Sponsor](https://app.codesponsor.io/embed/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/cross-env.svg)](https://app.codesponsor.io/link/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/cross-env)
-
 ## The problem
 
 Most Windows command prompts will choke when you set environment variables with
@@ -199,3 +197,5 @@ MIT
 [cross-spawn]: https://www.npmjs.com/package/cross-spawn
 [ts-loader]: https://www.npmjs.com/package/ts-loader
 [malware]: http://blog.npmjs.org/post/163723642530/crossenv-malware-on-the-npm-registry
+
+[![Sponsor](https://app.codesponsor.io/embed/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/cross-env.svg)](https://app.codesponsor.io/link/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/cross-env)
