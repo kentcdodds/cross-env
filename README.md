@@ -130,8 +130,8 @@ contains special shell characters *that you want interpreted*, then use
 ## Inspiration
 
 I originally created this to solve a problem I was having with my npm scripts in
-[angular-formly][angular-formly]. This made it made contributing to the project
-much easier for windows users.
+[angular-formly][angular-formly]. This made contributing to the project
+much easier for Windows users.
 
 ## Other Solutions
 
