@@ -97,3 +97,23 @@ test(`resolves an env variable with a JSON string value on UNIX`, () => {
   isWindowsMock.__mock.returnValue = false
   expect(varValueConvert('$JSON_VAR')).toBe(JSON_VALUE)
 })
+
+test(`does not resolve an env variable prefixed with \\ on Windows`, () => {
+  isWindowsMock.__mock.returnValue = true
+  expect(varValueConvert('\\$VAR1')).toBe('$VAR1')
+})
+
+test(`does not resolve an env variable prefixed with \\ on UNIX`, () => {
+  isWindowsMock.__mock.returnValue = false
+  expect(varValueConvert('\\$VAR1')).toBe('$VAR1')
+})
+
+test(`resolves an env variable prefixed with \\\\ on Windows`, () => {
+  isWindowsMock.__mock.returnValue = true
+  expect(varValueConvert('\\\\$VAR1')).toBe('\\value1')
+})
+
+test(`resolves an env variable prefixed with \\\\ on UNIX`, () => {
+  isWindowsMock.__mock.returnValue = false
+  expect(varValueConvert('\\\\$VAR1')).toBe('\\value1')
+})
