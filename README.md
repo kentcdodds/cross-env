@@ -88,7 +88,7 @@ the parent. This is quite useful for launching the same command with different
 env variables or when the environment variables are too long to have everything
 in one line.
 
-If you preceed a dollar sign with an odd number of backslashes the expression statement will not be replaced. Note that this means backslashes after the JSON string escaping took place. `"FOO=\\$BAR"` will not be replaced. `"FOO=\\\\$BAR"` will be replaced tough.
+If you preceed a dollar sign with an odd number of backslashes the expression statement will not be replaced. Note that this means backslashes after the JSON string escaping took place. `"FOO=\\$BAR"` will not be replaced. `"FOO=\\\\$BAR"` will be replaced though.
 
 Lastly, if you want to pass a JSON string (e.g., when using [ts-loader]), you can do as follows:
 
