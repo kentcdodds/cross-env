@@ -1,6 +1,11 @@
-# cross-env
+<div align="center">
+<h1>cross-env 🔀</h1>
 
 Run scripts that set and use environment variables across platforms
+
+</div>
+
+<hr />
 
 [![Travis Build Status][build-badge]][build]
 [![AppVeyor Build Status][win-build-badge]][win-build]
@@ -21,6 +26,10 @@ Run scripts that set and use environment variables across platforms
 [![Watch on GitHub][github-watch-badge]][github-watch]
 [![Star on GitHub][github-star-badge]][github-star]
 [![Tweet][twitter-badge]][twitter]
+
+<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/cross-env'>
+  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/cross-env.svg' />
+</a>
 
 ## The problem
 
@@ -158,8 +167,6 @@ This project follows the [all-contributors][all-contributors] specification. Con
 ## LICENSE
 
 MIT
-
-[![Sponsor](https://app.codesponsor.io/embed/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/cross-env.svg)](https://app.codesponsor.io/link/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/cross-env)
 
 [npm]: https://www.npmjs.com/
 [node]: https://nodejs.org
