@@ -29,9 +29,9 @@ function replaceListDelimiters(varValue, varName = '') {
 /**
  * This will attempt to resolve the value of any env variables that are inside
  * this string. For example, it will transform this:
- * cross-env FOO=$NODE_ENV echo $FOO
+ * cross-env FOO=$NODE_ENV BAR=\\$NODE_ENV echo $FOO $BAR
  * Into this:
- * FOO=development echo $FOO
+ * FOO=development BAR=$NODE_ENV echo $FOO
  * (Or whatever value the variable NODE_ENV has)
  * Note that this function is only called with the right-side portion of the
  * env var assignment, so in that example, this function would transform
@@ -40,10 +40,20 @@ function replaceListDelimiters(varValue, varName = '') {
  * @returns {String} Converted value
  */
 function resolveEnvVars(varValue) {
-  const envUnixRegex = /\$(\w+)|\${(\w+)}/g // $my_var or ${my_var}
-  return varValue.replace(envUnixRegex, (_, varName, altVarName) => {
-    return process.env[varName || altVarName] || ''
-  })
+  const envUnixRegex = /(\\*)(\$(\w+)|\${(\w+)})/g // $my_var or ${my_var} or \$my_var
+  return varValue.replace(
+    envUnixRegex,
+    (_, escapeChars, varNameWithDollarSign, varName, altVarName) => {
+      // do not replace things preceded by a odd number of \
+      if (escapeChars.length % 2 === 1) {
+        return varNameWithDollarSign
+      }
+      return (
+        escapeChars.substr(0, escapeChars.length / 2) +
+        (process.env[varName || altVarName] || '')
+      )
+    },
+  )
 }
 
 /**
