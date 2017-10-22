@@ -1,6 +1,6 @@
 const jestConfig = require('kcd-scripts/config').jest
 
 jestConfig.coveragePathIgnorePatterns = jestConfig.coveragePathIgnorePatterns.concat(
-  ['/bin/'],
+  ['/bin/']
 )
 module.exports = jestConfig
