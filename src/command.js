@@ -22,7 +22,7 @@ function commandConvert(command, env, normalize = false) {
     // so for example "echo %FOO%" will literally print the string "%FOO%", as
     // opposed to printing an empty string in UNIX. See kentcdodds/cross-env#145
     // If the env variable isn't defined at runtime, just strip it from the command entirely
-    return varName in env ? `%${varName}%` : ''
+    return env[varName] ? `%${varName}%` : ''
   })
   // Normalization is required for commands with relative paths
   // For example, `./cmd.bat`. See kentcdodds/cross-env#127
