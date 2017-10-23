@@ -5,7 +5,8 @@ const env = {
   test: 'a',
   test1: 'b',
   test2: 'c',
-  test3: 'd'
+  test3: 'd',
+  empty_var: ''
 }
 
 beforeEach(() => {
@@ -53,6 +54,16 @@ test(`converts braced unix-style env variable usage for windows`, () => {
   isWindowsMock.__mock.returnValue = true
   // eslint-disable-next-line no-template-curly-in-string
   expect(commandConvert('${test}', env)).toBe('%test%')
+})
+
+test(`removes non-existent variables from the converted command`, () => {
+  isWindowsMock.__mock.returnValue = true
+  expect(commandConvert('$test1/$foo/$test2', env)).toBe('%test1%//%test2%')
+})
+
+test(`removes empty variables from the converted command`, () => {
+  isWindowsMock.__mock.returnValue = true
+  expect(commandConvert('$foo/$test/$empty_var', env)).toBe('/%test%/')
 })
 
 test(`normalizes command on windows`, () => {
