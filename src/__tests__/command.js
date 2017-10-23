@@ -6,7 +6,7 @@ const env = {
   test1: 'b',
   test2: 'c',
   test3: 'd',
-  empty_var: ''
+  'empty_var': ''
 }
 
 beforeEach(() => {
