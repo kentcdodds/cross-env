@@ -8,16 +8,17 @@ const envSetterRegex = /(\w+)=('(.*)'|"(.*)"|(.*))/
 
 function crossEnv(args, options = {}) {
   const [envSetters, command, commandArgs] = parseCommand(args)
+  const env = getEnvVars(envSetters)
   if (command) {
     const proc = spawn(
       // run `path.normalize` for command(on windows)
-      commandConvert(command, true),
+      commandConvert(command, env, true),
       // by default normalize is `false`, so not run for cmd args
-      commandArgs.map(arg => commandConvert(arg)),
+      commandArgs.map(arg => commandConvert(arg, env)),
       {
         stdio: 'inherit',
         shell: options.shell,
-        env: getEnvVars(envSetters),
+        env,
       },
     )
     process.on('SIGTERM', () => proc.kill('SIGTERM'))
