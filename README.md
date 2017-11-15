@@ -82,10 +82,12 @@ The `NODE_ENV` environment variable will be set by `cross-env`
 You can also split a command into several ones, or separate the environment
 variables declaration from the actual command execution. You can do it this way:
 
-```json
+```javascript
 {
   "scripts": {
     "parentScript": "cross-env GREET=\"Joe\" npm run childScript",
+
+    // Prints "Hello Joe" on POSIX systems (e.g. OS X, Linux, etc)
     "childScript": "echo Hello $GREET"
   }
 }
@@ -96,6 +98,33 @@ the environment variables to use. Then instead of run the childScript you run
 the parent. This is quite useful for launching the same command with different
 env variables or when the environment variables are too long to have everything
 in one line.
+
+On Windows you will still need to wrap environment variables passed to child
+scripts in `%` characters:
+
+```javascript
+{
+  "scripts": {
+    "parentScript": "cross-env GREET=\"Joe\" npm run childScript",
+
+    // Prints "Hello Joe" on Windows
+    "childScript": "echo Hello %GREET%"
+  }
+}
+```
+
+They will be available to subprocesses as normal however:
+
+```javascript
+{
+  "scripts": {
+    "parentScript": "cross-env GREET=\"Joe\" npm run childScript",
+
+    // Prints "Hello Joe" on Windows and POSIX systems
+    "childScript": "node -e \"console.log('Hello', process.env.GREET)\""
+  }
+}
+```
 
 If you preceed a dollar sign with an odd number of backslashes the expression statement will not be replaced. Note that this means backslashes after the JSON string escaping took place. `"FOO=\\$BAR"` will not be replaced. `"FOO=\\\\$BAR"` will be replaced though.
 
