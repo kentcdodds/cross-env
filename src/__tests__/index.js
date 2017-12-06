@@ -58,20 +58,32 @@ it(`should handle no value after the equals sign`, () => {
   testEnvSetting({FOO_ENV: ''}, 'FOO_ENV=')
 })
 
+it(`should use default value if not defined`, () => {
+  testEnvSetting({FOO_ENV: 'foo'}, 'FOO_ENV=${FOO_ENV:foo}') // eslint-disable-line no-template-curly-in-string
+})
+
+it(`should not set not-overridable value if defined`, () => {
+  process.env.FOO_ENV = 'bar'
+  testEnvSetting({FOO_ENV: 'bar'}, 'FOO_ENV=${FOO_ENV:foo}') // eslint-disable-line no-template-curly-in-string
+  delete process.env.FOO_ENV
+})
+
 it(`should handle quoted scripts`, () => {
   crossEnv(['GREETING=Hi', 'NAME=Joe', 'echo $GREETING && echo $NAME'], {
     shell: true,
   })
-  expect(
-    crossSpawnMock.spawn,
-  ).toHaveBeenCalledWith('echo $GREETING && echo $NAME', [], {
-    stdio: 'inherit',
-    shell: true,
-    env: Object.assign({}, process.env, {
-      GREETING: 'Hi',
-      NAME: 'Joe',
-    }),
-  })
+  expect(crossSpawnMock.spawn).toHaveBeenCalledWith(
+    'echo $GREETING && echo $NAME',
+    [],
+    {
+      stdio: 'inherit',
+      shell: true,
+      env: Object.assign({}, process.env, {
+        GREETING: 'Hi',
+        NAME: 'Joe',
+      }),
+    },
+  )
 })
 
 it(`should do nothing given no command`, () => {

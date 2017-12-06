@@ -112,6 +112,20 @@ Lastly, if you want to pass a JSON string (e.g., when using [ts-loader]), you ca
 Pay special attention to the **triple backslash** `(\\\)` **before** the **double quotes** `(")` and the **absence** of **single quotes** `(')`.
 Both of these conditions have to be met in order to work both on Windows and UNIX.
 
+### Default value
+
+You can also use Bash-like syntax to assign default value to variables: `"FOO=${BAR:default value}"`.
+
+This is useful when you do not want to override existing environment variable. In following example, `NODE_ENV` will **always** be set to `production` (whatever is globally set), but `NODE_CONFIG_DIR` will be set **only** if it does not already exist:
+
+```json
+{
+  "scripts": {
+    "start": "cross-env NODE_CONFIG_DIR=${NODE_CONFIG_DIR:/data/config} NODE_ENV=production node server.js"
+  }
+}
+```
+
 ## `cross-env` vs `cross-env-shell`
 
 The `cross-env` module exposes two bins: `cross-env` and `cross-env-shell`. The
