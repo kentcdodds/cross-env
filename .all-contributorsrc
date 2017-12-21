@@ -154,6 +154,15 @@
         "example",
         "test"
       ]
+    },
+    {
+      "login": "NicoZelaya",
+      "name": "D. Nicolás Lopez Zelaya",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/5522668?v=4",
+      "profile": "https://github.com/NicoZelaya",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
