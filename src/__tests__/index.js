@@ -74,6 +74,23 @@ it(`should handle quoted scripts`, () => {
   })
 })
 
+it(`should handle escaped characters`, () => {
+  // this escapes \,",' and $
+  crossEnv(['GREETING=Hi', 'NAME=Joe', 'echo \\"\\\'\\$GREETING\\\'\\" && echo $NAME'], {
+    shell: true,
+  })
+  expect(
+    crossSpawnMock.spawn,
+  ).toHaveBeenCalledWith("echo \"'$GREETING'\" && echo $NAME", [], {
+    stdio: 'inherit',
+    shell: true,
+    env: Object.assign({}, process.env, {
+      GREETING: 'Hi',
+      NAME: 'Joe',
+    }),
+  })
+})
+
 it(`should do nothing given no command`, () => {
   crossEnv([])
   expect(crossSpawnMock.spawn).toHaveBeenCalledTimes(0)
