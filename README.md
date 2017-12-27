@@ -86,7 +86,7 @@ variables declaration from the actual command execution. You can do it this way:
 {
   "scripts": {
     "parentScript": "cross-env GREET=\"Joe\" npm run childScript",
-    "childScript": "echo Hello $GREET"
+    "childScript": "cross-env-shell \"echo Hello $GREET\""
   }
 }
 ```
@@ -95,7 +95,8 @@ Where `childScript` holds the actual command to execute and `parentScript` sets
 the environment variables to use. Then instead of run the childScript you run
 the parent. This is quite useful for launching the same command with different
 env variables or when the environment variables are too long to have everything
-in one line.
+in one line.  It also means that you can use `$GREET` env var syntax even on
+Windows which would usually require it to be `%GREET%`.
 
 If you preceed a dollar sign with an odd number of backslashes the expression statement will not be replaced. Note that this means backslashes after the JSON string escaping took place. `"FOO=\\$BAR"` will not be replaced. `"FOO=\\\\$BAR"` will be replaced though.
 
