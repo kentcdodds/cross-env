@@ -51,8 +51,22 @@ function parseCommand(args) {
       envSetters[match[1]] = value
     } else {
       // No more env setters, the rest of the line must be the command and args
-      command = args[i]
-      commandArgs = args.slice(i + 1)
+      let cStart = []
+      cStart = args
+        .slice(i)
+        // Regex:
+        // match "\'" or "'"
+        // or match "\" if followed by [$"\] (lookahead)
+        .map(a => {
+          const re = /(\\)?'|([\\])(?=[$"\\])/g
+          // Eliminate all matches except for "\'" => "'"
+          return a.replace(re, m => {
+            if (m === "\\'") return "'"
+            return ''
+          })
+        })
+      command = cStart[0]
+      commandArgs = cStart.slice(1)
       break
     }
   }
