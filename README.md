@@ -119,7 +119,7 @@ The `cross-env` module exposes two bins: `cross-env` and `cross-env-shell`. The
 first one executes commands using [`cross-spawn`][cross-spawn], while the
 second one uses the `shell` option from Node's `spawn`.
 
-The main use case for `cross-env-shell` is when your need an environment
+The main use case for `cross-env-shell` is when you need an environment
 variable to be set across an entire inline shell script, rather than just one
 command.
 
