@@ -3,6 +3,7 @@ coverage
 dist
 .opt-in
 .opt-out
+.eslintcache
 
 # Lock files
 yarn.lock
