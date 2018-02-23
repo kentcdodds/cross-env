@@ -79,6 +79,14 @@ webpack --config build/webpack.config.js
 
 The `NODE_ENV` environment variable will be set by `cross-env`
 
+Optionally, you can set the variable only if it's not set in environment already:
+
+```json
+    "build": "cross-env NODE_ENV?=production webpack --config build/webpack.config.js"
+```
+
+That way, the build will default to production environment, but allow you to override it.
+
 You can also split a command into several ones, or separate the environment
 variables declaration from the actual command execution. You can do it this way:
 
@@ -124,7 +132,7 @@ variable to be set across an entire inline shell script, rather than just one
 command.
 
 For example, if you want to have the environment variable apply to several
-commands in series then you will need to wrap those in quotes and use 
+commands in series then you will need to wrap those in quotes and use
 `cross-env-shell` instead of `cross-env`.
 
 ```json

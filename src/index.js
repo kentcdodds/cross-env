@@ -4,7 +4,14 @@ import varValueConvert from './variable'
 
 module.exports = crossEnv
 
-const envSetterRegex = /(\w+)=('(.*)'|"(.*)"|(.*))/
+const envSetterRegex = /(\w+)(\??)=('(.*)'|"(.*)"|(.*))/
+
+function splitEnvSetterMatch(match) { // eslint-disable-line complexity
+  const name = match[1]
+  const isDefault = match[2]
+  const value = isDefault && process.env[name] || match[4] || match[5] || match[6] || ''
+  return {name, value}
+}
 
 function crossEnv(args, options = {}) {
   const [envSetters, command, commandArgs] = parseCommand(args)
@@ -38,17 +45,8 @@ function parseCommand(args) {
   for (let i = 0; i < args.length; i++) {
     const match = envSetterRegex.exec(args[i])
     if (match) {
-      let value
-
-      if (typeof match[3] !== 'undefined') {
-        value = match[3]
-      } else if (typeof match[4] === 'undefined') {
-        value = match[5]
-      } else {
-        value = match[4]
-      }
-
-      envSetters[match[1]] = value
+      const {name, value} = splitEnvSetterMatch(match)
+      envSetters[name] = value
     } else {
       // No more env setters, the rest of the line must be the command and args
       let cStart = []
