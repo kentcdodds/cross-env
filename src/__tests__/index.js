@@ -6,6 +6,8 @@ const crossEnv = require('../')
 process.setMaxListeners(20)
 
 beforeEach(() => {
+  delete process.env.FOO_ENV
+  process.env.FOO_ENV_DEFAULT = 'default'
   crossSpawnMock.__mock.reset()
 })
 
@@ -56,6 +58,14 @@ it(`should handle empty double-quoted strings`, () => {
 
 it(`should handle no value after the equals sign`, () => {
   testEnvSetting({FOO_ENV: ''}, 'FOO_ENV=')
+})
+
+it(`should use default value if variable is not already set`, () => {
+  testEnvSetting({FOO_ENV: 'custom'}, 'FOO_ENV?=custom')
+})
+
+it(`should not use default value if variable is already set`, () => {
+  testEnvSetting({FOO_ENV_DEFAULT: 'default'}, 'FOO_ENV_DEFAULT?=custom')
 })
 
 it(`should handle quoted scripts`, () => {

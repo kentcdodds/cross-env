@@ -163,6 +163,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "iki",
+      "name": "Jan Killian",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/149730?v=4",
+      "profile": "http://j.mp/jan-killian",
+      "contributions": [
+        "code",
+        "doc",
+        "test"
+      ]
     }
   ]
 }
