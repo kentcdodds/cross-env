@@ -58,9 +58,10 @@ function parseCommand(args) {
         // match "\'" or "'"
         // or match "\" if followed by [$"\] (lookahead)
         .map(a => {
-          const re = /(\\)?'|([\\])(?=[$"\\])/g
+          const re = /\\\\|(\\)?'|([\\])(?=[$"\\])/g
           // Eliminate all matches except for "\'" => "'"
           return a.replace(re, m => {
+            if (m === "\\\\") return "\\"
             if (m === "\\'") return "'"
             return ''
           })

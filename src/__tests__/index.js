@@ -133,6 +133,21 @@ it(`should propagate kill signals`, () => {
   expect(crossSpawnMock.__mock.spawned.kill).toHaveBeenCalledWith('SIGBREAK')
 })
 
+it(`should keep backslashes`, () => {
+  isWindowsMock.__mock.returnValue = true
+  crossEnv(['echo', '\\\\\\\\someshare\\\\somefolder'])
+  expect(crossSpawnMock.spawn).toHaveBeenCalledWith(
+    'echo',
+    ['\\\\someshare\\somefolder'],
+    {
+      stdio: 'inherit',
+      env: Object.assign({}, process.env),
+    },
+  )
+  isWindowsMock.__mock.reset()
+})
+
+
 function testEnvSetting(expected, ...envSettings) {
   if (expected.APPDATA === 2) {
     // kill the APPDATA to test both is undefined
