@@ -163,6 +163,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "bithavoc",
+      "name": "Johan Hernandez",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/219289?v=4",
+      "profile": "http://bithavoc.io",
+      "contributions": [
+        "code"
+      ]
     }
-  ]
+  ],
+  "repoType": "github"
 }

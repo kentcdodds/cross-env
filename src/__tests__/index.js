@@ -62,33 +62,40 @@ it(`should handle quoted scripts`, () => {
   crossEnv(['GREETING=Hi', 'NAME=Joe', 'echo $GREETING && echo $NAME'], {
     shell: true,
   })
-  expect(
-    crossSpawnMock.spawn,
-  ).toHaveBeenCalledWith('echo $GREETING && echo $NAME', [], {
-    stdio: 'inherit',
-    shell: true,
-    env: Object.assign({}, process.env, {
-      GREETING: 'Hi',
-      NAME: 'Joe',
-    }),
-  })
+  expect(crossSpawnMock.spawn).toHaveBeenCalledWith(
+    'echo $GREETING && echo $NAME',
+    [],
+    {
+      stdio: 'inherit',
+      shell: true,
+      env: Object.assign({}, process.env, {
+        GREETING: 'Hi',
+        NAME: 'Joe',
+      }),
+    },
+  )
 })
 
 it(`should handle escaped characters`, () => {
   // this escapes \,",' and $
-  crossEnv(['GREETING=Hi', 'NAME=Joe', 'echo \\"\\\'\\$GREETING\\\'\\" && echo $NAME'], {
-    shell: true,
-  })
-  expect(
-    crossSpawnMock.spawn,
-  ).toHaveBeenCalledWith("echo \"'$GREETING'\" && echo $NAME", [], {
-    stdio: 'inherit',
-    shell: true,
-    env: Object.assign({}, process.env, {
-      GREETING: 'Hi',
-      NAME: 'Joe',
-    }),
-  })
+  crossEnv(
+    ['GREETING=Hi', 'NAME=Joe', 'echo \\"\\\'\\$GREETING\\\'\\" && echo $NAME'],
+    {
+      shell: true,
+    },
+  )
+  expect(crossSpawnMock.spawn).toHaveBeenCalledWith(
+    'echo "\'$GREETING\'" && echo $NAME',
+    [],
+    {
+      stdio: 'inherit',
+      shell: true,
+      env: Object.assign({}, process.env, {
+        GREETING: 'Hi',
+        NAME: 'Joe',
+      }),
+    },
+  )
 })
 
 it(`should do nothing given no command`, () => {
@@ -133,6 +140,24 @@ it(`should propagate kill signals`, () => {
   expect(crossSpawnMock.__mock.spawned.kill).toHaveBeenCalledWith('SIGBREAK')
 })
 
+it(`should propagate unhandled exit signal`, () => {
+  process.exit = jest.fn()
+  testEnvSetting({FOO_ENV: 'foo=bar'}, 'FOO_ENV="foo=bar"')
+  const spawnExitCallback = crossSpawnMock.__mock.spawned.on.mock.calls[0][1]
+  const spawnExitCode = null
+  spawnExitCallback(spawnExitCode)
+  expect(process.exit).toHaveBeenCalledWith(1)
+})
+
+it(`should propagate regular exit code`, () => {
+  process.exit = jest.fn()
+  testEnvSetting({FOO_ENV: 'foo=bar'}, 'FOO_ENV="foo=bar"')
+  const spawnExitCallback = crossSpawnMock.__mock.spawned.on.mock.calls[0][1]
+  const spawnExitCode = 0
+  spawnExitCallback(spawnExitCode)
+  expect(process.exit).toHaveBeenCalledWith(0)
+})
+
 it(`should keep backslashes`, () => {
   isWindowsMock.__mock.returnValue = true
   crossEnv(['echo', '\\\\\\\\someshare\\\\somefolder'])
@@ -146,7 +171,6 @@ it(`should keep backslashes`, () => {
   )
   isWindowsMock.__mock.reset()
 })
-
 
 function testEnvSetting(expected, ...envSettings) {
   if (expected.APPDATA === 2) {
