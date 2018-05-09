@@ -1,6 +1,7 @@
 {
   "projectName": "cross-env",
   "projectOwner": "kentcdodds",
+  "repoType": "github",
   "files": [
     "README.md"
   ],
@@ -160,6 +161,15 @@
       "name": "D. Nicolás Lopez Zelaya",
       "avatar_url": "https://avatars0.githubusercontent.com/u/5522668?v=4",
       "profile": "https://github.com/NicoZelaya",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "bithavoc",
+      "name": "Johan Hernandez",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/219289?v=4",
+      "profile": "http://bithavoc.io",
       "contributions": [
         "code"
       ]

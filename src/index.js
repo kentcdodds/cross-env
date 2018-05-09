@@ -25,7 +25,10 @@ function crossEnv(args, options = {}) {
     process.on('SIGINT', () => proc.kill('SIGINT'))
     process.on('SIGBREAK', () => proc.kill('SIGBREAK'))
     process.on('SIGHUP', () => proc.kill('SIGHUP'))
-    proc.on('exit', process.exit)
+    proc.on('exit', code => {
+      // exit code could be null when OS kills the process(out of memory, etc)
+      process.exit(code === null ? 1 : code)
+    })
     return proc
   }
   return null
@@ -61,7 +64,7 @@ function parseCommand(args) {
           const re = /\\\\|(\\)?'|([\\])(?=[$"\\])/g
           // Eliminate all matches except for "\'" => "'"
           return a.replace(re, m => {
-            if (m === "\\\\") return "\\"
+            if (m === '\\\\') return '\\'
             if (m === "\\'") return "'"
             return ''
           })
