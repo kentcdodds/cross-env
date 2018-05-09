@@ -1,6 +1,7 @@
 {
   "projectName": "cross-env",
   "projectOwner": "kentcdodds",
+  "repoType": "github",
   "files": [
     "README.md"
   ],
@@ -173,6 +174,5 @@
         "code"
       ]
     }
-  ],
-  "repoType": "github"
+  ]
 }
