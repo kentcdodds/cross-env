@@ -149,6 +149,16 @@ it(`should propagate unhandled exit signal`, () => {
   expect(process.exit).toHaveBeenCalledWith(1)
 })
 
+it(`should exit cleanly with SIGINT with a null exit code`, () => {
+  process.exit = jest.fn()
+  testEnvSetting({FOO_ENV: 'foo=bar'}, 'FOO_ENV="foo=bar"')
+  const spawnExitCallback = crossSpawnMock.__mock.spawned.on.mock.calls[0][1]
+  const spawnExitCode = null
+  const spawnExitSignal = 'SIGINT'
+  spawnExitCallback(spawnExitCode, spawnExitSignal)
+  expect(process.exit).toHaveBeenCalledWith(0)
+})
+
 it(`should propagate regular exit code`, () => {
   process.exit = jest.fn()
   testEnvSetting({FOO_ENV: 'foo=bar'}, 'FOO_ENV="foo=bar"')

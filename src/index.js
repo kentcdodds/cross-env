@@ -25,9 +25,14 @@ function crossEnv(args, options = {}) {
     process.on('SIGINT', () => proc.kill('SIGINT'))
     process.on('SIGBREAK', () => proc.kill('SIGBREAK'))
     process.on('SIGHUP', () => proc.kill('SIGHUP'))
-    proc.on('exit', code => {
-      // exit code could be null when OS kills the process(out of memory, etc)
-      process.exit(code === null ? 1 : code)
+    proc.on('exit', (code, signal) => {
+      let crossEnvExitCode = code
+      // exit code could be null when OS kills the process(out of memory, etc) or due to node handling it
+      // but if the signal is SIGINT the user exited the process so we want exit code 0
+      if (crossEnvExitCode === null) {
+        crossEnvExitCode = signal === 'SIGINT' ? 0 : 1
+      }
+      process.exit(crossEnvExitCode) //eslint-disable-line no-process-exit
     })
     return proc
   }
