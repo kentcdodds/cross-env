@@ -5,7 +5,7 @@ cache:
     - ~/.npm
 notifications:
   email: false
-node_js: '8'
+node_js: '4'
 install: npm install
 script: npm run validate
 after_success:
