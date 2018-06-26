@@ -27,10 +27,6 @@ Run scripts that set and use environment variables across platforms
 [![Star on GitHub][github-star-badge]][github-star]
 [![Tweet][twitter-badge]][twitter]
 
-<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/cross-env'>
-  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/cross-env.svg' />
-</a>
-
 ## The problem
 
 Most Windows command prompts will choke when you set environment variables with
