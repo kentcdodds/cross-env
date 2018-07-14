@@ -1,8 +1,7 @@
 {
   "name": "cross-env",
   "version": "0.0.0-semantically-released",
-  "description":
-    "Run scripts that set and use environment variables across platforms",
+  "description": "Run scripts that set and use environment variables across platforms",
   "main": "dist/index.js",
   "bin": {
     "cross-env": "dist/bin/cross-env.js",
@@ -20,8 +19,14 @@
     "validate": "kcd-scripts validate",
     "precommit": "kcd-scripts precommit"
   },
-  "files": ["dist"],
-  "keywords": ["cross-environment", "environment variable", "windows"],
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "cross-environment",
+    "environment variable",
+    "windows"
+  ],
   "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",
   "license": "MIT",
   "dependencies": {
@@ -29,12 +34,20 @@
     "is-windows": "^1.0.0"
   },
   "devDependencies": {
+    "condition-circle": "^2.0.1",
     "kcd-scripts": "^0.3.4"
+  },
+  "release": {
+    "verifyConditions": "condition-circle"
   },
   "eslintConfig": {
     "extends": "./node_modules/kcd-scripts/eslint.js"
   },
-  "eslintIgnore": ["node_modules", "coverage", "dist"],
+  "eslintIgnore": [
+    "node_modules",
+    "coverage",
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/kentcdodds/cross-env.git"
