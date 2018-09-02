@@ -146,6 +146,7 @@ much easier for Windows users.
 ## Other Solutions
 
 - [`env-cmd`](https://github.com/toddbluhm/env-cmd) - Reads environment variables from a file instead
+- [`@naholyr/cross-env`](https://www.npmjs.com/package/@naholyr/cross-env) - `cross-env` with support for setting default values
 
 ## Contributors
 
