@@ -94,7 +94,7 @@ env variables or when the environment variables are too long to have everything
 in one line.  It also means that you can use `$GREET` env var syntax even on
 Windows which would usually require it to be `%GREET%`.
 
-If you preceed a dollar sign with an odd number of backslashes the expression statement will not be replaced. Note that this means backslashes after the JSON string escaping took place. `"FOO=\\$BAR"` will not be replaced. `"FOO=\\\\$BAR"` will be replaced though.
+If you precede a dollar sign with an odd number of backslashes the expression statement will not be replaced. Note that this means backslashes after the JSON string escaping took place. `"FOO=\\$BAR"` will not be replaced. `"FOO=\\\\$BAR"` will be replaced though.
 
 Lastly, if you want to pass a JSON string (e.g., when using [ts-loader]), you can do as follows:
 
