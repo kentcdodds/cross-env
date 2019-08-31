@@ -1,5 +1,7 @@
 import crossSpawnMock from 'cross-spawn'
-import isWindowsMock from 'is-windows'
+import isWindowsMock from '../is-windows'
+
+jest.mock('../is-windows')
 
 const crossEnv = require('../')
 
