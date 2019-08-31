@@ -1,5 +1,7 @@
-import isWindowsMock from 'is-windows'
+import isWindowsMock from '../is-windows'
 import commandConvert from '../command'
+
+jest.mock('../is-windows')
 
 const env = {
   test: 'a',

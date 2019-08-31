@@ -1,5 +1,5 @@
 import path from 'path'
-import isWindows from 'is-windows'
+import isWindows from './is-windows'
 
 export default commandConvert
 

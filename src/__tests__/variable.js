@@ -1,5 +1,7 @@
-import isWindowsMock from 'is-windows'
+import isWindowsMock from '../is-windows'
 import varValueConvert from '../variable'
+
+jest.mock('../is-windows')
 
 const JSON_VALUE = '{\\"foo\\":\\"bar\\"}'
 

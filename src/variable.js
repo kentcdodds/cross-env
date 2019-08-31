@@ -1,4 +1,4 @@
-import isWindows from 'is-windows'
+import isWindows from './is-windows'
 
 const pathLikeEnvVarWhitelist = new Set(['PATH', 'NODE_PATH'])
 
