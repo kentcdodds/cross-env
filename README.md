@@ -54,6 +54,9 @@ npm install --save-dev cross-env
 > WARNING! Make sure that when you're installing packages that you spell things
 > correctly to avoid [mistakenly installing malware][malware]
 
+> NOTE : Version 6 of cross-env only supports Node.js 8 and higher, to use it on Node.js 7 or lower install version 5
+> ```npm install --save-dev cross-env@5 ```
+
 ## Usage
 
 I use this in my npm scripts:

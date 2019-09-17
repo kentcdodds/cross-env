@@ -25,7 +25,7 @@
   "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",
   "license": "MIT",
   "dependencies": {
-    "cross-spawn": "^6.0.5"
+    "cross-spawn": "^7.0.0"
   },
   "devDependencies": {
     "kcd-scripts": "^0.3.4"
