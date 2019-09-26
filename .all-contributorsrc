@@ -202,6 +202,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "coderberry",
+      "name": "Eric Berry",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/12481?v=4",
+      "profile": "https://codefund.io",
+      "contributions": [
+        "fundingFinding"
+      ]
     }
   ],
   "repoHost": "https://github.com",
