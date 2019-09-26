@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://codefund.io/properties/445/visit-sponsor">
+    <img src="https://codefund.io/properties/445/sponsor" />
+  </a>
+</p>
+
 <div align="center">
 <h1>cross-env 🔀</h1>
 
