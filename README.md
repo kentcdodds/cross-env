@@ -1,20 +1,3 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-- [cross-env 🔀](#cross-env-)
-  - [The problem](#the-problem)
-  - [This solution](#this-solution)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [`cross-env` vs `cross-env-shell`](#cross-env-vs-cross-env-shell)
-  - [Windows Issues](#windows-issues)
-  - [Inspiration](#inspiration)
-  - [Other Solutions](#other-solutions)
-  - [Contributors](#contributors)
-  - [LICENSE](#license)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 <p align="center">
   <a href="https://codefund.io/properties/445/visit-sponsor">
     <img src="https://codefund.io/properties/445/sponsor" />
@@ -53,6 +36,20 @@ and on windows you use `%ENV_VAR%`.
 setting or using the environment variable properly for the platform. Just set it
 like you would if it's running on a POSIX system, and `cross-env` will take care
 of setting it properly.
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [`cross-env` vs `cross-env-shell`](#cross-env-vs-cross-env-shell)
+- [Windows Issues](#windows-issues)
+- [Inspiration](#inspiration)
+- [Other Solutions](#other-solutions)
+- [Contributors](#contributors)
+- [LICENSE](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Installation
 
