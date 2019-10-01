@@ -18,12 +18,9 @@ learn how: http://kcd.im/pull-request
 Relevant code or config
 
 ```javascript
-
 ```
 
 What you did:
-
-
 
 What happened:
 
@@ -37,7 +34,5 @@ minimal amount of code possible.
 -->
 
 Problem description:
-
-
 
 Suggested solution:

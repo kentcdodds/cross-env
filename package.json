@@ -1,8 +1,7 @@
 {
   "name": "cross-env",
   "version": "0.0.0-semantically-released",
-  "description":
-    "Run scripts that set and use environment variables across platforms",
+  "description": "Run scripts that set and use environment variables across platforms",
   "main": "dist/index.js",
   "bin": {
     "cross-env": "dist/bin/cross-env.js",
@@ -12,28 +11,41 @@
     "node": ">=8.0"
   },
   "scripts": {
-    "add-contributor": "kcd-scripts contributors add",
     "build": "kcd-scripts build",
     "lint": "kcd-scripts lint",
     "test": "kcd-scripts test",
-    "test:update": "npm test -- --updateSnapshot --coverage",
-    "validate": "kcd-scripts validate",
-    "precommit": "kcd-scripts precommit"
+    "validate": "kcd-scripts validate"
   },
-  "files": ["dist"],
-  "keywords": ["cross-environment", "environment variable", "windows"],
+  "husky": {
+    "hooks": {
+      "pre-commit": "kcd-scripts pre-commit"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "cross-environment",
+    "environment variable",
+    "windows"
+  ],
   "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",
   "license": "MIT",
   "dependencies": {
+    "@babel/runtime": "^7.6.2",
     "cross-spawn": "^7.0.0"
   },
   "devDependencies": {
-    "kcd-scripts": "^0.3.4"
+    "kcd-scripts": "^1.8.0"
   },
   "eslintConfig": {
     "extends": "./node_modules/kcd-scripts/eslint.js"
   },
-  "eslintIgnore": ["node_modules", "coverage", "dist"],
+  "eslintIgnore": [
+    "node_modules",
+    "coverage",
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/kentcdodds/cross-env.git"

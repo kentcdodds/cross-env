@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [cross-env 🔀](#cross-env-)
+  - [The problem](#the-problem)
+  - [This solution](#this-solution)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [`cross-env` vs `cross-env-shell`](#cross-env-vs-cross-env-shell)
+  - [Windows Issues](#windows-issues)
+  - [Inspiration](#inspiration)
+  - [Other Solutions](#other-solutions)
+  - [Contributors](#contributors)
+  - [LICENSE](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 <p align="center">
   <a href="https://codefund.io/properties/445/visit-sponsor">
     <img src="https://codefund.io/properties/445/sponsor" />
@@ -16,22 +33,11 @@ Run scripts that set and use environment variables across platforms
 [![Travis Build Status][build-badge]][build]
 [![AppVeyor Build Status][win-build-badge]][win-build]
 [![Code Coverage][coverage-badge]][coverage]
-[![Dependencies][dependencyci-badge]][dependencyci]
-[![version][version-badge]][package]
-[![node-version][node-version-badge]][node]
-[![downloads][downloads-badge]][npm-stat]
+[![version][version-badge]][package] [![MIT License][license-badge]][license]
 
-[![MIT License][license-badge]][LICENSE]
 [![All Contributors](https://img.shields.io/badge/all_contributors-20-orange.svg?style=flat-square)](#contributors)
-[![PRs Welcome][prs-badge]][prs]
-[![Donate][donate-badge]][donate]
-[![Code of Conduct][coc-badge]][coc]
-[![Roadmap][roadmap-badge]][roadmap]
-[![Examples][examples-badge]][examples]
-
-[![Watch on GitHub][github-watch-badge]][github-watch]
-[![Star on GitHub][github-star-badge]][github-star]
-[![Tweet][twitter-badge]][twitter]
+[![PRs Welcome][prs-badge]][prs] [![Code of Conduct][coc-badge]][coc]
+[![downloads][downloads-badge]][npmtrends]
 
 ## The problem
 
@@ -60,8 +66,8 @@ npm install --save-dev cross-env
 > WARNING! Make sure that when you're installing packages that you spell things
 > correctly to avoid [mistakenly installing malware][malware]
 
-> NOTE : Version 6 of cross-env only supports Node.js 8 and higher, to use it on Node.js 7 or lower install version 5
-> ```npm install --save-dev cross-env@5 ```
+> NOTE : Version 6 of cross-env only supports Node.js 8 and higher, to use it on
+> Node.js 7 or lower install version 5 `npm install --save-dev cross-env@5`
 
 ## Usage
 
@@ -100,12 +106,16 @@ Where `childScript` holds the actual command to execute and `parentScript` sets
 the environment variables to use. Then instead of run the childScript you run
 the parent. This is quite useful for launching the same command with different
 env variables or when the environment variables are too long to have everything
-in one line.  It also means that you can use `$GREET` env var syntax even on
+in one line. It also means that you can use `$GREET` env var syntax even on
 Windows which would usually require it to be `%GREET%`.
 
-If you precede a dollar sign with an odd number of backslashes the expression statement will not be replaced. Note that this means backslashes after the JSON string escaping took place. `"FOO=\\$BAR"` will not be replaced. `"FOO=\\\\$BAR"` will be replaced though.
+If you precede a dollar sign with an odd number of backslashes the expression
+statement will not be replaced. Note that this means backslashes after the JSON
+string escaping took place. `"FOO=\\$BAR"` will not be replaced.
+`"FOO=\\\\$BAR"` will be replaced though.
 
-Lastly, if you want to pass a JSON string (e.g., when using [ts-loader]), you can do as follows:
+Lastly, if you want to pass a JSON string (e.g., when using [ts-loader]), you
+can do as follows:
 
 ```json
 {
@@ -115,21 +125,21 @@ Lastly, if you want to pass a JSON string (e.g., when using [ts-loader]), you ca
 }
 ```
 
-Pay special attention to the **triple backslash** `(\\\)` **before** the **double quotes** `(")` and the **absence** of **single quotes** `(')`.
-Both of these conditions have to be met in order to work both on Windows and UNIX.
+Pay special attention to the **triple backslash** `(\\\)` **before** the
+**double quotes** `(")` and the **absence** of **single quotes** `(')`. Both of
+these conditions have to be met in order to work both on Windows and UNIX.
 
 ## `cross-env` vs `cross-env-shell`
 
 The `cross-env` module exposes two bins: `cross-env` and `cross-env-shell`. The
-first one executes commands using [`cross-spawn`][cross-spawn], while the
-second one uses the `shell` option from Node's `spawn`.
+first one executes commands using [`cross-spawn`][cross-spawn], while the second
+one uses the `shell` option from Node's `spawn`.
 
-The main use case for `cross-env-shell` is when you need an environment
-variable to be set across an entire inline shell script, rather than just one
-command.
+The main use case for `cross-env-shell` is when you need an environment variable
+to be set across an entire inline shell script, rather than just one command.
 
 For example, if you want to have the environment variable apply to several
-commands in series then you will need to wrap those in quotes and use 
+commands in series then you will need to wrap those in quotes and use
 `cross-env-shell` instead of `cross-env`.
 
 ```json
@@ -140,29 +150,34 @@ commands in series then you will need to wrap those in quotes and use
 }
 ```
 
-The rule of thumb is: if you want to pass to `cross-env` a command that
-contains special shell characters *that you want interpreted*, then use
+The rule of thumb is: if you want to pass to `cross-env` a command that contains
+special shell characters _that you want interpreted_, then use
 `cross-env-shell`. Otherwise stick to `cross-env`.
 
-On Windows you need to use `cross-env-shell`, if you want to handle [signal events](https://nodejs.org/api/process.html#process_signal_events) inside of your program. A common case for that is when you want to capture a `SIGINT` event invoked by pressing `Ctrl + C` on the command-line interface.
+On Windows you need to use `cross-env-shell`, if you want to handle
+[signal events](https://nodejs.org/api/process.html#process_signal_events)
+inside of your program. A common case for that is when you want to capture a
+`SIGINT` event invoked by pressing `Ctrl + C` on the command-line interface.
 
 ## Windows Issues
 
 Please note that `npm` uses `cmd` by default and that doesn't support command
-substitution, so if you want to leaverage that, then you need to update your
+substitution, so if you want to leverage that, then you need to update your
 `.npmrc` to set the `script-shell` to powershell.
 [Learn more here](https://github.com/kentcdodds/cross-env/issues/192#issuecomment-513341729).
 
 ## Inspiration
 
 I originally created this to solve a problem I was having with my npm scripts in
-[angular-formly][angular-formly]. This made contributing to the project
-much easier for Windows users.
+[angular-formly][angular-formly]. This made contributing to the project much
+easier for Windows users.
 
 ## Other Solutions
 
-- [`env-cmd`](https://github.com/toddbluhm/env-cmd) - Reads environment variables from a file instead
-- [`@naholyr/cross-env`](https://www.npmjs.com/package/@naholyr/cross-env) - `cross-env` with support for setting default values
+- [`env-cmd`](https://github.com/toddbluhm/env-cmd) - Reads environment
+  variables from a file instead
+- [`@naholyr/cross-env`](https://www.npmjs.com/package/@naholyr/cross-env) -
+  `cross-env` with support for setting default values
 
 ## Contributors
 
@@ -201,11 +216,12 @@ Thanks goes to these people ([emoji key][emojis]):
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the [all-contributors][all-contributors] specification. Contributions of any kind welcome!
+This project follows the [all-contributors][all-contributors] specification.
+Contributions of any kind welcome!
 
 > Note: this was added late into the project. If you've contributed to this
-> project in any way, please make a pull request to add yourself to the list
-> by following the instructions in the `CONTRIBUTING.md`
+> project in any way, please make a pull request to add yourself to the list by
+> following the instructions in the `CONTRIBUTING.md`
 
 ## LICENSE
 
@@ -213,41 +229,33 @@ MIT
 
 [npm]: https://www.npmjs.com/
 [node]: https://nodejs.org
-[build-badge]: https://img.shields.io/travis/kentcdodds/cross-env.svg?style=flat-square
+[build-badge]:
+  https://img.shields.io/travis/kentcdodds/cross-env.svg?style=flat-square
 [build]: https://travis-ci.org/kentcdodds/cross-env
-[win-build-badge]: https://img.shields.io/appveyor/ci/kentcdodds/cross-env.svg?style=flat-square
+[win-build-badge]:
+  https://img.shields.io/appveyor/ci/kentcdodds/cross-env.svg?style=flat-square
 [win-build]: https://ci.appveyor.com/project/kentcdodds/cross-env
-[coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/cross-env.svg?style=flat-square
+[coverage-badge]:
+  https://img.shields.io/codecov/c/github/kentcdodds/cross-env.svg?style=flat-square
 [coverage]: https://codecov.io/github/kentcdodds/cross-env
-[dependencyci-badge]: https://dependencyci.com/github/kentcdodds/cross-env/badge?style=flat-square
-[dependencyci]: https://dependencyci.com/github/kentcdodds/cross-env
 [version-badge]: https://img.shields.io/npm/v/cross-env.svg?style=flat-square
 [package]: https://www.npmjs.com/package/cross-env
-[node-version-badge]: https://img.shields.io/badge/node-%3E%3D%204.0-orange.svg?style=flat-square
 [downloads-badge]: https://img.shields.io/npm/dm/cross-env.svg?style=flat-square
-[npm-stat]: http://npm-stat.com/charts.html?package=cross-env&from=2016-04-01
+[npmtrends]: https://www.npmtrends.com/cross-env
 [license-badge]: https://img.shields.io/npm/l/cross-env.svg?style=flat-square
 [license]: https://github.com/kentcdodds/cross-env/blob/master/other/LICENSE
-[prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
+[prs-badge]:
+  https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
 [prs]: http://makeapullrequest.com
-[donate-badge]: https://img.shields.io/badge/$-support-green.svg?style=flat-square
-[donate]: http://kcd.im/donate
-[coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
-[coc]: https://github.com/kentcdodds/cross-env/blob/master/other/CODE_OF_CONDUCT.md
-[roadmap-badge]: https://img.shields.io/badge/%F0%9F%93%94-roadmap-CD9523.svg?style=flat-square
-[roadmap]: https://github.com/kentcdodds/cross-env/blob/master/other/ROADMAP.md
-[examples-badge]: https://img.shields.io/badge/%F0%9F%92%A1-examples-8C8E93.svg?style=flat-square
-[examples]: https://github.com/kentcdodds/cross-env/blob/master/other/EXAMPLES.md
-[github-watch-badge]: https://img.shields.io/github/watchers/kentcdodds/cross-env.svg?style=social
-[github-watch]: https://github.com/kentcdodds/cross-env/watchers
-[github-star-badge]: https://img.shields.io/github/stars/kentcdodds/cross-env.svg?style=social
-[github-star]: https://github.com/kentcdodds/cross-env/stargazers
-[twitter]: https://twitter.com/intent/tweet?text=Check%20out%20cross-env!%20https://github.com/kentcdodds/cross-env%20%F0%9F%91%8D
-[twitter-badge]: https://img.shields.io/twitter/url/https/github.com/kentcdodds/cross-env.svg?style=social
+[coc-badge]:
+  https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
+[coc]:
+  https://github.com/kentcdodds/cross-env/blob/master/other/CODE_OF_CONDUCT.md
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
 [all-contributors]: https://github.com/kentcdodds/all-contributors
 [win-bash]: https://msdn.microsoft.com/en-us/commandline/wsl/about
 [angular-formly]: https://github.com/formly-js/angular-formly
 [cross-spawn]: https://www.npmjs.com/package/cross-spawn
 [ts-loader]: https://www.npmjs.com/package/ts-loader
-[malware]: http://blog.npmjs.org/post/163723642530/crossenv-malware-on-the-npm-registry
+[malware]:
+  http://blog.npmjs.org/post/163723642530/crossenv-malware-on-the-npm-registry

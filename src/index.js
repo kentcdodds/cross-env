@@ -84,7 +84,7 @@ function parseCommand(args) {
 }
 
 function getEnvVars(envSetters) {
-  const envVars = Object.assign({}, process.env)
+  const envVars = {...process.env}
   if (process.env.APPDATA) {
     envVars.APPDATA = process.env.APPDATA
   }

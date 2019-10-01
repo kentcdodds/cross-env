@@ -1,17 +1,32 @@
-import isWindows from "../is-windows"
+import isWindows from '../is-windows'
 
-it(`should return true if the current OS is Windows`, () => {
-  process.platform = 'win32'
-  expect(isWindows()).toBe(true)
+const {
+  platform,
+  env: {OSTYPE},
+} = process
 
+// make the platform property writeable
+Object.defineProperty(process, 'platform', {
+  value: platform,
+  writable: true,
 })
 
-it(`should return false if the current OS is not Windows`, () => {
+afterEach(() => {
+  process.platform = platform
+  process.env.OSTYPE = OSTYPE
+})
+
+test(`returns true if the current OS is Windows`, () => {
+  process.platform = 'win32'
+  expect(isWindows()).toBe(true)
+})
+
+test(`returns false if the current OS is not Windows`, () => {
   process.platform = 'linux'
   expect(isWindows()).toBe(false)
 })
 
-it(`should return true if the OSTYPE is cygwin or msys`, () => {
+test(`returns true if the OSTYPE is cygwin or msys`, () => {
   process.platform = 'linux'
 
   process.env.OSTYPE = 'cygwin'
