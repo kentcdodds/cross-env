@@ -1,5 +1,5 @@
-import isWindowsMock from '../is-windows'
-import commandConvert from '../command'
+const isWindowsMock = require('../is-windows')
+const commandConvert = require('../command')
 
 jest.mock('../is-windows')
 

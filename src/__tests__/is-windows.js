@@ -1,4 +1,4 @@
-import isWindows from '../is-windows'
+const isWindows = require('../is-windows')
 
 const {
   platform,

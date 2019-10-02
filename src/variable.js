@@ -1,6 +1,8 @@
-import isWindows from './is-windows'
+const isWindows = require('./is-windows')
 
 const pathLikeEnvVarWhitelist = new Set(['PATH', 'NODE_PATH'])
+
+module.exports = varValueConvert
 
 /**
  * This will transform UNIX-style list values to Windows-style.
@@ -62,6 +64,6 @@ function resolveEnvVars(varValue) {
  * @param {String} originalName Original name of the env variable
  * @returns {String} Converted value
  */
-export default function varValueConvert(originalValue, originalName) {
+function varValueConvert(originalValue, originalName) {
   return resolveEnvVars(replaceListDelimiters(originalValue, originalName))
 }

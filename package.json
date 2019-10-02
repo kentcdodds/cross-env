@@ -2,16 +2,15 @@
   "name": "cross-env",
   "version": "0.0.0-semantically-released",
   "description": "Run scripts that set and use environment variables across platforms",
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "bin": {
-    "cross-env": "dist/bin/cross-env.js",
-    "cross-env-shell": "dist/bin/cross-env-shell.js"
+    "cross-env": "src/bin/cross-env.js",
+    "cross-env-shell": "src/bin/cross-env-shell.js"
   },
   "engines": {
     "node": ">=8.0"
   },
   "scripts": {
-    "build": "kcd-scripts build",
     "lint": "kcd-scripts lint",
     "test": "kcd-scripts test",
     "validate": "kcd-scripts validate"
@@ -22,7 +21,8 @@
     }
   },
   "files": [
-    "dist"
+    "src",
+    "!__tests__"
   ],
   "keywords": [
     "cross-environment",
@@ -32,7 +32,6 @@
   "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.6.2",
     "cross-spawn": "^7.0.0"
   },
   "devDependencies": {
@@ -41,11 +40,10 @@
   "eslintConfig": {
     "extends": "./node_modules/kcd-scripts/eslint.js"
   },
-  "eslintIgnore": [
-    "node_modules",
-    "coverage",
-    "dist"
-  ],
+  "// babel 1": "this disables all built-in plugins from kcd-scripts for tests",
+  "// babel 2": "that way we ensure that the tests run without compilation",
+  "// babel 3": "because this module is published as-is. It is not compiled.",
+  "babel": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/kentcdodds/cross-env.git"

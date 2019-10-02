@@ -1,6 +1,6 @@
-import {spawn} from 'cross-spawn'
-import commandConvert from './command'
-import varValueConvert from './variable'
+const {spawn} = require('cross-spawn')
+const commandConvert = require('./command')
+const varValueConvert = require('./variable')
 
 module.exports = crossEnv
 

@@ -1,5 +1,5 @@
-import isWindowsMock from '../is-windows'
-import varValueConvert from '../variable'
+const isWindowsMock = require('../is-windows')
+const varValueConvert = require('../variable')
 
 jest.mock('../is-windows')
 

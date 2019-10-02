@@ -1,5 +1,5 @@
-import crossSpawnMock from 'cross-spawn'
-import isWindowsMock from '../is-windows'
+const crossSpawnMock = require('cross-spawn')
+const isWindowsMock = require('../is-windows')
 
 jest.mock('../is-windows')
 jest.mock('cross-spawn')

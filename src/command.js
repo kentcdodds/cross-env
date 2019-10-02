@@ -1,7 +1,7 @@
-import path from 'path'
-import isWindows from './is-windows'
+const path = require('path')
+const isWindows = require('./is-windows')
 
-export default commandConvert
+module.exports = commandConvert
 
 /**
  * Converts an environment variable usage to be appropriate for the current OS
