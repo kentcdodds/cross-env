@@ -1,6 +1,7 @@
 const {spawn} = require('cross-spawn')
 const commandConvert = require('./command')
 const varValueConvert = require('./variable')
+const isWindows = require('./is-windows')
 
 module.exports = crossEnv
 
@@ -91,5 +92,8 @@ function getEnvVars(envSetters) {
   Object.keys(envSetters).forEach(varName => {
     envVars[varName] = varValueConvert(envSetters[varName], varName)
   })
+  if (isWindows() && envVars.Path && envVars.PATH) {
+    envVars.Path = envVars.PATH
+  }
   return envVars
 }

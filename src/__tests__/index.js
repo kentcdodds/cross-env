@@ -108,6 +108,17 @@ test(`does nothing when given no command`, () => {
   expect(crossSpawnMock.spawn).toHaveBeenCalledTimes(0)
 })
 
+test(`use Path environment variable instead of PATH on windows`, () => {
+  isWindowsMock.mockReturnValue(true)
+  testEnvSetting(
+    {
+      ...(process.env.Path ? {} : {Path: `path1;${process.env.Path}`}), //Hack for git shell on windows
+      PATH: `path1;${process.env.Path}`,
+    },
+    'PATH=path1:$PATH',
+  )
+})
+
 test(`normalizes commands on windows`, () => {
   isWindowsMock.mockReturnValue(true)
   crossEnv(['./cmd.bat'])
