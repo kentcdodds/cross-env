@@ -1,12 +1,14 @@
 const {spawn} = require('cross-spawn')
 const commandConvert = require('./command')
 const varValueConvert = require('./variable')
+const patchPathEnv = require('./patch-path')
 
 module.exports = crossEnv
 
 const envSetterRegex = /(\w+)=('(.*)'|"(.*)"|(.*))/
 
 function crossEnv(args, options = {}) {
+  patchPathEnv(process.env)
   const [envSetters, command, commandArgs] = parseCommand(args)
   const env = getEnvVars(envSetters)
   if (command) {

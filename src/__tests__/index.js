@@ -2,6 +2,7 @@ const crossSpawnMock = require('cross-spawn')
 const isWindowsMock = require('../is-windows')
 
 jest.mock('../is-windows')
+jest.mock('../patch-path')
 jest.mock('cross-spawn')
 
 const crossEnv = require('../')
