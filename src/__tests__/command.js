@@ -79,3 +79,19 @@ test(`normalizes command on windows`, () => {
   // as `true` for command only
   expect(commandConvert('./cmd.bat', env, true)).toBe('cmd.bat')
 })
+
+test(`evaluates default values for missing environment variables on windows`, () => {
+  isWindowsMock.mockReturnValue(true)
+  // eslint-disable-next-line no-template-curly-in-string
+  expect(commandConvert('$test1/${foo:-bar}/$test2', env)).toBe(
+    '%test1%/bar/%test2%',
+  )
+})
+
+test(`evaluates default values for empty environment variables on windows`, () => {
+  isWindowsMock.mockReturnValue(true)
+  // eslint-disable-next-line no-template-curly-in-string
+  expect(commandConvert('$test1/${empty_var:-bang}/$test2', env)).toBe(
+    '%test1%/bang/%test2%',
+  )
+})

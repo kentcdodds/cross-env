@@ -38,21 +38,31 @@ function replaceListDelimiters(varValue, varName = '') {
  * Note that this function is only called with the right-side portion of the
  * env var assignment, so in that example, this function would transform
  * the string "$NODE_ENV" into "development"
+ *
+ * To specify a default value for a variable, use the ${ENV_VAR_NAME:-default value} syntax.
+ *
  * @param {String} varValue Original value of the env variable
  * @returns {String} Converted value
  */
 function resolveEnvVars(varValue) {
-  const envUnixRegex = /(\\*)(\$(\w+)|\${(\w+)})/g // $my_var or ${my_var} or \$my_var
+  const envUnixRegex = /(\\*)(\$(\w+)|\${(\w+)(?::-(\w*))?})/g // $my_var or ${my_var} or \$my_var or ${my_var:-default_value}
   return varValue.replace(
     envUnixRegex,
-    (_, escapeChars, varNameWithDollarSign, varName, altVarName) => {
+    (
+      _,
+      escapeChars,
+      varNameWithDollarSign,
+      varName,
+      altVarName,
+      defaultValue,
+    ) => {
       // do not replace things preceded by a odd number of \
       if (escapeChars.length % 2 === 1) {
         return varNameWithDollarSign
       }
       return (
         escapeChars.substr(0, escapeChars.length / 2) +
-        (process.env[varName || altVarName] || '')
+        (process.env[varName || altVarName] || defaultValue || '')
       )
     },
   )

@@ -8,6 +8,7 @@ const JSON_VALUE = '{\\"foo\\":\\"bar\\"}'
 beforeEach(() => {
   process.env.VAR1 = 'value1'
   process.env.VAR2 = 'value2'
+  process.env.EMPTY_VAR = ''
   process.env.JSON_VAR = JSON_VALUE
 })
 
@@ -118,4 +119,32 @@ test(`resolves an env variable prefixed with \\\\ on Windows`, () => {
 test(`resolves an env variable prefixed with \\\\ on UNIX`, () => {
   isWindowsMock.mockReturnValue(false)
   expect(varValueConvert('\\\\$VAR1')).toBe('\\value1')
+})
+
+test(`resolves default value for missing variable on UNIX`, () => {
+  isWindowsMock.mockReturnValue(false)
+  // eslint-disable-next-line no-template-curly-in-string
+  expect(varValueConvert('${UNKNOWN_UNIX_VAR:-defaultUnix}')).toBe(
+    'defaultUnix',
+  )
+})
+
+test(`resolves default value for missing variable on windows`, () => {
+  isWindowsMock.mockReturnValue(true)
+  // eslint-disable-next-line no-template-curly-in-string
+  expect(varValueConvert('${UNKNOWN_WINDOWS_VAR:-defaultWindows}')).toBe(
+    'defaultWindows',
+  )
+})
+
+test(`resolves default value for empty string variable on UNIX`, () => {
+  isWindowsMock.mockReturnValue(false)
+  // eslint-disable-next-line no-template-curly-in-string
+  expect(varValueConvert('${EMPTY_VAR:-defaultUnix}')).toBe('defaultUnix')
+})
+
+test(`resolves default value for empty string variable on windows`, () => {
+  isWindowsMock.mockReturnValue(true)
+  // eslint-disable-next-line no-template-curly-in-string
+  expect(varValueConvert('${EMPTY_VAR:-defaultWindows}')).toBe('defaultWindows')
 })
