@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 const isWindowsMock = require('../is-windows')
 const commandConvert = require('../command')
 
@@ -59,7 +60,7 @@ test(`leaves embedded variables unchanged when using correct operating system`, 
 
 test(`converts braced unix-style env variable usage for windows`, () => {
   isWindowsMock.mockReturnValue(true)
-  // eslint-disable-next-line no-template-curly-in-string
+
   expect(commandConvert('${test}', env)).toBe('%test%')
 })
 
@@ -82,7 +83,6 @@ test(`normalizes command on windows`, () => {
 
 test(`evaluates default values for missing environment variables on windows`, () => {
   isWindowsMock.mockReturnValue(true)
-  // eslint-disable-next-line no-template-curly-in-string
   expect(commandConvert('$test1/${foo:-bar}/$test2', env)).toBe(
     '%test1%/bar/%test2%',
   )
@@ -90,8 +90,21 @@ test(`evaluates default values for missing environment variables on windows`, ()
 
 test(`evaluates default values for empty environment variables on windows`, () => {
   isWindowsMock.mockReturnValue(true)
-  // eslint-disable-next-line no-template-curly-in-string
   expect(commandConvert('$test1/${empty_var:-bang}/$test2', env)).toBe(
     '%test1%/bang/%test2%',
   )
+})
+
+test(`evaluates default values recursively for empty environment variables on windows`, () => {
+  isWindowsMock.mockReturnValue(true)
+  expect(
+    commandConvert('$test1/${empty_var:-${missing_var:-bang}}/$test2', env),
+  ).toBe('%test1%/bang/%test2%')
+})
+
+test(`evaluates secondary values recursively for environment variables on windows`, () => {
+  isWindowsMock.mockReturnValue(true)
+  expect(
+    commandConvert('$test1/${empty_var:-${test3:-bang}}/$test2', env),
+  ).toBe('%test1%/%test3%/%test2%')
 })

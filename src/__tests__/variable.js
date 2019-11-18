@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 const isWindowsMock = require('../is-windows')
 const varValueConvert = require('../variable')
 
@@ -77,7 +78,6 @@ test(`resolves an env variable value`, () => {
 
 test(`resolves an env variable value with curly syntax`, () => {
   isWindowsMock.mockReturnValue(true)
-  // eslint-disable-next-line no-template-curly-in-string
   expect(varValueConvert('foo-${VAR1}')).toBe('foo-value1')
 })
 
@@ -123,7 +123,6 @@ test(`resolves an env variable prefixed with \\\\ on UNIX`, () => {
 
 test(`resolves default value for missing variable on UNIX`, () => {
   isWindowsMock.mockReturnValue(false)
-  // eslint-disable-next-line no-template-curly-in-string
   expect(varValueConvert('${UNKNOWN_UNIX_VAR:-defaultUnix}')).toBe(
     'defaultUnix',
   )
@@ -131,7 +130,6 @@ test(`resolves default value for missing variable on UNIX`, () => {
 
 test(`resolves default value for missing variable on windows`, () => {
   isWindowsMock.mockReturnValue(true)
-  // eslint-disable-next-line no-template-curly-in-string
   expect(varValueConvert('${UNKNOWN_WINDOWS_VAR:-defaultWindows}')).toBe(
     'defaultWindows',
   )
@@ -139,12 +137,38 @@ test(`resolves default value for missing variable on windows`, () => {
 
 test(`resolves default value for empty string variable on UNIX`, () => {
   isWindowsMock.mockReturnValue(false)
-  // eslint-disable-next-line no-template-curly-in-string
   expect(varValueConvert('${EMPTY_VAR:-defaultUnix}')).toBe('defaultUnix')
 })
 
 test(`resolves default value for empty string variable on windows`, () => {
   isWindowsMock.mockReturnValue(true)
-  // eslint-disable-next-line no-template-curly-in-string
   expect(varValueConvert('${EMPTY_VAR:-defaultWindows}')).toBe('defaultWindows')
+})
+
+test('resolves default value recursively when primary and secondary doesnt exist in UNIX', () => {
+  isWindowsMock.mockReturnValue(false)
+  expect(
+    varValueConvert('${EMPTY_VAR:-foobar${MISSING_VAR:-defaultUnix}}'),
+  ).toBe('foobardefaultUnix')
+})
+
+test('resolves secondary value recursively when primary doesnt exist in UNIX', () => {
+  isWindowsMock.mockReturnValue(false)
+  expect(varValueConvert('${EMPTY_VAR:-bang${VAR1:-defaultUnix}}')).toBe(
+    'bangvalue1',
+  )
+})
+
+test('resolves default value recursively when primary and secondary doesnt exist in windows', () => {
+  isWindowsMock.mockReturnValue(true)
+  expect(
+    varValueConvert('${EMPTY_VAR:-foobar${MISSING_VAR:-defaultWindows}}'),
+  ).toBe('foobardefaultWindows')
+})
+
+test('resolves secondary value recursively when primary doesnt exist in windows', () => {
+  isWindowsMock.mockReturnValue(true)
+  expect(varValueConvert('${EMPTY_VAR:-bang${VAR1:-defaultWindows}}')).toBe(
+    'bangvalue1',
+  )
 })

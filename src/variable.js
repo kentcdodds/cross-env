@@ -45,7 +45,7 @@ function replaceListDelimiters(varValue, varName = '') {
  * @returns {String} Converted value
  */
 function resolveEnvVars(varValue) {
-  const envUnixRegex = /(\\*)(\$(\w+)|\${(\w+)(?::-(\w*))?})/g // $my_var or ${my_var} or \$my_var or ${my_var:-default_value}
+  const envUnixRegex = /(\\*)(\$(\w+)|\${(\w+)(?::-([\w{}$:-]*))?})/g // $my_var or ${my_var} or \$my_var or ${my_var:-default_value} or ${my_var:-${backup_var:-default_value}}
   return varValue.replace(
     envUnixRegex,
     (
@@ -62,7 +62,9 @@ function resolveEnvVars(varValue) {
       }
       return (
         escapeChars.substr(0, escapeChars.length / 2) +
-        (process.env[varName || altVarName] || defaultValue || '')
+        (process.env[varName || altVarName] ||
+          (defaultValue && resolveEnvVars(defaultValue)) ||
+          '')
       )
     },
   )
