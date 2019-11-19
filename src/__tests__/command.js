@@ -108,3 +108,15 @@ test(`evaluates secondary values recursively for environment variables on window
     commandConvert('$test1/${empty_var:-${test3:-bang}}/$test2', env),
   ).toBe('%test1%/%test3%/%test2%')
 })
+
+test('resolves the current working directory inside string in windows', () => {
+  isWindowsMock.mockReturnValue(true)
+  expect(commandConvert('cd ${PWD}\\ADirectory')).toBe(
+    `cd ${process.cwd()}\\ADirectory`,
+  )
+})
+
+test('resolves the current working directory inside string in UNIX', () => {
+  isWindowsMock.mockReturnValue(false)
+  expect(commandConvert('cd ${PWD}/adir')).toBe('cd ${PWD}/adir')
+})

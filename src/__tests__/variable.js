@@ -172,3 +172,15 @@ test('resolves secondary value recursively when primary doesnt exist in windows'
     'bangvalue1',
   )
 })
+
+test('resolves the current working directory inside string in windows', () => {
+  isWindowsMock.mockReturnValue(true)
+  expect(varValueConvert('${PWD}\\ADirectory')).toBe(
+    `${process.cwd()}\\ADirectory`,
+  )
+})
+
+test('resolves the current working directory inside string in UNIX', () => {
+  isWindowsMock.mockReturnValue(false)
+  expect(varValueConvert('${PWD}/adir')).toBe(`${process.cwd()}/adir`)
+})

@@ -62,9 +62,11 @@ function resolveEnvVars(varValue) {
       }
       return (
         escapeChars.substr(0, escapeChars.length / 2) +
-        (process.env[varName || altVarName] ||
-          (defaultValue && resolveEnvVars(defaultValue)) ||
-          '')
+        ((varName || altVarName) === 'PWD'
+          ? process.cwd()
+          : process.env[varName || altVarName] ||
+            (defaultValue && resolveEnvVars(defaultValue)) ||
+            '')
       )
     },
   )
