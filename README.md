@@ -127,6 +127,8 @@ Pay special attention to the **triple backslash** `(\\\)` **before** the
 **double quotes** `(")` and the **absence** of **single quotes** `(')`. Both of
 these conditions have to be met in order to work both on Windows and UNIX.
 
+Note: `${PWD}` and `$PWD` substitute for the current working directory.
+
 ## Default Values
 
 To reference an environment variable and provide a default value if that
