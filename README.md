@@ -138,6 +138,29 @@ variable is empty or not-defined, use the syntax:
 ${ENV_VAR_NAME:-default value}
 ```
 
+Also supports recursive replacement in the default value allowing you to test
+multiple environment variables before showing a default
+
+```bash
+# Value of FIRST_VAR_TO_TEST or SECOND_VAR_TO_TEST environment variable if blank or undefined.
+# If both are blank or undefined, replace with an empty string
+${FIRST_VAR_TO_TEST:-$SECOND_VAR_TO_TEST}
+```
+
+Can nest as many as you want
+
+```bash
+# Value of FIRST_VAR_TO_TEST, then SECOND_VAR_TO_TEST then THIRD_VAR_TO_TEST environment variables.
+# If all are blank or undefined, the string "default value if all are empty or undefined"
+${FIRST_VAR_TO_TEST:-${SECOND_VAR_TO_TEST:-${THIRD_VAR_TO_TEST:-default value if all are empty or undefined}}}
+```
+
+Or even use multiple environment variables in the default values
+
+```bash
+${NODE_DEBUG_OPTIONS:---inspect=$NODE_DEBUG_PORT $NODE_DEFAULT_OPTIONS}`
+```
+
 This follows the UNIX standard for environment variables and works for both
 `cross-env` and `cross-env-shell`.
 
