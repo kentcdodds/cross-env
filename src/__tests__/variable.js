@@ -106,6 +106,26 @@ test(`does not resolve an env variable prefixed with \\ on Windows`, () => {
   expect(varValueConvert('\\$VAR1')).toBe('$VAR1')
 })
 
+test(`does not resolve a $ without a word after it in UNIX`, () => {
+  isWindowsMock.mockReturnValue(false)
+  expect(varValueConvert('hello $ the case')).toBe('hello $ the case')
+})
+
+test(`does not resolve a $ without a word after it in Windows`, () => {
+  isWindowsMock.mockReturnValue(true)
+  expect(varValueConvert('hello $ the case')).toBe('hello $ the case')
+})
+
+test(`does not resolve an env variable if it isn't prefix with a $ but is in curly braces \\ on UNIX`, () => {
+  isWindowsMock.mockReturnValue(false)
+  expect(varValueConvert('{VAR1}')).toBe('{VAR1}')
+})
+
+test(`does not resolve an env variable if it isn't prefix with a $ but is in curly braces \\ on Windows`, () => {
+  isWindowsMock.mockReturnValue(true)
+  expect(varValueConvert('{VAR1}')).toBe('{VAR1}')
+})
+
 test(`does not resolve an env variable prefixed with \\ on UNIX`, () => {
   isWindowsMock.mockReturnValue(false)
   expect(varValueConvert('\\$VAR1')).toBe('$VAR1')
@@ -119,6 +139,26 @@ test(`resolves an env variable prefixed with \\\\ on Windows`, () => {
 test(`resolves an env variable prefixed with \\\\ on UNIX`, () => {
   isWindowsMock.mockReturnValue(false)
   expect(varValueConvert('\\\\$VAR1')).toBe('\\value1')
+})
+
+test(`does not resolve an env variable prefixed with \\$\{ on Windows`, () => {
+  isWindowsMock.mockReturnValue(true)
+  expect(varValueConvert('\\${VAR1}')).toBe('${VAR1}')
+})
+
+test(`does not resolve an env variable prefixed with \\$\{ on UNIX`, () => {
+  isWindowsMock.mockReturnValue(false)
+  expect(varValueConvert('\\${VAR1}')).toBe('${VAR1}')
+})
+
+test(`resolves an env variable prefixed with \\\\$\{ on Windows`, () => {
+  isWindowsMock.mockReturnValue(true)
+  expect(varValueConvert('\\\\${VAR1}')).toBe('\\value1')
+})
+
+test(`resolves an env variable prefixed with \\\\$\{ on UNIX`, () => {
+  isWindowsMock.mockReturnValue(false)
+  expect(varValueConvert('\\\\${VAR1}')).toBe('\\value1')
 })
 
 test(`resolves default value for missing variable on UNIX`, () => {

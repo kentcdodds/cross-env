@@ -71,8 +71,8 @@ function envReplace(value, env = process.env, winEnvReplace = false) {
       default:
         // Case of $ENVIRONMENT_VARIABLE_1_NAME
         if (lastDollar && braceCount === 0) {
-          const matchedRest = /(\w+).*/g.exec(value.substring(i))
-          if (matchedRest) {
+          const matchedRest = /^(\w+).*$/g.exec(value.substring(i))
+          if (matchedRest !== null) {
             const envVarName = matchedRest[1]
             i = i + envVarName.length
             matches.add(escaped ? `\\$${envVarName}` : `$${envVarName}`)
