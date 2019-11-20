@@ -74,7 +74,7 @@ function envReplace(value, env = process.env, winEnvReplace = false) {
           const matchedRest = /^(\w+).*$/g.exec(value.substring(i))
           if (matchedRest !== null) {
             const envVarName = matchedRest[1]
-            i = i + envVarName.length
+            i = i + envVarName.length - 1
             matches.add(escaped ? `\\$${envVarName}` : `$${envVarName}`)
           }
           escaped = false
