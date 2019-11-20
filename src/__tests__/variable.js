@@ -236,20 +236,24 @@ test('resolves a very complex string with defaults and PWD in Windows', () => {
 
 test('sequential variables  resolves in UNIX', () => {
   isWindowsMock.mockReturnValue(false)
-  expect(varValueConvert('$VAR1$VAR2')).toBe('value1value2')
+  expect(varValueConvert('start-$VAR1$VAR2-end')).toBe('start-value1value2-end')
 })
 
 test('sequential variables with brackets resolves in UNIX', () => {
   isWindowsMock.mockReturnValue(false)
-  expect(varValueConvert('${VAR1}$VAR2')).toBe('value1value2')
+  expect(varValueConvert('start-${VAR1}$VAR2-end')).toBe(
+    'start-value1value2-end',
+  )
 })
 
 test('sequential variables resolves in UNIX', () => {
   isWindowsMock.mockReturnValue(false)
-  expect(varValueConvert('$VAR1$VAR2')).toBe('value1value2')
+  expect(varValueConvert('start-$VAR1$VAR2-end')).toBe('start-value1value2-end')
 })
 
 test('reversed sequential variables with brackets resolves in UNIX', () => {
   isWindowsMock.mockReturnValue(false)
-  expect(varValueConvert('$VAR1${VAR2}')).toBe('value1value2')
+  expect(varValueConvert('start-$VAR1${VAR2}-end')).toBe(
+    'start-value1value2-end',
+  )
 })
