@@ -25,20 +25,16 @@ module.exports = envReplace
 // eslint-disable-next-line complexity
 function envReplace(value, env = process.env, winEnvReplace = false) {
   let lastDollar = false
-  let escaped = false
   let braceCount = 0
   let startIndex = 0
-  const matches = new Set()
+  let escapeCount = 0
   for (let i = 0; i < value.length; i++) {
     const char = value.charAt(i)
     switch (char) {
       case '\\':
-        if (escaped && value.charAt(i + 1) === '$') {
-          //double escaped $ (special case)
-          value = `${value.substring(0, i)}${value.substring(i + 1)}`
-          i--
+        if (braceCount === 0) {
+          escapeCount++
         }
-        escaped = !escaped
         break
       case '$':
         lastDollar = true
@@ -53,18 +49,30 @@ function envReplace(value, env = process.env, winEnvReplace = false) {
         lastDollar = false
         break
       case '}':
-        if (braceCount === 1) {
-          // Case of ${ENVIRONMENT_VARIABLE_1_NAME:-default value} OR
-          // ${ENVIRONMENT_VARIABLE_1_NAME:-${ENVIRONMENT_VARIABLE_2_NAME:-default value}}
-          matches.add(
-            escaped
-              ? `\\${value.substring(startIndex, i + 1)}`
-              : value.substring(startIndex, i + 1),
-          )
-          escaped = false
-          braceCount = 0
-        } else if (braceCount > 0) {
-          braceCount--
+        if (braceCount > 0) {
+          if (i > 0 && value.charAt(i - 1) === '\\') {
+            //ignore for now
+          } else if (braceCount === 1) {
+            // Case of ${ENVIRONMENT_VARIABLE_1_NAME:-default value} OR
+            // ${ENVIRONMENT_VARIABLE_1_NAME:-${ENVIRONMENT_VARIABLE_2_NAME:-default value}}
+            const prefix = value.substring(
+              0,
+              startIndex - Math.round(escapeCount / 2),
+            )
+            const match = value.substring(startIndex, i + 1)
+            const suffix = value.length > i + 1 ? value.substring(i + 1) : ''
+            const replace =
+              escapeCount % 2 === 1
+                ? match
+                : replaceMatch(match, env, winEnvReplace).replace(/\\}/g, '}')
+
+            value = `${prefix}${replace}${suffix}`
+            i = replace.length - match.length
+            escapeCount = 0
+            braceCount = 0
+          } else {
+            braceCount--
+          }
         }
         lastDollar = false
         break
@@ -74,31 +82,39 @@ function envReplace(value, env = process.env, winEnvReplace = false) {
           const matchedRest = /^(\w+).*$/g.exec(value.substring(i))
           if (matchedRest !== null) {
             const envVarName = matchedRest[1]
-            i = i + envVarName.length - 1
-            matches.add(escaped ? `\\$${envVarName}` : `$${envVarName}`)
+            const prefix = value.substring(
+              0,
+              i - Math.round(escapeCount / 2) - 1,
+            )
+            const match = value.substring(i - 1, i + envVarName.length)
+            const suffix =
+              value.length > i + envVarName.length
+                ? value.substring(i + envVarName.length)
+                : ''
+            const replace =
+              escapeCount % 2 === 1
+                ? match
+                : replaceMatch(match, env, winEnvReplace)
+            value = `${prefix}${replace}${suffix}`
+            i = replace.length - match.length
           }
-          escaped = false
+        }
+        if (braceCount === 0) {
+          escapeCount = 0
         }
         lastDollar = false
     }
   }
-  for (const match of matches) {
-    value = replaceMatch(value, match, env, winEnvReplace)
-  }
   return value
 }
 
-function replaceMatch(value, match, env, winEnvReplace) {
-  if (match.charAt(0) === '\\') {
-    return value.replace(match, match.substring(1))
-  }
-
+function replaceMatch(match, env, winEnvReplace) {
   let envVarName =
     match.charAt(1) === '{'
       ? match.substring(2, match.length - 1)
       : match.substring(1)
   if (envVarName === 'PWD') {
-    return value.replace(match, process.cwd())
+    return process.cwd()
   }
 
   let defaultValue = ''
@@ -114,11 +130,8 @@ function replaceMatch(value, match, env, winEnvReplace) {
   }
 
   if (winEnvReplace) {
-    return value.replace(
-      match,
-      (env[envVarName] && `%${envVarName}%`) || defaultValue,
-    )
+    return (env[envVarName] && `%${envVarName}%`) || defaultValue
   } else {
-    return value.replace(match, env[envVarName] || defaultValue)
+    return env[envVarName] || defaultValue
   }
 }

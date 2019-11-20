@@ -146,7 +146,7 @@ test(`does not resolve an env variable prefixed with \\$\{ on Windows`, () => {
   expect(varValueConvert('\\${VAR1}')).toBe('${VAR1}')
 })
 
-test(`does not resolve an env variable prefixed with \\$\{ on UNIX`, () => {
+test(`does not resolve an env variable prefixed with on UNIX`, () => {
   isWindowsMock.mockReturnValue(false)
   expect(varValueConvert('\\${VAR1}')).toBe('${VAR1}')
 })
@@ -229,7 +229,7 @@ test('resolves a very complex string with defaults and PWD in Windows', () => {
   isWindowsMock.mockReturnValue(true)
   expect(
     varValueConvert(
-      'start-${PWD}-${EMPTY_VAR:-${NO_VAR:-$VAR1}}-${NO_VAR:-$VAR2}-${NO_VAR:-${EMPTY_VAR:-value3}}-${EMPTY_VAR:-$PWD}-end',
+      'start-${PWD}-${EMPTY_VAR:-${NO_VAR1:-$VAR1}}-${NO_VAR2:-$VAR2}-${NO_VAR3:-${EMPTY_VAR:-value3}}-${EMPTY_VAR:-$PWD}-end',
     ),
   ).toBe(`start-${process.cwd()}-value1-value2-value3-${process.cwd()}-end`)
 })
@@ -256,4 +256,9 @@ test('reversed sequential variables with brackets resolves in UNIX', () => {
   expect(varValueConvert('start-$VAR1${VAR2}-end')).toBe(
     'start-value1value2-end',
   )
+})
+
+test('escape closed curly brace in default value in UNIX', () => {
+  isWindowsMock.mockReturnValue(false)
+  expect(varValueConvert('${EMPTY_VAR:-${UNKNOWN:-ba\\}r}}')).toBe('ba}r')
 })
