@@ -184,3 +184,12 @@ test('resolves the current working directory inside string in UNIX', () => {
   isWindowsMock.mockReturnValue(false)
   expect(varValueConvert('${PWD}/adir')).toBe(`${process.cwd()}/adir`)
 })
+
+test('resolves a very complex string with defaults and PWD in Windows', () => {
+  isWindowsMock.mockReturnValue(true)
+  expect(
+    varValueConvert(
+      'start-${PWD}-${EMPTY_VAR:-${NO_VAR:-$VAR1}}-${NO_VAR:-$VAR2}-${NO_VAR:-${EMPTY_VAR:-value3}}-${EMPTY_VAR:-$PWD}-end',
+    ),
+  ).toBe(`start-${process.cwd()}-value1-value2-value3-${process.cwd()}-end`)
+})

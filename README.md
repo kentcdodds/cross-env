@@ -158,7 +158,7 @@ ${FIRST_VAR_TO_TEST:-${SECOND_VAR_TO_TEST:-${THIRD_VAR_TO_TEST:-default value if
 Or even use multiple environment variables in the default values
 
 ```bash
-${NODE_DEBUG_OPTIONS:---inspect=$NODE_DEBUG_PORT $NODE_DEFAULT_OPTIONS}`
+${NODE_DEBUG_OPTIONS:---inspect=$NODE_DEBUG_PORT $NODE_DEFAULT_OPTIONS}
 ```
 
 This follows the UNIX standard for environment variables and works for both

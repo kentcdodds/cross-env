@@ -1,4 +1,5 @@
 const isWindows = require('./is-windows')
+const envReplace = require('./env-replace')
 
 const pathLikeEnvVarWhitelist = new Set(['PATH', 'NODE_PATH'])
 
@@ -29,55 +30,11 @@ function replaceListDelimiters(varValue, varName = '') {
 }
 
 /**
- * This will attempt to resolve the value of any env variables that are inside
- * this string. For example, it will transform this:
- * cross-env FOO=$NODE_ENV BAR=\\$NODE_ENV echo $FOO $BAR
- * Into this:
- * FOO=development BAR=$NODE_ENV echo $FOO
- * (Or whatever value the variable NODE_ENV has)
- * Note that this function is only called with the right-side portion of the
- * env var assignment, so in that example, this function would transform
- * the string "$NODE_ENV" into "development"
- *
- * To specify a default value for a variable, use the ${ENV_VAR_NAME:-default value} syntax.
- *
- * @param {String} varValue Original value of the env variable
- * @returns {String} Converted value
- */
-function resolveEnvVars(varValue) {
-  const envUnixRegex = /(\\*)(\$(\w+)|\${(\w+)(?::-([\w{}$:-]*))?})/g // $my_var or ${my_var} or \$my_var or ${my_var:-default_value} or ${my_var:-${backup_var:-default_value}}
-  return varValue.replace(
-    envUnixRegex,
-    (
-      _,
-      escapeChars,
-      varNameWithDollarSign,
-      varName,
-      altVarName,
-      defaultValue,
-    ) => {
-      // do not replace things preceded by a odd number of \
-      if (escapeChars.length % 2 === 1) {
-        return varNameWithDollarSign
-      }
-      return (
-        escapeChars.substr(0, escapeChars.length / 2) +
-        ((varName || altVarName) === 'PWD'
-          ? process.cwd()
-          : process.env[varName || altVarName] ||
-            (defaultValue && resolveEnvVars(defaultValue)) ||
-            '')
-      )
-    },
-  )
-}
-
-/**
  * Converts an environment variable value to be appropriate for the current OS.
  * @param {String} originalValue Original value of the env variable
  * @param {String} originalName Original name of the env variable
  * @returns {String} Converted value
  */
 function varValueConvert(originalValue, originalName) {
-  return resolveEnvVars(replaceListDelimiters(originalValue, originalName))
+  return envReplace(replaceListDelimiters(originalValue, originalName))
 }
