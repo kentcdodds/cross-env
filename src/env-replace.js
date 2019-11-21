@@ -65,9 +65,9 @@ function envReplace(value, env = process.env, winEnvReplace = false) {
               escapeCount % 2 === 1
                 ? match
                 : replaceMatch(match, env, winEnvReplace).replace(/\\}/g, '}')
-
+            const beforeLength = value.length
             value = `${prefix}${replace}${suffix}`
-            i = replace.length - match.length
+            i = i - beforeLength + value.length
             escapeCount = 0
             braceCount = 0
           } else {
@@ -95,8 +95,9 @@ function envReplace(value, env = process.env, winEnvReplace = false) {
               escapeCount % 2 === 1
                 ? match
                 : replaceMatch(match, env, winEnvReplace)
+            const beforeLength = value.length
             value = `${prefix}${replace}${suffix}`
-            i = replace.length - match.length
+            i = i - beforeLength + value.length
           }
         }
         if (braceCount === 0) {

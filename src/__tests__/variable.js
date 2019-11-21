@@ -262,3 +262,12 @@ test('escape closed curly brace in default value in UNIX', () => {
   isWindowsMock.mockReturnValue(false)
   expect(varValueConvert('${EMPTY_VAR:-${UNKNOWN:-ba\\}r}}')).toBe('ba}r')
 })
+
+test('All the escapes are belong to us in UNIX', () => {
+  isWindowsMock.mockReturnValue(false)
+  expect(
+    varValueConvert(
+      'start-\\${ESCAPED:-a-\\}-val}-\\$ESCAPED-\\\\${ESCAPED:-a-\\}-val}-\\\\$VAR1-end',
+    ),
+  ).toBe('start-${ESCAPED:-a-\\}-val}-$ESCAPED-\\a-}-val-\\value1-end')
+})

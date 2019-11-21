@@ -120,3 +120,13 @@ test('resolves the current working directory inside string in UNIX', () => {
   isWindowsMock.mockReturnValue(false)
   expect(commandConvert('cd ${PWD}/adir')).toBe('cd ${PWD}/adir')
 })
+
+test('All the escapes are belong to us in Windows', () => {
+  isWindowsMock.mockReturnValue(true)
+  expect(
+    commandConvert(
+      'start-\\${ESCAPED:-a-\\}-val}-\\$ESCAPED-\\\\${ESCAPED:-a-\\}-val}-\\\\$test1-end',
+      env,
+    ),
+  ).toBe('start-${ESCAPED:-a-\\}-val}-$ESCAPED-\\a-}-val-\\%test1%-end')
+})
