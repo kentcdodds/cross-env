@@ -8,7 +8,7 @@
     "cross-env-shell": "src/bin/cross-env-shell.js"
   },
   "engines": {
-    "node": ">=10.13",
+    "node": ">=10.14",
     "npm": ">=6",
     "yarn": ">=1"
   },
