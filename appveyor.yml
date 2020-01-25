@@ -1,20 +1,15 @@
 environment:
   matrix:
-    - node_version: "8"
-
+    - node_version: '10.13'
+    - node_version: '12'
+    - node_version: '13'
 branches:
   only:
     - master
-
 install:
   - ps: Install-Product node $env:node_version
-  - npm i
-
-test_script:
-  - node --version
-  - npm test
-
+  - npm install
+test_script: npm run validate
 cache:
   - ~/.npm
-
 build: off

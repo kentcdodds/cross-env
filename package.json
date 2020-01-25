@@ -8,11 +8,15 @@
     "cross-env-shell": "src/bin/cross-env-shell.js"
   },
   "engines": {
-    "node": ">=8.0"
+    "node": ">=10.13",
+    "npm": ">=6",
+    "yarn": ">=1"
   },
   "scripts": {
     "lint": "kcd-scripts lint",
+    "setup": "npm install && npm run validate -s",
     "test": "kcd-scripts test",
+    "test:update": "npm test -- --updateSnapshot --coverage",
     "validate": "kcd-scripts validate"
   },
   "husky": {
@@ -32,10 +36,10 @@
   "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",
   "license": "MIT",
   "dependencies": {
-    "cross-spawn": "^7.0.0"
+    "cross-spawn": "^7.0.1"
   },
   "devDependencies": {
-    "kcd-scripts": "^1.8.0"
+    "kcd-scripts": "^4.1.0"
   },
   "eslintConfig": {
     "extends": "./node_modules/kcd-scripts/eslint.js"
