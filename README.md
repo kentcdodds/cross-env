@@ -211,6 +211,9 @@ Thanks goes to these people ([emoji key][emojis]):
     <td align="center"><a href="https://codefund.io"><img src="https://avatars2.githubusercontent.com/u/12481?v=4" width="100px;" alt=""/><br /><sub><b>Eric Berry</b></sub></a><br /><a href="#fundingFinding-coderberry" title="Funding Finding">🔍</a></td>
     <td align="center"><a href="https://michaeldeboey.be"><img src="https://avatars3.githubusercontent.com/u/6643991?v=4" width="100px;" alt=""/><br /><sub><b>Michaël De Boey</b></sub></a><br /><a href="https://github.com/kentcdodds/cross-env/commits?author=MichaelDeBoey" title="Code">💻</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/lauriii"><img src="https://avatars0.githubusercontent.com/u/1845495?v=4" width="100px;" alt=""/><br /><sub><b>Lauri Eskola</b></sub></a><br /><a href="https://github.com/kentcdodds/cross-env/commits?author=lauriii" title="Documentation">📖</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
