@@ -10,7 +10,7 @@ function crossEnv(args, options = {}) {
   const [envSetters, command, commandArgs] = parseCommand(args)
   const env = getEnvVars(envSetters)
   if (command) {
-    const proc = spawn(
+    let child = spawn(
       // run `path.normalize` for command(on windows)
       commandConvert(command, env, true),
       // by default normalize is `false`, so not run for cmd args
@@ -21,20 +21,59 @@ function crossEnv(args, options = {}) {
         env,
       },
     )
-    process.on('SIGTERM', () => proc.kill('SIGTERM'))
-    process.on('SIGINT', () => proc.kill('SIGINT'))
-    process.on('SIGBREAK', () => proc.kill('SIGBREAK'))
-    process.on('SIGHUP', () => proc.kill('SIGHUP'))
-    proc.on('exit', (code, signal) => {
-      let crossEnvExitCode = code
-      // exit code could be null when OS kills the process(out of memory, etc) or due to node handling it
-      // but if the signal is SIGINT the user exited the process so we want exit code 0
-      if (crossEnvExitCode === null) {
-        crossEnvExitCode = signal === 'SIGINT' ? 0 : 1
+
+    // See https://github.com/jtlapp/node-cleanup
+    //
+    // > When you hit Ctrl-C, you send a SIGINT signal to each process in the
+    // > current process group. A process group is set of processes that are
+    // > all supposed to end together as a group instead of persisting
+    // > independently. However, some programs, such as Emacs, intercept and
+    // > repurpose SIGINT so that it does not end the process. In such cases,
+    // > SIGINT should not end any processes of the group.
+    //
+    // Delegate decision to terminate to child process, if the child exits on
+    // SIGINT then the `child.on('exit')` callback will be invoked, re-raising
+    // the signal to the parent process
+    const delegateSignalToChild = signal => () => {
+      // SIGINT is sent to all processes in group, no need to delegate.
+      if (child && signal !== 'SIGINT') {
+        process.kill(child.pid, signal)
       }
-      process.exit(crossEnvExitCode) //eslint-disable-line no-process-exit
+    }
+
+    const sigtermHandler = delegateSignalToChild('SIGTERM')
+    const sigintHandler = delegateSignalToChild('SIGINT')
+    const sigbreakHandler = delegateSignalToChild('SIGBREAK')
+    const sighupHandler = delegateSignalToChild('SIGHUP')
+    const sigquitHandler = delegateSignalToChild('SIGQUIT')
+
+    process.on('SIGTERM', sigtermHandler)
+    process.on('SIGINT', sigintHandler)
+    process.on('SIGBREAK', sigbreakHandler)
+    process.on('SIGHUP', sighupHandler)
+    process.on('SIGQUIT', sigquitHandler)
+
+    child.on('exit', (exitCode, signal) => {
+      // Child has decided to exit.
+      child = null
+      process.removeListener('SIGTERM', sigtermHandler)
+      process.removeListener('SIGINT', sigintHandler)
+      process.removeListener('SIGBREAK', sigbreakHandler)
+      process.removeListener('SIGHUP', sighupHandler)
+      process.removeListener('SIGQUIT', sigquitHandler)
+
+      if (exitCode !== null) {
+        // Calling process.exit is not necessary most of the time,
+        // see https://nodejs.org/api/process.html#process_process_exit_code
+        process.exitCode = exitCode
+      }
+      if (signal !== null) {
+        // Pass through child's signal to parent.
+        // SIGINT should not be transformed into a 0 exit code
+        process.kill(process.pid, signal)
+      }
     })
-    return proc
+    return child
   }
   return null
 }

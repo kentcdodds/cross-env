@@ -6,16 +6,44 @@ jest.mock('cross-spawn')
 
 const crossEnv = require('../')
 
-const getSpawned = (call = 0) => crossSpawnMock.spawn.mock.results[call].value
+/*
+  Each test should spawn at most once.
+ */
+const getSpawned = () => {
+  if (crossSpawnMock.spawn.mock.results.length !== 0) {
+    return crossSpawnMock.spawn.mock.results[0].value
+  }
 
-process.setMaxListeners(20)
+  return undefined
+}
+
+const getSpawnedOnExitCallBack = () => getSpawned().on.mock.calls[0][1]
+
+// Enforce checks for leaking process.on() listeners in cross-env
+process.setMaxListeners(1)
 
 beforeEach(() => {
   jest.spyOn(process, 'exit').mockImplementation(() => {})
-  crossSpawnMock.spawn.mockReturnValue({on: jest.fn(), kill: jest.fn()})
+  jest.spyOn(process, 'kill').mockImplementation(() => {})
+  crossSpawnMock.spawn.mockReturnValue({
+    pid: 42,
+    on: jest.fn(),
+    kill: jest.fn(),
+  })
 })
 
 afterEach(() => {
+  // stop tests from leaking process.on() listeners in cross-env
+  const spawned = getSpawned()
+  if (spawned) {
+    const spawnExitCallback = getSpawnedOnExitCallBack()
+    const signal = 'SIGTEST'
+    const exitCode = null
+    spawnExitCallback(exitCode, signal)
+
+    process.removeAllListeners('exit')
+  }
+
   jest.clearAllMocks()
   process.exit.mockRestore()
 })
@@ -130,20 +158,6 @@ test(`does not normalize command arguments on windows`, () => {
   )
 })
 
-test(`propagates kill signals`, () => {
-  testEnvSetting({FOO_ENV: 'foo=bar'}, 'FOO_ENV="foo=bar"')
-
-  process.emit('SIGTERM')
-  process.emit('SIGINT')
-  process.emit('SIGHUP')
-  process.emit('SIGBREAK')
-  const spawned = getSpawned()
-  expect(spawned.kill).toHaveBeenCalledWith('SIGTERM')
-  expect(spawned.kill).toHaveBeenCalledWith('SIGINT')
-  expect(spawned.kill).toHaveBeenCalledWith('SIGHUP')
-  expect(spawned.kill).toHaveBeenCalledWith('SIGBREAK')
-})
-
 test(`keeps backslashes`, () => {
   isWindowsMock.mockReturnValue(true)
   crossEnv(['echo', '\\\\\\\\someshare\\\\somefolder'])
@@ -157,29 +171,73 @@ test(`keeps backslashes`, () => {
   )
 })
 
-test(`propagates unhandled exit signal`, () => {
-  const {spawned} = testEnvSetting({FOO_ENV: 'foo=bar'}, 'FOO_ENV="foo=bar"')
-  const spawnExitCallback = spawned.on.mock.calls[0][1]
-  const spawnExitCode = null
-  spawnExitCallback(spawnExitCode)
-  expect(process.exit).toHaveBeenCalledWith(1)
+describe(`cross-env delegates signals to spawn`, () => {
+  test(`SIGINT is not delegated`, () => {
+    const signal = 'SIGINT'
+
+    crossEnv(['echo', 'hello world'])
+    const spawnExitCallback = getSpawnedOnExitCallBack()
+    const exitCode = null
+    const parentProcessId = expect.any(Number)
+
+    // Parent receives signal
+    // SIGINT is sent to all processes in group, no need to delegated.
+    process.emit(signal)
+    expect(process.kill).not.toHaveBeenCalled()
+    // child handles signal and 'exits'
+    spawnExitCallback(exitCode, signal)
+    expect(process.kill).toHaveBeenCalledTimes(1)
+    expect(process.kill).toHaveBeenCalledWith(parentProcessId, signal)
+  })
+
+  test.each(['SIGTERM', 'SIGBREAK', 'SIGHUP', 'SIGQUIT'])(
+    `delegates %s`,
+    signal => {
+      crossEnv(['echo', 'hello world'])
+      const spawnExitCallback = getSpawnedOnExitCallBack()
+      const exitCode = null
+      const parentProcessId = expect.any(Number)
+
+      // Parent receives signal
+      process.emit(signal)
+      expect(process.kill).toHaveBeenCalledTimes(1)
+      expect(process.kill).toHaveBeenCalledWith(42, signal)
+      // Parent delegates signal to child, child handles signal and 'exits'
+      spawnExitCallback(exitCode, signal)
+      expect(process.kill).toHaveBeenCalledTimes(2)
+      expect(process.kill).toHaveBeenCalledWith(parentProcessId, signal)
+    },
+  )
 })
 
-test(`exits cleanly with SIGINT with a null exit code`, () => {
-  const {spawned} = testEnvSetting({FOO_ENV: 'foo=bar'}, 'FOO_ENV="foo=bar"')
-  const spawnExitCallback = spawned.on.mock.calls[0][1]
-  const spawnExitCode = null
-  const spawnExitSignal = 'SIGINT'
-  spawnExitCallback(spawnExitCode, spawnExitSignal)
-  expect(process.exit).toHaveBeenCalledWith(0)
+describe(`spawn received signal and exits`, () => {
+  test.each(['SIGTERM', 'SIGINT', 'SIGBREAK', 'SIGHUP', 'SIGQUIT'])(
+    `delegates %s`,
+    signal => {
+      crossEnv(['echo', 'hello world'])
+
+      const spawnExitCallback = getSpawnedOnExitCallBack()
+      const exitCode = null
+      const parentProcessId = expect.any(Number)
+
+      // cross-env child.on('exit') re-raises signal, now with no signal handlers
+      spawnExitCallback(exitCode, signal)
+      process.emit('exit', exitCode, signal)
+      expect(process.kill).toHaveBeenCalledTimes(1)
+      expect(process.kill).toHaveBeenCalledWith(parentProcessId, signal)
+    },
+  )
 })
 
-test(`propagates regular exit code`, () => {
-  const {spawned} = testEnvSetting({FOO_ENV: 'foo=bar'}, 'FOO_ENV="foo=bar"')
-  const spawnExitCallback = spawned.on.mock.calls[0][1]
+test(`spawn regular exit code`, () => {
+  crossEnv(['echo', 'hello world'])
+
+  const spawnExitCallback = getSpawnedOnExitCallBack()
   const spawnExitCode = 0
-  spawnExitCallback(spawnExitCode)
-  expect(process.exit).toHaveBeenCalledWith(0)
+  const spawnExitSignal = null
+  spawnExitCallback(spawnExitCode, spawnExitSignal)
+  expect(process.exit).not.toHaveBeenCalled()
+  expect(process.exitCode).toBe(0)
 })
 
 function testEnvSetting(expected, ...envSettings) {
