@@ -33,13 +33,13 @@
     "environment variable",
     "windows"
   ],
-  "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",
+  "author": "Kent C. Dodds <me@kentcdodds.com> (https://kentcdodds.com)",
   "license": "MIT",
   "dependencies": {
     "cross-spawn": "^7.0.1"
   },
   "devDependencies": {
-    "kcd-scripts": "^4.1.0"
+    "kcd-scripts": "^5.2.0"
   },
   "eslintConfig": {
     "extends": "./node_modules/kcd-scripts/eslint.js"
