@@ -19,11 +19,6 @@
     "test:update": "npm test -- --updateSnapshot --coverage",
     "validate": "kcd-scripts validate"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "kcd-scripts pre-commit"
-    }
-  },
   "files": [
     "src",
     "!__tests__"
@@ -39,7 +34,7 @@
     "cross-spawn": "^7.0.1"
   },
   "devDependencies": {
-    "kcd-scripts": "^5.2.0"
+    "kcd-scripts": "^5.5.0"
   },
   "eslintConfig": {
     "extends": "./node_modules/kcd-scripts/eslint.js"
