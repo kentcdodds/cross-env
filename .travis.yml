@@ -20,3 +20,4 @@ jobs:
     - stage: release
       node_js: 12
       script: kcd-scripts travis-release
+      if: fork = false
