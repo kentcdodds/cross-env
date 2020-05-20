@@ -81,6 +81,16 @@ webpack --config build/webpack.config.js
 
 The `NODE_ENV` environment variable will be set by `cross-env`
 
+You can set multiple environment variables at a time:
+
+```json
+{
+  "scripts": {
+    "build": "cross-env FIRST_ENV=one SECOND_ENV=two node ./my-program"
+  }
+}
+```
+
 You can also split a command into several ones, or separate the environment
 variables declaration from the actual command execution. You can do it this way:
 
