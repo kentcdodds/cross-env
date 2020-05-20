@@ -217,6 +217,7 @@ Thanks goes to these people ([emoji key][emojis]):
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/lauriii"><img src="https://avatars0.githubusercontent.com/u/1845495?v=4" width="100px;" alt=""/><br /><sub><b>Lauri Eskola</b></sub></a><br /><a href="https://github.com/kentcdodds/cross-env/commits?author=lauriii" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/devuxer"><img src="https://avatars0.githubusercontent.com/u/1298521?v=4" width="100px;" alt=""/><br /><sub><b>devuxer</b></sub></a><br /><a href="https://github.com/kentcdodds/cross-env/commits?author=devuxer" title="Documentation">📖</a></td>
   </tr>
 </table>
 
