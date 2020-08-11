@@ -19,7 +19,7 @@ function crossEnv(args, options = {}) {
         stdio: 'inherit',
         shell: options.shell,
         env,
-      },
+      }
     )
     process.on('SIGTERM', () => proc.kill('SIGTERM'))
     process.on('SIGINT', () => proc.kill('SIGINT'))
