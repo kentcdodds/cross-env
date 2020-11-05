@@ -1,20 +1,21 @@
 <div align="center">
 <h1>cross-env 🔀</h1>
 
-Run scripts that set and use environment variables across platforms
-
+<p>Run scripts that set and use environment variables across platforms</p>
 </div>
 
-<hr />
+---
 
-[![Travis Build Status][build-badge]][build]
-[![AppVeyor Build Status][win-build-badge]][win-build]
+<!-- prettier-ignore-start -->
+[![Build Status][build-badge]][build]
 [![Code Coverage][coverage-badge]][coverage]
-[![version][version-badge]][package] [![MIT License][license-badge]][license]
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-20-orange.svg?style=flat-square)](#contributors)
-[![PRs Welcome][prs-badge]][prs] [![Code of Conduct][coc-badge]][coc]
+[![version][version-badge]][package]
 [![downloads][downloads-badge]][npmtrends]
+[![MIT License][license-badge]][license]
+[![All Contributors][all-contributors-badge]](#contributors-)
+[![PRs Welcome][prs-badge]][prs]
+[![Code of Conduct][coc-badge]][coc]
+<!-- prettier-ignore-end -->
 
 ## The problem
 
@@ -180,7 +181,25 @@ easier for Windows users.
 - [`@naholyr/cross-env`](https://www.npmjs.com/package/@naholyr/cross-env) -
   `cross-env` with support for setting default values
 
-## Contributors
+## Issues
+
+_Looking to contribute? Look for the [Good First Issue][good-first-issue]
+label._
+
+### 🐛 Bugs
+
+Please file an issue for bugs, missing documentation, or unexpected behavior.
+
+[**See Bugs**][bugs]
+
+### 💡 Feature Requests
+
+Please file an issue to suggest new features. Vote on feature requests by adding
+a 👍. This helps maintainers prioritize what to work on.
+
+[**See Feature Requests**][requests]
+
+## Contributors ✨
 
 Thanks goes to these people ([emoji key][emojis]):
 
@@ -236,35 +255,33 @@ Contributions of any kind welcome!
 
 MIT
 
-[npm]: https://www.npmjs.com/
+<!-- prettier-ignore-start -->
+[npm]: https://npmjs.com
 [node]: https://nodejs.org
-[build-badge]:
-  https://img.shields.io/travis/kentcdodds/cross-env.svg?style=flat-square
-[build]: https://travis-ci.org/kentcdodds/cross-env
-[win-build-badge]:
-  https://img.shields.io/appveyor/ci/kentcdodds/cross-env.svg?style=flat-square
-[win-build]: https://ci.appveyor.com/project/kentcdodds/cross-env
-[coverage-badge]:
-  https://img.shields.io/codecov/c/github/kentcdodds/cross-env.svg?style=flat-square
+[build-badge]: https://img.shields.io/github/workflow/status/kentcdodds/cross-env/validate?logo=github&style=flat-square
+[build]: https://github.com/kentcdodds/cross-env/actions?query=workflow%3Avalidate
+[coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/cross-env.svg?style=flat-square
 [coverage]: https://codecov.io/github/kentcdodds/cross-env
-[version-badge]: https://img.shields.io/npm/v/cross-env.svg?style=flat-square
-[package]: https://www.npmjs.com/package/cross-env
-[downloads-badge]: https://img.shields.io/npm/dm/cross-env.svg?style=flat-square
-[npmtrends]: https://www.npmtrends.com/cross-env
-[license-badge]: https://img.shields.io/npm/l/cross-env.svg?style=flat-square
-[license]: https://github.com/kentcdodds/cross-env/blob/master/other/LICENSE
-[prs-badge]:
-  https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
+[version-badge]: https://img.shields.io/npm/v/gatsby-remark-embedder.svg?style=flat-square
+[package]: https://www.npmjs.com/package/gatsby-remark-embedder
+[downloads-badge]: https://img.shields.io/npm/dm/gatsby-remark-embedder.svg?style=flat-square
+[npmtrends]: http://www.npmtrends.com/gatsby-remark-embedder
+[license-badge]: https://img.shields.io/npm/l/gatsby-remark-embedder.svg?style=flat-square
+[license]: https://github.com/kentcdodds/cross-env/blob/master/LICENSE
+[prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
 [prs]: http://makeapullrequest.com
-[coc-badge]:
-  https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
-[coc]:
-  https://github.com/kentcdodds/cross-env/blob/master/other/CODE_OF_CONDUCT.md
-[emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
-[all-contributors]: https://github.com/kentcdodds/all-contributors
-[win-bash]: https://msdn.microsoft.com/en-us/commandline/wsl/about
+[coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
+[coc]: https://github.com/kentcdodds/cross-env/blob/master/other/CODE_OF_CONDUCT.md
+[emojis]: https://allcontributors.org/docs/en/emoji-key
+[all-contributors]: https://github.com/all-contributors/all-contributors
+[all-contributors-badge]: https://img.shields.io/github/all-contributors/kentcdodds/cross-env?color=orange&style=flat-square
+[bugs]: https://github.com/kentcdodds/cross-env/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3A%22%F0%9F%90%9B+Bug%22+sort%3Acreated-desc
+[requests]: https://github.com/kentcdodds/cross-env/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc+label%3Aenhancement
+[good-first-issue]: https://github.com/kentcdodds/cross-env/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc+label%3A%22good+first+issue%22
+
 [angular-formly]: https://github.com/formly-js/angular-formly
 [cross-spawn]: https://www.npmjs.com/package/cross-spawn
+[malware]: http://blog.npmjs.org/post/163723642530/crossenv-malware-on-the-npm-registry
 [ts-loader]: https://www.npmjs.com/package/ts-loader
-[malware]:
-  http://blog.npmjs.org/post/163723642530/crossenv-malware-on-the-npm-registry
+[win-bash]: https://msdn.microsoft.com/en-us/commandline/wsl/about
+<!-- prettier-ignore-end -->
