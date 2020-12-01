@@ -20,6 +20,11 @@ jobs:
         node: [10.14, 10, 12, 14, 15]
     runs-on: ${{ matrix.os }}
     steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.6.0
+        with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v2
 
