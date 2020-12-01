@@ -4,6 +4,11 @@
 <p>Run scripts that set and use environment variables across platforms</p>
 </div>
 
+**🚨 NOTICE: cross-env still works well, but is in maintenance mode. No new
+features will be added, only serious and common-case bugs will be fixed, and
+it will only be kept up-to-date with Node.js over time.
+[Learn more](https://github.com/kentcdodds/cross-env/issues/257)**
+
 ---
 
 <!-- prettier-ignore-start -->
