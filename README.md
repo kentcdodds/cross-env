@@ -199,10 +199,9 @@ Please file an issue for bugs, missing documentation, or unexpected behavior.
 
 ### 💡 Feature Requests
 
-Please file an issue to suggest new features. Vote on feature requests by adding
-a 👍. This helps maintainers prioritize what to work on.
+This project is in maintenance mode and no new feature requests will be considered.
 
-[**See Feature Requests**][requests]
+[**Learn more**](https://github.com/kentcdodds/cross-env/issues/257)
 
 ## Contributors ✨
 
@@ -281,7 +280,6 @@ MIT
 [all-contributors]: https://github.com/all-contributors/all-contributors
 [all-contributors-badge]: https://img.shields.io/github/all-contributors/kentcdodds/cross-env?color=orange&style=flat-square
 [bugs]: https://github.com/kentcdodds/cross-env/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3A%22%F0%9F%90%9B+Bug%22+sort%3Acreated-desc
-[requests]: https://github.com/kentcdodds/cross-env/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc+label%3Aenhancement
 [good-first-issue]: https://github.com/kentcdodds/cross-env/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc+label%3A%22good+first+issue%22
 
 [angular-formly]: https://github.com/formly-js/angular-formly
