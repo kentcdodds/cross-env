@@ -267,11 +267,11 @@ MIT
 [build]: https://github.com/kentcdodds/cross-env/actions?query=workflow%3Avalidate
 [coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/cross-env.svg?style=flat-square
 [coverage]: https://codecov.io/github/kentcdodds/cross-env
-[version-badge]: https://img.shields.io/npm/v/gatsby-remark-embedder.svg?style=flat-square
-[package]: https://www.npmjs.com/package/gatsby-remark-embedder
-[downloads-badge]: https://img.shields.io/npm/dm/gatsby-remark-embedder.svg?style=flat-square
-[npmtrends]: http://www.npmtrends.com/gatsby-remark-embedder
-[license-badge]: https://img.shields.io/npm/l/gatsby-remark-embedder.svg?style=flat-square
+[version-badge]: https://img.shields.io/npm/v/cross-env.svg?style=flat-square
+[package]: https://www.npmjs.com/package/cross-env
+[downloads-badge]: https://img.shields.io/npm/dm/cross-env.svg?style=flat-square
+[npmtrends]: http://www.npmtrends.com/cross-env
+[license-badge]: https://img.shields.io/npm/l/cross-env.svg?style=flat-square
 [license]: https://github.com/kentcdodds/cross-env/blob/master/LICENSE
 [prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
 [prs]: http://makeapullrequest.com
