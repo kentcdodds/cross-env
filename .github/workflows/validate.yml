@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          cache: 'npm'
 
       - name: 📦 Install dependencies
         run: npm ci
@@ -49,7 +49,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: dist
-          key: build-${{ runner.os }}-${{ matrix.node-version }}-${{
+          key:
+            build-${{ runner.os }}-${{ matrix.node-version }}-${{
             hashFiles('package-lock.json') }}
           restore-keys: |
             build-${{ runner.os }}-${{ matrix.node-version }}-
@@ -71,7 +72,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          cache: 'npm'
 
       - name: 📦 Install dependencies
         run: npm ci
@@ -80,7 +81,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: dist
-          key: build-ubuntu-latest-${{ matrix.node-version }}-${{
+          key:
+            build-ubuntu-latest-${{ matrix.node-version }}-${{
             hashFiles('package-lock.json') }}
           restore-keys: |
             build-ubuntu-latest-${{ matrix.node-version }}-
