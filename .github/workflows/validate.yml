@@ -87,13 +87,6 @@ jobs:
           restore-keys: |
             build-ubuntu-latest-${{ matrix.node-version }}-
 
-      - name: ✅ Verify build output exists
-        run: |
-          echo "Checking build output..."
-          ls -la dist/
-          ls -la dist/bin/
-          echo "Build output verified ✅"
-
       - name: 🧪 Run cross-env e2e tests
         run: node e2e/test-cross-env.js
 
