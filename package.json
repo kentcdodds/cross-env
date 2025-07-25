@@ -14,7 +14,7 @@
   },
   "scripts": {
     "build": "zshy && npm run clean-cjs",
-    "clean-cjs": "rimraf dist/*.cjs dist/*.d.cts dist/bin/*.cjs dist/bin/*.d.cts",
+    "clean-cjs": "node other/clean-cjs.js",
     "dev": "zshy --watch",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -49,7 +49,6 @@
     "@types/node": "^24.1.0",
     "@types/cross-spawn": "^6.0.6",
     "prettier": "^3.6.2",
-    "rimraf": "^6.0.1",
     "typescript": "^5.8.3",
     "vitest": "^3.2.4",
     "@vitest/ui": "^3.2.4",
