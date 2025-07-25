@@ -1,88 +1,104 @@
-name: validate
+name: Validate
+
 on:
   push:
-    branches:
-      - '+([0-9])?(.{+([0-9]),x}).x'
-      - 'master'
-      - 'next'
-      - 'next-major'
-      - 'beta'
-      - 'alpha'
-      - '!all-contributors/**'
-  pull_request: {}
+    branches: [main]
+  pull_request:
+    branches: [main]
+
 jobs:
-  main:
-    # ignore all-contributors PRs
-    if: ${{ !contains(github.head_ref, 'all-contributors') }}
+  build:
+    name: 🔨 Build and Validate
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22, 24, 26]
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🔨 Build
+        run: npm run build
+
+      - name: 🔍 Type check
+        run: npm run typecheck
+
+      - name: 🧹 Lint
+        run: npm run lint
+
+      - name: 💅 Format check
+        run: npm run format:check
+
+      - name: 🧪 Test
+        run: npm run test:run
+
+      - name: 📊 Upload coverage
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
+
+      - name: 💾 Cache build output
+        uses: actions/cache@v4
+        with:
+          path: dist
+          key:
+            build-${{ runner.os }}-${{ matrix.node-version }}-${{
+            hashFiles('package-lock.json') }}
+          restore-keys: |
+            build-${{ runner.os }}-${{ matrix.node-version }}-
+
+  e2e:
+    name: 🌐 E2E Tests
+    needs: build
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        node: [10.14, 10, 12, 14, 15]
-    runs-on: ${{ matrix.os }}
+        node-version: [24]
+
     steps:
-      - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.6.0
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
         with:
-          access_token: ${{ secrets.GITHUB_TOKEN }}
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
-      - name: ⬇️ Checkout repo
-        uses: actions/checkout@v2
+      - name: 📦 Install dependencies
+        run: npm ci
 
-      - name: ⎔ Setup node
-        uses: actions/setup-node@v1
+      - name: 📂 Restore build output
+        uses: actions/cache@v4
         with:
-          node-version: ${{ matrix.node }}
+          path: dist
+          key:
+            build-ubuntu-latest-${{ matrix.node-version }}-${{
+            hashFiles('package-lock.json') }}
+          restore-keys: |
+            build-ubuntu-latest-${{ matrix.node-version }}-
 
-      - name: 📥 Download deps
-        uses: bahmutov/npm-install@v1
-        with:
-          useLockFile: false
+      - name: ✅ Verify build output exists
+        run: |
+          echo "Checking build output..."
+          ls -la dist/
+          ls -la dist/bin/
+          echo "Build output verified ✅"
 
-      - name: ▶️ Run validate script
-        run: npm run validate
+      - name: 🧪 Run cross-env e2e tests
+        run: node e2e/test-cross-env.js
 
-      - name: ⬆️ Upload coverage report
-        uses: codecov/codecov-action@v1
-
-  release:
-    needs: main
-    runs-on: ubuntu-latest
-    if:
-      ${{ github.repository == 'kentcdodds/cross-env' &&
-      contains('refs/heads/master,refs/heads/beta,refs/heads/next,refs/heads/alpha',
-      github.ref) && github.event_name == 'push' }}
-    steps:
-      - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.6.0
-        with:
-          access_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: ⬇️ Checkout repo
-        uses: actions/checkout@v2
-
-      - name: ⎔ Setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14
-
-      - name: 📥 Download deps
-        uses: bahmutov/npm-install@v1
-        with:
-          useLockFile: false
-
-      - name: 🚀 Release
-        uses: cycjimmy/semantic-release-action@v2
-        with:
-          semantic_version: 17
-          branches: |
-            [
-              '+([0-9])?(.{+([0-9]),x}).x',
-              'master',
-              'next',
-              'next-major',
-              {name: 'beta', prerelease: true},
-              {name: 'alpha', prerelease: true}
-            ]
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: 🐚 Run cross-env-shell e2e tests
+        run: node e2e/test-cross-env-shell.js
