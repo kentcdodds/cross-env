@@ -91,15 +91,14 @@ async function runTests() {
 			},
 		},
 		{
-			name: 'Shell command with multiple statements',
+			name: 'Shell command with environment variable in command',
 			test: async () => {
-				const result = await runShellCommand('echo "first"; echo "second"', {
-					SEPARATOR: ';',
+				const result = await runShellCommand('echo $MESSAGE', {
+					MESSAGE: 'hello from shell',
 				})
-				const lines = result.stdout.trim().split('\n')
-				if (lines.length < 2) {
+				if (!result.stdout.trim().includes('hello from shell')) {
 					throw new Error(
-						`Expected at least 2 lines, got ${lines.length}: '${result.stdout.trim()}'`,
+						`Expected output to contain 'hello from shell', got '${result.stdout.trim()}'`,
 					)
 				}
 			},
