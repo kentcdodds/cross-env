@@ -49,18 +49,8 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: false
 
-      - name: 💾 Cache build output
-        uses: actions/cache@v4
-        with:
-          path: dist
-          # prettier-ignore
-          key: dist-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            dist-${{ matrix.node-version }}-
-
   e2e:
     name: 🌐 E2E Tests
-    needs: build
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -80,18 +70,12 @@ jobs:
       - name: 📦 Install dependencies
         run: npm ci
 
+      - name: 🔨 Build
+        run: npm run build
+
       # ensure we don't implicitly rely on dev dependencies
       - name: 📦 Prune dependencies
         run: npm prune --production
-
-      - name: 📂 Restore build output
-        uses: actions/cache@v4
-        with:
-          path: dist
-          # prettier-ignore
-          key: dist-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            dist-${{ matrix.node-version }}-
 
       - name: 🧪 Run cross-env e2e tests
         run: node e2e/test-cross-env.js
