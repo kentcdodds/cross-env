@@ -94,6 +94,8 @@ jobs:
       - name: Commit and push changes
         if:
           steps.non-workflow-changes.outputs.has_non_workflow_changes == 'true'
+        env:
+          TARGET_REF: ${{ github.head_ref || github.ref_name }}
         run: |
           git commit -m "chore: 🔧 Auto-format code with Prettier [skip ci]
 
@@ -102,7 +104,7 @@ jobs:
           - Code formatting fixes
           - Consistent indentation
           - Proper line endings"
-          git push origin HEAD:${{ github.head_ref || github.ref_name }}
+          git push origin HEAD:"$TARGET_REF"
 
       - name: Comment on PR
         if:
