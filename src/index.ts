@@ -3,11 +3,11 @@ import { spawn } from 'cross-spawn'
 import { commandConvert } from './command.js'
 import { varValueConvert } from './variable.js'
 
-export interface CrossEnvOptions {
+export type CrossEnvOptions = {
 	shell?: boolean
 }
 
-export interface ProcessResult {
+export type ProcessResult = {
 	exitCode: number | null
 	signal?: string | null
 }
