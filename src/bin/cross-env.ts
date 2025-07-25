@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-const crossEnv = require('..')
+import { crossEnv } from '../index.js'
 
 crossEnv(process.argv.slice(2))

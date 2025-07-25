@@ -2,47 +2,59 @@
   "name": "cross-env",
   "version": "0.0.0-semantically-released",
   "description": "Run scripts that set and use environment variables across platforms",
-  "main": "src/index.js",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "bin": {
-    "cross-env": "src/bin/cross-env.js",
-    "cross-env-shell": "src/bin/cross-env-shell.js"
+    "cross-env": "./dist/bin/cross-env.js",
+    "cross-env-shell": "./dist/bin/cross-env-shell.js"
   },
   "engines": {
-    "node": ">=10.14",
-    "npm": ">=6",
-    "yarn": ">=1"
+    "node": ">=20"
   },
   "scripts": {
-    "lint": "kcd-scripts lint",
-    "setup": "npm install && npm run validate -s",
-    "test": "kcd-scripts test",
-    "test:update": "npm test -- --updateSnapshot --coverage",
-    "validate": "kcd-scripts validate"
+    "build": "zshy && npm run clean-cjs",
+    "clean-cjs": "node other/clean-cjs.js",
+    "dev": "zshy --watch",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "node e2e/test-cross-env.js && node e2e/test-cross-env-shell.js",
+    "validate": "npm run build && npm run typecheck && npm run lint && npm run format:check && npm run test:run",
+    "prepublishOnly": "npm run validate"
   },
   "files": [
-    "src",
-    "!__tests__"
+    "dist"
   ],
   "keywords": [
     "cross-environment",
     "environment variable",
-    "windows"
+    "windows",
+    "cross-platform"
   ],
   "author": "Kent C. Dodds <me@kentcdodds.com> (https://kentcdodds.com)",
   "license": "MIT",
   "dependencies": {
-    "cross-spawn": "^7.0.1"
+    "cross-spawn": "^7.0.6"
   },
   "devDependencies": {
-    "kcd-scripts": "^5.5.0"
+    "@epic-web/config": "^1.21.1",
+    "eslint": "^9.32.0",
+    "@types/node": "^24.1.0",
+    "@types/cross-spawn": "^6.0.6",
+    "prettier": "^3.6.2",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "@vitest/coverage-v8": "^3.2.4",
+    "zshy": "^0.2.5"
   },
-  "eslintConfig": {
-    "extends": "./node_modules/kcd-scripts/eslint.js"
-  },
-  "// babel 1": "this disables all built-in plugins from kcd-scripts for tests",
-  "// babel 2": "that way we ensure that the tests run without compilation",
-  "// babel 3": "because this module is published as-is. It is not compiled.",
-  "babel": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/kentcdodds/cross-env.git"
@@ -50,5 +62,28 @@
   "bugs": {
     "url": "https://github.com/kentcdodds/cross-env/issues"
   },
-  "homepage": "https://github.com/kentcdodds/cross-env#readme"
+  "homepage": "https://github.com/kentcdodds/cross-env#readme",
+  "zshy": {
+    "exports": {
+      ".": "./src/index.ts",
+      "./bin/cross-env": "./src/bin/cross-env.ts",
+      "./bin/cross-env-shell": "./src/bin/cross-env-shell.ts"
+    }
+  },
+  "prettier": "@epic-web/config/prettier",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./bin/cross-env": {
+      "types": "./dist/bin/cross-env.d.ts",
+      "import": "./dist/bin/cross-env.js"
+    },
+    "./bin/cross-env-shell": {
+      "types": "./dist/bin/cross-env-shell.d.ts",
+      "import": "./dist/bin/cross-env-shell.js"
+    }
+  }
 }
