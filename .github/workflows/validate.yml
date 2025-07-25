@@ -82,3 +82,31 @@ jobs:
 
       - name: 🐚 Run cross-env-shell e2e tests
         run: node e2e/test-cross-env-shell.js
+
+  release:
+    needs: [build, e2e]
+    runs-on: ubuntu-latest
+    if:
+      ${{ github.repository == 'kentcdodds/cross-env' &&
+      contains('refs/heads/main,refs/heads/beta,refs/heads/next,refs/heads/alpha',
+      github.ref) && github.event_name == 'push' }}
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 🚀 Release
+        uses: cycjimmy/semantic-release-action@v4
+        with:
+          semantic_version: 24
+          branches: |
+            [
+              '+([0-9])?(.{+([0-9]),x}).x',
+              'main',
+              'next',
+              'next-major',
+              {name: 'beta', prerelease: true},
+              {name: 'alpha', prerelease: true}
+            ]
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
