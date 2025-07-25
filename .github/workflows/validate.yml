@@ -90,10 +90,6 @@ jobs:
       - name: ✅ Verify build output exists
         run: |
           echo "Checking build output..."
-          if [ ! -d "dist" ]; then
-            echo "❌ dist/ directory not found. Building locally..."
-            npm run build
-          fi
           ls -la dist/
           ls -la dist/bin/
           echo "Build output verified ✅"
