@@ -34,6 +34,13 @@ jobs:
       - name: 🔨 Build
         run: npm run build
 
+      - name: 💾 Cache build output
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            dist/
+          key: build-${{ matrix.node-version }}-${{ github.sha }}
+
       - name: 🔍 Type check
         run: npm run typecheck
 
@@ -93,6 +100,14 @@ jobs:
     steps:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
+
+      - name: 🔄 Restore build output
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            dist/
+          key: build-24-${{ github.sha }}
+          fail-on-cache-miss: false
 
       - name: 🚀 Release
         uses: cycjimmy/semantic-release-action@v4
