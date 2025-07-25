@@ -75,7 +75,7 @@ jobs:
 
       # ensure we don't implicitly rely on dev dependencies
       - name: 📦 Prune dependencies
-        run: npm prune --production
+        run: npm prune --omit=dev
 
       - name: 🧪 Run cross-env e2e tests
         run: node e2e/test-cross-env.js
