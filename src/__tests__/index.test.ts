@@ -120,6 +120,11 @@ describe('crossEnv', () => {
 		expect(crossSpawnMock.spawn).toHaveBeenCalledTimes(0)
 	})
 
+	test('handles empty command after processing', () => {
+		crossEnv(['FOO=bar', ''])
+		expect(crossSpawnMock.spawn).toHaveBeenCalledTimes(0)
+	})
+
 	test('normalizes commands on windows', () => {
 		isWindowsMock.mockReturnValue(true)
 		crossEnv(['./cmd.bat'])

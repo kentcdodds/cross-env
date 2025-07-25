@@ -41,18 +41,19 @@
   "author": "Kent C. Dodds <me@kentcdodds.com> (https://kentcdodds.com)",
   "license": "MIT",
   "dependencies": {
+    "@epic-web/invariant": "^1.0.0",
     "cross-spawn": "^7.0.6"
   },
   "devDependencies": {
     "@epic-web/config": "^1.21.1",
-    "eslint": "^9.32.0",
-    "@types/node": "^24.1.0",
     "@types/cross-spawn": "^6.0.6",
+    "@types/node": "^24.1.0",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "eslint": "^9.32.0",
     "prettier": "^3.6.2",
     "typescript": "^5.8.3",
     "vitest": "^3.2.4",
-    "@vitest/ui": "^3.2.4",
-    "@vitest/coverage-v8": "^3.2.4",
     "zshy": "^0.2.5"
   },
   "repository": {
