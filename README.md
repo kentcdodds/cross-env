@@ -5,8 +5,8 @@
 </div>
 
 **🚨 NOTICE: cross-env still works well, but is in maintenance mode. No new
-features will be added, only serious and common-case bugs will be fixed, and
-it will only be kept up-to-date with Node.js over time.
+features will be added, only serious and common-case bugs will be fixed, and it
+will only be kept up-to-date with Node.js over time.
 [Learn more](https://github.com/kentcdodds/cross-env/issues/257)**
 
 ---
@@ -18,7 +18,6 @@ it will only be kept up-to-date with Node.js over time.
 [![downloads][downloads-badge]][npmtrends]
 [![MIT License][license-badge]][license]
 [![All Contributors][all-contributors-badge]](#contributors-)
-[![PRs Welcome][prs-badge]][prs]
 [![Code of Conduct][coc-badge]][coc]
 <!-- prettier-ignore-end -->
 
@@ -46,7 +45,10 @@ of setting it properly.
 - [Windows Issues](#windows-issues)
 - [Inspiration](#inspiration)
 - [Other Solutions](#other-solutions)
-- [Contributors](#contributors)
+- [Issues](#issues)
+  - [🐛 Bugs](#-bugs)
+  - [💡 Feature Requests](#-feature-requests)
+- [Contributors ✨](#contributors-)
 - [LICENSE](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -63,8 +65,8 @@ npm install --save-dev cross-env
 > WARNING! Make sure that when you're installing packages that you spell things
 > correctly to avoid [mistakenly installing malware][malware]
 
-> NOTE : Version 7 of cross-env only supports Node.js 10 and higher, to use it on
-> Node.js 8 or lower install version 6 `npm install --save-dev cross-env@6`
+> NOTE : Version 7 of cross-env only supports Node.js 10 and higher, to use it
+> on Node.js 8 or lower install version 6 `npm install --save-dev cross-env@6`
 
 ## Usage
 
@@ -199,7 +201,8 @@ Please file an issue for bugs, missing documentation, or unexpected behavior.
 
 ### 💡 Feature Requests
 
-This project is in maintenance mode and no new feature requests will be considered.
+This project is in maintenance mode and no new feature requests will be
+considered.
 
 [**Learn more**](https://github.com/kentcdodds/cross-env/issues/257)
 
@@ -247,6 +250,7 @@ Thanks goes to these people ([emoji key][emojis]):
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification.
@@ -263,7 +267,8 @@ MIT
 <!-- prettier-ignore-start -->
 [npm]: https://npmjs.com
 [node]: https://nodejs.org
-[build-badge]: https://img.shields.io/github/workflow/status/kentcdodds/cross-env/validate?logo=github&style=flat-square
+<!-- you caught me! The builds have been deleted, but I promise they were passing before now! -->
+[build-badge]: https://camo.githubusercontent.com/748e4a1386b345c47427adeb7025b74850b550e5b1deffecd6779c374b887184/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f616374696f6e732f776f726b666c6f772f7374617475732f6b656e7463646f6464732f6d617463682d736f727465722f76616c69646174652e796d6c3f6c6f676f3d676974687562267374796c653d666c61742d737175617265266272616e63683d6d61696e
 [build]: https://github.com/kentcdodds/cross-env/actions?query=workflow%3Avalidate
 [coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/cross-env.svg?style=flat-square
 [coverage]: https://codecov.io/github/kentcdodds/cross-env
@@ -273,8 +278,6 @@ MIT
 [npmtrends]: http://www.npmtrends.com/cross-env
 [license-badge]: https://img.shields.io/npm/l/cross-env.svg?style=flat-square
 [license]: https://github.com/kentcdodds/cross-env/blob/master/LICENSE
-[prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
-[prs]: http://makeapullrequest.com
 [coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
 [coc]: https://github.com/kentcdodds/cross-env/blob/master/other/CODE_OF_CONDUCT.md
 [emojis]: https://allcontributors.org/docs/en/emoji-key
