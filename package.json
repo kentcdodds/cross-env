@@ -3,8 +3,8 @@
   "version": "0.0.0-semantically-released",
   "description": "Run scripts that set and use environment variables across platforms",
   "type": "module",
-  "main": "./dist/index.cjs",
-  "types": "./dist/index.d.cts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "bin": {
     "cross-env": "./dist/bin/cross-env.js",
     "cross-env-shell": "./dist/bin/cross-env-shell.js"
@@ -74,19 +74,16 @@
   "module": "./dist/index.js",
   "exports": {
     ".": {
-      "types": "./dist/index.d.cts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     },
     "./bin/cross-env": {
-      "types": "./dist/bin/cross-env.d.cts",
-      "import": "./dist/bin/cross-env.js",
-      "require": "./dist/bin/cross-env.cjs"
+      "types": "./dist/bin/cross-env.d.ts",
+      "import": "./dist/bin/cross-env.js"
     },
     "./bin/cross-env-shell": {
-      "types": "./dist/bin/cross-env-shell.d.cts",
-      "import": "./dist/bin/cross-env-shell.js",
-      "require": "./dist/bin/cross-env-shell.cjs"
+      "types": "./dist/bin/cross-env-shell.d.ts",
+      "import": "./dist/bin/cross-env-shell.js"
     }
   }
 }
