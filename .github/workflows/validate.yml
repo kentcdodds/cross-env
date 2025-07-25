@@ -54,10 +54,10 @@ jobs:
         with:
           path: dist
           key:
-            build-${{ runner.os }}-${{ matrix.node-version }}-${{
-            hashFiles('package-lock.json') }}
+            dist-${{ matrix.node-version }}-${{ hashFiles('package-lock.json')
+            }}
           restore-keys: |
-            build-${{ runner.os }}-${{ matrix.node-version }}-
+            dist-${{ matrix.node-version }}-
 
   e2e:
     name: 🌐 E2E Tests
@@ -90,10 +90,10 @@ jobs:
         with:
           path: dist
           key:
-            build-ubuntu-latest-${{ matrix.node-version }}-${{
-            hashFiles('package-lock.json') }}
+            dist-${{ matrix.node-version }}-${{ hashFiles('package-lock.json')
+            }}
           restore-keys: |
-            build-ubuntu-latest-${{ matrix.node-version }}-
+            dist-${{ matrix.node-version }}-
 
       - name: 🧪 Run cross-env e2e tests
         run: node e2e/test-cross-env.js

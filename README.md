@@ -29,7 +29,7 @@ I use this in my npm scripts:
 ```json
 {
 	"scripts": {
-		"build": "cross-env NODE_ENV=production webpack --config build/webpack.config.js"
+		"build": "cross-env NODE_ENV=production node ./start.js"
 	}
 }
 ```
@@ -38,7 +38,7 @@ Ultimately, the command that is executed (using [`cross-spawn`][cross-spawn])
 is:
 
 ```
-webpack --config build/webpack.config.js
+node ./start.js
 ```
 
 The `NODE_ENV` environment variable will be set by `cross-env`.
