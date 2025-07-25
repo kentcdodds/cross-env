@@ -184,7 +184,7 @@ MIT
 [downloads-badge]: https://img.shields.io/npm/dm/cross-env.svg?style=flat-square
 [npmtrends]: http://www.npmtrends.com/cross-env
 [license-badge]: https://img.shields.io/npm/l/cross-env.svg?style=flat-square
-[license]: https://github.com/kentcdodds/cross-env/blob/master/LICENSE
+[license]: https://github.com/kentcdodds/cross-env/blob/main/LICENSE
 
 [angular-formly]: https://github.com/formly-js/angular-formly
 [cross-spawn]: https://www.npmjs.com/package/cross-spawn
