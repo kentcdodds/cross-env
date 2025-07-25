@@ -1,4 +1,4 @@
-name: Validate
+name: 🚀 Validate
 
 on:
   push:
@@ -91,6 +91,7 @@ jobs:
         run: node e2e/test-cross-env-shell.js
 
   release:
+    name: 🚀 Release
     needs: [build, e2e]
     runs-on: ubuntu-latest
     if:
