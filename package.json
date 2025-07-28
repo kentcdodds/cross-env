@@ -13,8 +13,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "build": "zshy && npm run clean-cjs",
-    "clean-cjs": "node other/clean-cjs.js",
+    "build": "zshy",
     "dev": "zshy --watch",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -53,7 +52,7 @@
     "prettier": "^3.6.2",
     "typescript": "^5.8.3",
     "vitest": "^3.2.4",
-    "zshy": "^0.2.5"
+    "zshy": "^0.3.0"
   },
   "repository": {
     "type": "git",
@@ -64,6 +63,7 @@
   },
   "homepage": "https://github.com/kentcdodds/cross-env#readme",
   "zshy": {
+    "cjs": false,
     "exports": {
       ".": "./src/index.ts",
       "./bin/cross-env": "./src/bin/cross-env.ts",
