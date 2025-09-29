@@ -24,7 +24,7 @@
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "test:e2e": "node e2e/test-cross-env.js && node e2e/test-cross-env-shell.js",
+    "test:e2e": "node e2e/test-cross-env.js && node e2e/test-cross-env-shell.js && node e2e/test-default-values.js",
     "validate": "npm run build && npm run typecheck && npm run lint && npm run format:check && npm run test:run"
   },
   "files": [

@@ -90,6 +90,9 @@ jobs:
       - name: 🐚 Run cross-env-shell e2e tests
         run: node e2e/test-cross-env-shell.js
 
+      - name: 🔧 Run default value syntax e2e tests
+        run: node e2e/test-default-values.js
+
   release:
     name: 🚀 Release
     needs: [build, e2e]

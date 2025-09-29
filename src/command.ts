@@ -17,8 +17,25 @@ export function commandConvert(
 		return command
 	}
 
-	const envUnixRegex = /\$(\w+)|\${(\w+)}/g // $my_var or ${my_var}
-	const convertedCmd = command.replace(envUnixRegex, (match, $1, $2) => {
+	// Handle simple variables: $var or ${var}
+	const simpleEnvRegex = /\$(\w+)|\${(\w+)}/g
+	// Handle bash parameter expansion with default values: ${var:-default}
+	const defaultValueRegex = /\$\{(\w+):-([^}]+)\}/g
+
+	let convertedCmd = command
+
+	// First, handle bash parameter expansion with default values
+	convertedCmd = convertedCmd.replace(
+		defaultValueRegex,
+		(match, varName, defaultValue) => {
+			// If the variable exists, use its value; otherwise use the default
+			const value = env[varName] || defaultValue
+			return value
+		},
+	)
+
+	// Then handle simple variable references
+	convertedCmd = convertedCmd.replace(simpleEnvRegex, (match, $1, $2) => {
 		const varName = $1 || $2
 		// In Windows, non-existent variables are not replaced by the shell,
 		// so for example "echo %FOO%" will literally print the string "%FOO%", as
