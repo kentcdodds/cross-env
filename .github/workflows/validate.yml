@@ -62,7 +62,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        node-version: [lts/-1, lts/*, latest]
+        node-version: [lts/*]
 
     steps:
       - name: 📥 Checkout
