@@ -115,7 +115,7 @@ jobs:
         with:
           path: |
             dist/
-          key: build-lts/*-${{ github.sha }}
+          key: build-lts-${{ github.sha }}
           fail-on-cache-miss: false
 
       - name: 🚀 Release
