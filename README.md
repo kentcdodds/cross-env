@@ -60,8 +60,7 @@ I use this in my npm scripts:
 }
 ```
 
-Ultimately, the command that is executed (using [`tinyexec`][tinyexec])
-is:
+Ultimately, the command that is executed (using [`tinyexec`][tinyexec]) is:
 
 ```
 node ./start.js --enable-turbo-mode
@@ -121,8 +120,8 @@ these conditions have to be met in order to work both on Windows and UNIX.
 ## `cross-env` vs `cross-env-shell`
 
 The `cross-env` module exposes two bins: `cross-env` and `cross-env-shell`. The
-first one executes commands using [`tinyexec`][tinyexec], while the second
-one uses the `shell` option from Node's `spawn`.
+first one executes commands using [`tinyexec`][tinyexec], while the second one
+uses the `shell` option from Node's `spawn`.
 
 The main use case for `cross-env-shell` is when you need an environment variable
 to be set across an entire inline shell script, rather than just one command.
