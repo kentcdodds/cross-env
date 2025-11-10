@@ -39,13 +39,10 @@
   "author": "Kent C. Dodds <me@kentcdodds.com> (https://kentcdodds.com)",
   "license": "MIT",
   "dependencies": {
-    "@epic-web/invariant": "^1.0.0",
-    "cross-spawn": "^7.0.6",
     "tinyexec": "^1.0.2"
   },
   "devDependencies": {
     "@epic-web/config": "^1.21.1",
-    "@types/cross-spawn": "^6.0.6",
     "@types/node": "^24.1.0",
     "@vitest/coverage-v8": "^3.2.4",
     "@vitest/ui": "^3.2.4",
