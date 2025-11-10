@@ -60,7 +60,7 @@ I use this in my npm scripts:
 }
 ```
 
-Ultimately, the command that is executed (using [`cross-spawn`][cross-spawn])
+Ultimately, the command that is executed (using [`tinyexec`][tinyexec])
 is:
 
 ```
@@ -121,7 +121,7 @@ these conditions have to be met in order to work both on Windows and UNIX.
 ## `cross-env` vs `cross-env-shell`
 
 The `cross-env` module exposes two bins: `cross-env` and `cross-env-shell`. The
-first one executes commands using [`cross-spawn`][cross-spawn], while the second
+first one executes commands using [`tinyexec`][tinyexec], while the second
 one uses the `shell` option from Node's `spawn`.
 
 The main use case for `cross-env-shell` is when you need an environment variable
@@ -187,7 +187,7 @@ MIT
 [license]: https://github.com/kentcdodds/cross-env/blob/main/LICENSE
 
 [angular-formly]: https://github.com/formly-js/angular-formly
-[cross-spawn]: https://www.npmjs.com/package/cross-spawn
+[tinyexec]: https://www.npmjs.com/package/tinyexec
 [malware]: http://blog.npmjs.org/post/163723642530/crossenv-malware-on-the-npm-registry
 [ts-loader]: https://www.npmjs.com/package/ts-loader
 [win-bash]: https://msdn.microsoft.com/en-us/commandline/wsl/about
