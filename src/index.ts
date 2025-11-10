@@ -1,6 +1,6 @@
 import { type SpawnOptions } from 'child_process'
 import { invariant } from '@epic-web/invariant'
-import { spawn } from 'cross-spawn'
+import { spawn } from './spawn.js'
 import { commandConvert } from './command.js'
 import { varValueConvert } from './variable.js'
 

@@ -40,7 +40,8 @@
   "license": "MIT",
   "dependencies": {
     "@epic-web/invariant": "^1.0.0",
-    "cross-spawn": "^7.0.6"
+    "cross-spawn": "^7.0.6",
+    "tinyexec": "^1.0.2"
   },
   "devDependencies": {
     "@epic-web/config": "^1.21.1",

@@ -1,22 +1,22 @@
-import * as crossSpawnModule from 'cross-spawn'
+import * as spawnModule from '../spawn.js'
 import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest'
 import { crossEnv } from '../index.js'
 import * as isWindowsModule from '../is-windows.js'
 
 vi.mock('../is-windows.js')
-vi.mock('cross-spawn')
+vi.mock('../spawn.js')
 
-const crossSpawnMock = vi.mocked(crossSpawnModule)
+const spawnMock = vi.mocked(spawnModule)
 const isWindowsMock = vi.mocked(isWindowsModule.isWindows)
 
 const getSpawned = (call = 0) =>
-	vi.mocked(crossSpawnMock.spawn).mock.results[call]?.value
+	vi.mocked(spawnMock.spawn).mock.results[call]?.value
 
 process.setMaxListeners(20)
 
 beforeEach(() => {
 	vi.spyOn(process, 'exit').mockImplementation(() => undefined as never)
-	vi.mocked(crossSpawnMock.spawn).mockReturnValue({
+	vi.mocked(spawnMock.spawn).mockReturnValue({
 		on: vi.fn(),
 		kill: vi.fn(),
 	} as any)
@@ -81,7 +81,7 @@ describe('crossEnv', () => {
 		crossEnv(['GREETING=Hi', 'NAME=Joe', 'echo $GREETING && echo $NAME'], {
 			shell: true,
 		})
-		expect(crossSpawnMock.spawn).toHaveBeenCalledWith(
+		expect(spawnMock.spawn).toHaveBeenCalledWith(
 			'echo $GREETING && echo $NAME',
 			[],
 			{
@@ -104,7 +104,7 @@ describe('crossEnv', () => {
 				shell: true,
 			},
 		)
-		expect(crossSpawnMock.spawn).toHaveBeenCalledWith(
+		expect(spawnMock.spawn).toHaveBeenCalledWith(
 			'echo "\'$GREETING\'" && echo $NAME',
 			[],
 			{
@@ -117,18 +117,18 @@ describe('crossEnv', () => {
 
 	test('does nothing when given no command', () => {
 		crossEnv([])
-		expect(crossSpawnMock.spawn).toHaveBeenCalledTimes(0)
+		expect(spawnMock.spawn).toHaveBeenCalledTimes(0)
 	})
 
 	test('handles empty command after processing', () => {
 		crossEnv(['FOO=bar', ''])
-		expect(crossSpawnMock.spawn).toHaveBeenCalledTimes(0)
+		expect(spawnMock.spawn).toHaveBeenCalledTimes(0)
 	})
 
 	test('normalizes commands on windows', () => {
 		isWindowsMock.mockReturnValue(true)
 		crossEnv(['./cmd.bat'])
-		expect(crossSpawnMock.spawn).toHaveBeenCalledWith('cmd.bat', [], {
+		expect(spawnMock.spawn).toHaveBeenCalledWith('cmd.bat', [], {
 			stdio: 'inherit',
 			env: { ...process.env },
 		})
@@ -137,7 +137,7 @@ describe('crossEnv', () => {
 	test('does not normalize command arguments on windows', () => {
 		isWindowsMock.mockReturnValue(true)
 		crossEnv(['echo', 'http://example.com'])
-		expect(crossSpawnMock.spawn).toHaveBeenCalledWith(
+		expect(spawnMock.spawn).toHaveBeenCalledWith(
 			'echo',
 			['http://example.com'],
 			{
@@ -164,7 +164,7 @@ describe('crossEnv', () => {
 	test('keeps backslashes', () => {
 		isWindowsMock.mockReturnValue(true)
 		crossEnv(['echo', '\\\\\\\\someshare\\\\somefolder'])
-		expect(crossSpawnMock.spawn).toHaveBeenCalledWith(
+		expect(spawnMock.spawn).toHaveBeenCalledWith(
 			'echo',
 			['\\\\someshare\\somefolder'],
 			{
@@ -239,8 +239,8 @@ function testEnvSetting(
 	Object.assign(env, expected)
 	const spawned = getSpawned()
 	expect(ret).toBe(spawned)
-	expect(crossSpawnMock.spawn).toHaveBeenCalledTimes(1)
-	expect(crossSpawnMock.spawn).toHaveBeenCalledWith('echo', ['hello world'], {
+	expect(spawnMock.spawn).toHaveBeenCalledTimes(1)
+	expect(spawnMock.spawn).toHaveBeenCalledWith('echo', ['hello world'], {
 		stdio: 'inherit',
 		shell: undefined,
 		env: { ...process.env, ...env },
