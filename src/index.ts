@@ -1,5 +1,4 @@
 import { type SpawnOptions } from 'child_process'
-import { invariant } from '@epic-web/invariant'
 import { spawn } from 'cross-spawn'
 import { commandConvert } from './command.js'
 import { varValueConvert } from './variable.js'
@@ -98,7 +97,9 @@ function parseCommand(
 					})
 				})
 			const parsedCommand = cStart[0]
-			invariant(parsedCommand, 'Command is required')
+			if (!parsedCommand) {
+				throw new Error('Command is required')
+			}
 			command = parsedCommand
 			commandArgs = cStart.slice(1).filter(Boolean)
 			break

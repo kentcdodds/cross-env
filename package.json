@@ -39,7 +39,6 @@
   "author": "Kent C. Dodds <me@kentcdodds.com> (https://kentcdodds.com)",
   "license": "MIT",
   "dependencies": {
-    "@epic-web/invariant": "^1.0.0",
     "cross-spawn": "^7.0.6"
   },
   "devDependencies": {
